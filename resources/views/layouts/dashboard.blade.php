@@ -48,27 +48,19 @@
         </li>
         <li class="nav-item">
             <a class="nav-link {{ Request::route()->getName() == 'reseller_owner.paket' ? 'active' : '' }}" href="{{ route('reseller_owner.bandwidth') }}">
-            <i class="nav-icon cil cil-people"></i> Paket </a>
+            <i class="nav-icon cil cil-globe-alt"></i> Paket </a>
         </li>
         <li class="nav-item">
             <a class="nav-link {{ Request::route()->getName() == 'reseller_owner.bill' ? 'active' : '' }}" href="{{ route('reseller_owner.bill') }}">
-            <i class="nav-icon cil cil-people"></i> Tagihan </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link {{ Request::route()->getName() == 'reseller_owner.history' ? 'active' : '' }}" href="{{ route('reseller_owner.history') }}">
-            <i class="nav-icon cil cil-people"></i> Riwayat </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link {{ Request::route()->getName() == 'reseller_owner.employee' ? 'active' : '' }}" href="{{ route('reseller_owner.employee') }}">
-            <i class="nav-icon cil cil-people"></i> Pegawai </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link {{ Request::route()->getName() == 'reseller_owner.profile' ? 'active' : '' }}" href="{{ route('reseller_owner.profile') }}">
-            <i class="nav-icon cil cil-people"></i> Profile </a>
+            <i class="nav-icon cil cil-chart"></i> Tagihan </a>
         </li>
         <li class="nav-item">
             <a class="nav-link {{ Request::route()->getName() == 'reseller_owner.transaction' ? 'active' : '' }}" href="{{ route('reseller_owner.transaction') }}">
-            <i class="nav-icon cil cil-gem"></i> Transaksi</a>
+            <i class="nav-icon cil cil-briefcase"></i> Transaksi</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {{ Request::route()->getName() == 'reseller_owner.employee' ? 'active' : '' }}" href="{{ route('reseller_owner.employee') }}">
+            <i class="nav-icon cil cil-badge"></i> Pegawai </a>
         </li>
         @endhasanyrole
 

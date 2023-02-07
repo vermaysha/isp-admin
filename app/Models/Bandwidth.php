@@ -13,6 +13,19 @@ class Bandwidth extends Model
     use HasFactory;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'reseller_id',
+        'bandwidth',
+        'price',
+        'description',
+    ];
+
+    /**
      * Relation to reseller
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
