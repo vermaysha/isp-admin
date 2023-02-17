@@ -23,7 +23,6 @@ class EmployeeController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
@@ -48,7 +47,6 @@ class EmployeeController extends Controller
     /**
      * Show detail data of client
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  string  $id
      * @return \Illuminate\Http\Response
      */
@@ -71,7 +69,6 @@ class EmployeeController extends Controller
     /**
      * Show form to create add new employees
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request)
@@ -84,7 +81,6 @@ class EmployeeController extends Controller
     /**
      * Process create new employee
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -167,8 +163,6 @@ class EmployeeController extends Controller
     /**
      * Show edit employee form
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $id
      * @return \Illuminate\Http\Response
      */
     public function edit(Request $request, string $id)
@@ -190,8 +184,6 @@ class EmployeeController extends Controller
     /**
      * Update employee process
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, string $id)
@@ -293,8 +285,6 @@ class EmployeeController extends Controller
     /**
      * Delete selected employee
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $id
      * @return \Illuminate\Http\Response
      */
     public function delete(Request $request, string $id)

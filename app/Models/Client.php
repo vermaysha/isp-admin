@@ -69,7 +69,6 @@ class Client extends Model
     /**
      * Scope a query to only include ppn client.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return void
      */
     public function scopePpn(Builder $query)

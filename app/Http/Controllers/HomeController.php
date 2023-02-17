@@ -20,7 +20,6 @@ class HomeController extends Controller
     /**
      * Dashboard by user role
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
@@ -45,7 +44,6 @@ class HomeController extends Controller
     /**
      * Admin pages
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function adminPages(Request $request)
@@ -104,7 +102,6 @@ class HomeController extends Controller
     /**
      * Reseller Owner pages
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function resellerOwnerPages(Request $request)
@@ -213,7 +210,6 @@ class HomeController extends Controller
     /**
      * Reseller Teknisi pages
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function resellerTeknisiPages(Request $request)
@@ -223,7 +219,6 @@ class HomeController extends Controller
     /**
      * Reseller Admin pages
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function resellerAdminPages(Request $request)
@@ -233,7 +228,6 @@ class HomeController extends Controller
     /**
      * Client pages
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function clientPages(Request $request)

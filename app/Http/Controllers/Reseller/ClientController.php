@@ -27,7 +27,6 @@ class ClientController extends Controller
     /**
      * Show table of client
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
@@ -51,8 +50,6 @@ class ClientController extends Controller
     /**
      * Show detail data of client
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $id
      * @return \Illuminate\Http\Response
      */
     public function detail(Request $request, string $id)
@@ -77,8 +74,6 @@ class ClientController extends Controller
     /**
      * Show edit form for client
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $id
      * @return \Illuminate\Http\Response
      */
     public function edit(Request $request, string $id)
@@ -108,8 +103,6 @@ class ClientController extends Controller
     /**
      * Update process for client
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, string $id)
@@ -220,7 +213,6 @@ class ClientController extends Controller
     /**
      * Show create clients form
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request)
@@ -238,7 +230,6 @@ class ClientController extends Controller
     /**
      * Store data process
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)

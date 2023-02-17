@@ -25,7 +25,6 @@ class BillController extends Controller
     /**
      * Outstanding balance bill
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function outstanding(Request $request)
@@ -50,7 +49,6 @@ class BillController extends Controller
     /**
      * History balance bill
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function history(Request $request)
@@ -74,7 +72,6 @@ class BillController extends Controller
     /**
      * Detail balance bill
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function detail(Request $request, string $id)
@@ -98,7 +95,6 @@ class BillController extends Controller
     /**
      * Pay bill
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function pay(Request $request, string $id)

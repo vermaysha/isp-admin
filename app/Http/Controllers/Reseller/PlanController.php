@@ -17,7 +17,6 @@ class PlanController extends Controller
     /**
      * Show table of available plan
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
@@ -48,8 +47,6 @@ class PlanController extends Controller
     /**
      * Show detail data of plans
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $id
      * @return \Illuminate\Http\Response
      */
     public function detail(Request $request, string $id)
@@ -67,7 +64,6 @@ class PlanController extends Controller
     /**
      * Show create plans form
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request)
@@ -78,7 +74,6 @@ class PlanController extends Controller
     /**
      * Store plan to database
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -128,8 +123,6 @@ class PlanController extends Controller
     /**
      * Show edit form
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $id
      * @return \Illuminate\Http\Response
      */
     public function edit(Request $request, string $id)
@@ -146,8 +139,6 @@ class PlanController extends Controller
     /**
      * Process update data
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, string $id)
@@ -195,8 +186,6 @@ class PlanController extends Controller
     /**
      * Process delete data
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $id
      * @return \Illuminate\Http\Response
      */
     public function delete(Request $request, string $id)
