@@ -16,7 +16,10 @@ namespace App\Models{
      * @property int $id
      * @property string $invoice_id
      * @property int $type
-     * @property string $balance
+     * @property string $amount Balance Without any tax
+     * @property string $tax PPN
+     * @property string $grand_total Balance With PPN & BHP USO
+     * @property int|null $transaction_id
      * @property string|null $bill_photo
      * @property int|null $reseller_id
      * @property string $reseller_name
@@ -24,35 +27,47 @@ namespace App\Models{
      * @property string $client_name
      * @property int|null $plan_id
      * @property string $plan_name
+     * @property string $plan_price
+     * @property int $plan_bandwidth
+     * @property mixed $plan_tax_type
      * @property string|null $description
      * @property string|null $accepted_at
      * @property string|null $payed_at
+     * @property \Illuminate\Support\Carbon|null $payment_month
      * @property \Illuminate\Support\Carbon|null $deleted_at
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property-read \App\Models\Client|null $client
      * @property-read \App\Models\Plan|null $plan
      * @property-read \App\Models\Reseller|null $reseller
+     * @property-read \Bavix\Wallet\Models\Transaction|null $transaction
      *
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill onlyTrashed()
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill query()
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill whereAcceptedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill whereBalance($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill whereAmount($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill whereBillPhoto($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill whereClientId($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill whereClientName($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill whereDeletedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill whereDescription($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill whereGrandTotal($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill whereInvoiceId($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill wherePayedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill wherePaymentMonth($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill wherePlanBandwidth($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill wherePlanId($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill wherePlanName($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill wherePlanPrice($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill wherePlanTaxType($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill whereResellerId($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill whereResellerName($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill whereTax($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill whereTransactionId($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill whereType($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill withTrashed()
@@ -333,6 +348,8 @@ namespace App\Models{
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Permission> $permissions
      * @property-read int|null $permissions_count
      * @property-read \App\Models\Reseller|null $reseller
+     * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Reseller> $resellers
+     * @property-read int|null $resellers_count
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Role> $roles
      * @property-read int|null $roles_count
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Session> $sessions
