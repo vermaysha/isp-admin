@@ -10,7 +10,6 @@ class AuthController extends Controller
     /**
      * Show login page
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function login(Request $request)
@@ -27,7 +26,6 @@ class AuthController extends Controller
     /**
      * Handle an authentication attempt.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function authenticate(Request $request)
@@ -51,7 +49,6 @@ class AuthController extends Controller
    /**
     * Handle an authentication attempt.
     *
-    * @param  \Illuminate\Http\Request  $request
     * @return \Illuminate\Http\Response
     */
    public function signup(Request $request)
@@ -68,7 +65,6 @@ class AuthController extends Controller
     /**
      * Handle logout process
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function logout(Request $request)
