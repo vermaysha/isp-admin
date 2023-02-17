@@ -11,7 +11,6 @@ class ClientController extends Controller
     /**
      * Show all data of clients
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)

@@ -17,7 +17,6 @@ class BillController extends Controller
     /**
      * Outstanding balance bill
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function outstanding(Request $request)
@@ -41,7 +40,6 @@ class BillController extends Controller
     /**
      * Paid bill but not confirmed
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function paid(Request $request)
@@ -65,7 +63,6 @@ class BillController extends Controller
     /**
      * Bill has been paid and confirmed
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function paidOff(Request $request)
@@ -89,7 +86,6 @@ class BillController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
@@ -107,7 +103,6 @@ class BillController extends Controller
     /**
      * Get bill
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function bills(Request $request)
@@ -124,9 +119,6 @@ class BillController extends Controller
 
     /**
      * Get all data
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     private function _getTransactions(Request $request): Builder
     {
@@ -146,7 +138,6 @@ class BillController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -170,7 +161,6 @@ class BillController extends Controller
     /**
      * Confirm bill
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

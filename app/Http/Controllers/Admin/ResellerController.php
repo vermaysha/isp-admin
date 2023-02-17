@@ -22,7 +22,6 @@ class ResellerController extends Controller
     /**
      * Show all data of reseller
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
@@ -40,7 +39,6 @@ class ResellerController extends Controller
     /**
      * Show detail data of reseller
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function detail(Request $request, string $id)
@@ -70,7 +68,6 @@ class ResellerController extends Controller
     /**
      * Show create data form
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request)
@@ -81,7 +78,6 @@ class ResellerController extends Controller
     /**
      * Store data process
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
