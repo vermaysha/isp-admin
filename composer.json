@@ -61,11 +61,11 @@
         ],
         "format": [
             "./vendor/bin/pint",
-            "./node_modules/.bin/blade-formatter --write resources/**/*.blade.php"
+            "npx blade-formatter --write resources/views/**/**/**/**/**/*.blade.php"
         ],
         "lint": [
             "./vendor/bin/pint --test",
-            "./node_modules/.bin/blade-formatter resources/**/*.blade.php -c"
+            "npx blade-formatter -c resources/views/**/**/**/**/**/*.blade.php"
         ],
         "ide-helper": [
             "./vendor/bin/sail artisan ide-helper:generate -q",
