@@ -1,5 +1,8 @@
 {
   "*.php": [
-      "./vendor/bin/pint"
+    "./vendor/bin/pint"
+  ],
+  "*.blade.php": [
+    "./node_modules/.bin/blade-formatter --write"
   ]
 }

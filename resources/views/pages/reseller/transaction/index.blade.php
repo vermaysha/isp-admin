@@ -23,7 +23,7 @@
                                     <th scope="col">Nilai</th>
                                     <th scope="col" class="text-center">Pembayaran Bulan</th>
                                     @if ($transaction_type !== 'outstanding')
-                                    <th scope="col" class="text-center">Dibayar Tanggal</th>
+                                        <th scope="col" class="text-center">Dibayar Tanggal</th>
                                     @endif
                                     {{-- <th scope="col" class="text-center">Dikonfirmasi</th> --}}
                                 </tr>
@@ -58,9 +58,10 @@
                 },
                 stateSave: true,
                 pagingType: 'simple_numbers',
-                order: [[0, 'desc']],
-                columns: [
-                    {
+                order: [
+                    [0, 'desc']
+                ],
+                columns: [{
                         data: 'id',
                         name: 'id',
                         orderable: true,
@@ -86,7 +87,8 @@
                         orderable: true,
                         className: 'align-middle',
                         render: (data, type, row, meta) => {
-                            const photoUrl = row.client.user.photo ?? 'assets/brand/GMDP_100x100.png'
+                            const photoUrl = row.client.user.photo ??
+                                'assets/brand/GMDP_100x100.png'
                             return `<a href="{{ route('business.clientMenu.detail') }}/${row.client_id}">
                                 <img alt="${row.client.user.fullname ?? row.client_name}"
                                     src="{{ asset('') }}${photoUrl}"
@@ -126,18 +128,18 @@
                         }
                     },
                     @if ($transaction_type !== 'outstanding')
-                    {
-                        data: 'created_at_formated',
-                        name: 'created_at',
-                        className: 'text-center',
-                        searchable: false,
-                        orderable: true,
-                        render: (data, type, row, meta) => {
-                            return `<span class="badge badge-pills bg-success">
+                        {
+                            data: 'created_at_formated',
+                            name: 'created_at',
+                            className: 'text-center',
+                            searchable: false,
+                            orderable: true,
+                            render: (data, type, row, meta) => {
+                                return `<span class="badge badge-pills bg-success">
                                 ${data}
                             </span>`;
-                        }
-                    },
+                            }
+                        },
                     @endif
                     // {
                     //     data: 'accepted_at',

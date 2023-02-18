@@ -11,7 +11,8 @@
                 <div class="card-header">
                     <strong>Pelanggan</strong>
                 </div>
-                <form action="{{ route('business.clientMenu.update', ['id' => $client->id]) }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('business.clientMenu.update', ['id' => $client->id]) }}" method="post"
+                    enctype="multipart/form-data">
                     @csrf
                     <div class="card-body p-4">
                         @if ($errors->any())
@@ -46,7 +47,8 @@
                             <div class="col-md-6 mb-3">
                                 <label class="form-label" for="phone_number">Nomor Telepon</label>
                                 <input type="text" name="phone_number" id="phone_number" class="form-control"
-                                    value="{{ old('phone_number') ?? $client->user->phone_number }}" placeholder="Masukan nomor telepon (opsional)">
+                                    value="{{ old('phone_number') ?? $client->user->phone_number }}"
+                                    placeholder="Masukan nomor telepon (opsional)">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="birth" class="form-label">Tanggal Lahir</label>
@@ -68,12 +70,13 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="photo" class="form-label">Foto</label>
-                                <input type="file" accept="image/*" name="photo" id="photo"
-                                    class="form-control" onchange="preview(event, 'imgOwner')">
+                                <input type="file" accept="image/*" name="photo" id="photo" class="form-control"
+                                    onchange="preview(event, 'imgOwner')">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <span class="mb-2 d-block">Pratinjau Gambar</span>
-                                <img id="imgOwner" src="{{  asset($client->user->photo) ?? 'https://via.placeholder.com/200?text=Pratinjau Gambar' }}"
+                                <img id="imgOwner"
+                                    src="{{ asset($client->user->photo) ?? 'https://via.placeholder.com/200?text=Pratinjau Gambar' }}"
                                     class="img-fluid img-thumbnail" />
                             </div>
                         </fieldset>
@@ -90,7 +93,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-md-6 mb-3">                                 {{-- todo --}}
+                            <div class="col-md-6 mb-3"> {{-- todo --}}
                                 <label class="mb-2">Apakah User PPN ?</label>
                                 <div class="form-check form-switch form-switch-lg">
                                     <input class="form-check-input" type="checkbox" name="is_ppn" id="is_ppn"

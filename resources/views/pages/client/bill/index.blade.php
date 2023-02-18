@@ -22,8 +22,8 @@
                                     <th scope="col">Nilai</th>
                                     <th scope="col" class="text-center">Pembayaran Bulan</th>
                                     @if ($type !== 'outstanding')
-                                    <th scope="col" class="text-center">Dibayar Tanggal</th>
-                                    <th scope="col">Status</th>
+                                        <th scope="col" class="text-center">Dibayar Tanggal</th>
+                                        <th scope="col">Status</th>
                                     @endif
                                     {{-- <th scope="col" class="text-center">Dikonfirmasi</th> --}}
                                 </tr>
@@ -58,9 +58,10 @@
                 },
                 stateSave: true,
                 pagingType: 'simple_numbers',
-                order: [[0, 'desc']],
-                columns: [
-                    {
+                order: [
+                    [0, 'desc']
+                ],
+                columns: [{
                         data: 'id',
                         name: 'id',
                         orderable: true,
@@ -88,11 +89,11 @@
                     //     render: (data, type, row, meta) => {
                     //         const photoUrl = row.client.user.photo ?? 'assets/brand/GMDP_100x100.png'
                     //         return `<a href="{{ route('business.clientMenu.detail') }}/${row.client_id}">
-                    //             <img alt="${row.client.user.fullname ?? row.client_name}"
-                    //                 src="{{ asset('') }}${photoUrl}"
-                    //                 class="img-thumbnail rounded-circle" style="width: 60px">
-                    //             <span class="ms-2">${row.client.user.fullname}</span>
-                    //         </a>`;
+                //             <img alt="${row.client.user.fullname ?? row.client_name}"
+                //                 src="{{ asset('') }}${photoUrl}"
+                //                 class="img-thumbnail rounded-circle" style="width: 60px">
+                //             <span class="ms-2">${row.client.user.fullname}</span>
+                //         </a>`;
                     //     }
                     // },
                     {
@@ -103,8 +104,8 @@
                         render: (data, type, row, meta) => {
                             return data
                             // return `<a href="{{ route('business.planMenu.detail') }}/${row.plan_id}">
-                            //     ${row.plan_name}
-                            // </a>`;
+                        //     ${row.plan_name}
+                        // </a>`;
                         }
                     },
                     {
@@ -127,40 +128,39 @@
                         }
                     },
                     @if ($type !== 'outstanding')
-                    {
-                        data: 'payed_at_formated',
-                        name: 'payed_at',
-                        className: 'text-center',
-                        searchable: false,
-                        orderable: true,
-                        render: (data, type, row, meta) => {
-                            return `<span class="badge badge-pills bg-success">
+                        {
+                            data: 'payed_at_formated',
+                            name: 'payed_at',
+                            className: 'text-center',
+                            searchable: false,
+                            orderable: true,
+                            render: (data, type, row, meta) => {
+                                return `<span class="badge badge-pills bg-success">
                                 ${data}
                             </span>`;
-                        }
-                    },
-                    {
-                        data: null,
-                        name: null,
-                        className: 'text-center',
-                        searchable: false,
-                        orderable: false,
-                        render: (data, type, row, meta) => {
-                            if (row.payed_at == null && row.accepted_at == null) {
-                                return `<span class="badge badge-pills bg-danger">
+                            }
+                        }, {
+                            data: null,
+                            name: null,
+                            className: 'text-center',
+                            searchable: false,
+                            orderable: false,
+                            render: (data, type, row, meta) => {
+                                if (row.payed_at == null && row.accepted_at == null) {
+                                    return `<span class="badge badge-pills bg-danger">
                                     Belum Dibayar
                                 </span>`;
-                            } else if (row.payed_at != null && row.accepted_at == null) {
-                                return `<span class="badge badge-pills bg-warning">
+                                } else if (row.payed_at != null && row.accepted_at == null) {
+                                    return `<span class="badge badge-pills bg-warning">
                                     Belum Dikonfirmasi
                                 </span>`;
-                            } else {
-                                return `<span class="badge badge-pills bg-success">
+                                } else {
+                                    return `<span class="badge badge-pills bg-success">
                                     Selesai
                                 </span>`;
+                                }
                             }
-                        }
-                    },
+                        },
                     @endif
                     // {
                     //     data: 'accepted_at',

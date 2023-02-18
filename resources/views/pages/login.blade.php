@@ -44,28 +44,32 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-12 d-grid gap-2">
-                                            <button class="btn rounded-pill btn-outline-info px-4" type="submit">Login</button>
+                                            <button class="btn rounded-pill btn-outline-info px-4"
+                                                type="submit">Login</button>
                                         </div>
                                         <div class="mb-4"> </div>
                                         <div class="col-6">
                                             <button class="btn btn-link btn-sm px-0" type="button">Lupa Password?</button>
                                         </div>
                                         <div class="col-6 text-end">
-                                            <a href="{{ route('signup') }}"><button class="btn btn-link btn-sm px-0" type="button">Daftar Akun</button></a>
+                                            <a href="{{ route('signup') }}"><button class="btn btn-link btn-sm px-0"
+                                                    type="button">Daftar Akun</button></a>
                                         </div>
                                     </div>
                                 </form>
                             </div>
-                            <p class="text-medium-emphasis font-monospace mb-0" style="font-size: 75%">* Pendaftaran Akun Hanya Untuk Reseller</p>
+                            <p class="text-medium-emphasis font-monospace mb-0" style="font-size: 75%">* Pendaftaran Akun
+                                Hanya Untuk Reseller</p>
                         </div>
                         <div class="card col-md-5 text-white bg-gradient bg-dark py-5">
                             <div class="card-body text-center">
                                 <div>
-                                    <img src="{{ mix('assets/brand/GMDP_full.png') }}"  style="width: 150px">       {{-- edit --}}
+                                    <img src="{{ mix('assets/brand/GMDP_full.png') }}" style="width: 150px">
+                                    {{-- edit --}}
                                 </div>
-                                    <div class="mb-4"> </div>
-                                    <h4 class="fs-2">GMDP eBILLING</h4>
-                                    <p>Sistem Administrasi dan Pembayaran</p>
+                                <div class="mb-4"> </div>
+                                <h4 class="fs-2">GMDP eBILLING</h4>
+                                <p>Sistem Administrasi dan Pembayaran</p>
                             </div>
                             <p class="text-center fs-5 fw-light">PT.Global Media Data Prima</p>
                         </div>

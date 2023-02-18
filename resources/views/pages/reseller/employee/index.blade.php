@@ -5,42 +5,44 @@
 @endsection
 
 @section('content')
-<div class="container-lg">
-    <div class="row g-0">
-        <div class="card">
-            <div class="card-header">
-                <strong>Paket</strong>
-            </div>
-            <div class="card-body py-4">
-                <div class="d-flex justify-content-between mb-3">
-                    <div class="px-3">
-                        <a href="{{ route('business.employeeMenu.create') }}" class="btn btn-primary btn-outline">Tambah Karyawan</a>
-                    </div>
+    <div class="container-lg">
+        <div class="row g-0">
+            <div class="card">
+                <div class="card-header">
+                    <strong>Paket</strong>
                 </div>
-                @if (session('status'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <strong>Berhasil!</strong> {{ session('status') }}
-                        <button type="button" class="btn-close" data-coreui-dismiss="alert" aria-label="Close"></button>
+                <div class="card-body py-4">
+                    <div class="d-flex justify-content-between mb-3">
+                        <div class="px-3">
+                            <a href="{{ route('business.employeeMenu.create') }}" class="btn btn-primary btn-outline">Tambah
+                                Karyawan</a>
+                        </div>
                     </div>
+                    @if (session('status'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>Berhasil!</strong> {{ session('status') }}
+                            <button type="button" class="btn-close" data-coreui-dismiss="alert"
+                                aria-label="Close"></button>
+                        </div>
                     @endif
-                <div class="table-responsive p-2">
-                    <table class="table table-hover align-middle custom-table" id="staffTable">
-                        <thead class="align-middle">
-                            <tr>
-                              <th scope="col">#</th>
-                              <th scope="col">Nama</th>
-                              <th scope="col">Jabatan</th>
-                              <th scope="col">Nomor Telepon</th>
-                              <th scope="col">Alamat</th>
-                              <th scope="col">Tanggal Pendaftaran</th>
-                            </tr>
-                          </thead>
-                    </table>
+                    <div class="table-responsive p-2">
+                        <table class="table table-hover align-middle custom-table" id="staffTable">
+                            <thead class="align-middle">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nama</th>
+                                    <th scope="col">Jabatan</th>
+                                    <th scope="col">Nomor Telepon</th>
+                                    <th scope="col">Alamat</th>
+                                    <th scope="col">Tanggal Pendaftaran</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 @endsection
 
 @section('stylesheet')
@@ -61,11 +63,12 @@
                 language: {
                     url: '{{ asset('/js/datatable-id.json') }}',
                 },
-                order: [[0, 'asc']],
+                order: [
+                    [0, 'asc']
+                ],
                 stateSave: true,
                 pagingType: 'simple_numbers',
-                columns: [
-                    {
+                columns: [{
                         data: 'id',
                         name: 'id',
                         searchable: false,
@@ -100,7 +103,8 @@
                             if (data[0].name == {{ Js::from(App\Models\Role::RESELLER_ADMIN) }}) {
                                 return `<span class="badge badge-pills bg-info">Admin Usaha</span>`
                             }
-                            if (data[0].name == {{ Js::from(App\Models\Role::RESELLER_TECHNICIAN) }}) {
+                            if (data[0].name ==
+                                {{ Js::from(App\Models\Role::RESELLER_TECHNICIAN) }}) {
                                 return `<span class="badge badge-pills bg-warning">Teknisi Usaha</span>`
                             }
                             return data[0].name;

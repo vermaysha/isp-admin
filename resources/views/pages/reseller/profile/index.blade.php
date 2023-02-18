@@ -5,17 +5,17 @@
 @endsection
 
 @section('content')
-<div class="container-lg">
+    <div class="container-lg">
         <div class="row g-0 mb-4">
             <div class="card">
                 <div class="card-header">
                     <strong>Profile Reseller</strong>
                 </div>
                 <div class="card-body py-4">
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <strong>Galat!</strong>
-                                <button type="button" class="btn-close" data-coreui-dismiss="alert" aria-label="Close"></button>
-                            </div>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Galat!</strong>
+                        <button type="button" class="btn-close" data-coreui-dismiss="alert" aria-label="Close"></button>
+                    </div>
                     <form action="" method="post" class="px-4" autocomplete="off" enctype="multipart/form-data">
                         @csrf
                         <fieldset class="border row p-3 mb-4 rounded-2">
@@ -31,7 +31,8 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label" for="phoneNumber">Nomor Telepon Reseller</label>
-                                <input type="text" name="phoneNumber" id="phoneNumber" class="form-control" value="">
+                                <input type="text" name="phoneNumber" id="phoneNumber" class="form-control"
+                                    value="">
                             </div>
                             <div class="col-md-12 mb-3">
                                 <label for="address" class="form-label">Alamat Lengkap Reseller</label>
@@ -52,15 +53,18 @@
                             <legend class="float-none w-auto px-4">Informasi Owner</legend>
                             <div class="col-md-12 mb-3">
                                 <label for="owner_fullname" class="form-label">Nama Lengkap</label>
-                                <input type="text" name="owner_fullname" id="owner_fullname" class="form-control" value="">
+                                <input type="text" name="owner_fullname" id="owner_fullname" class="form-control"
+                                    value="">
                             </div>
                             <div class="col-md-12 mb-3">
                                 <label for="owner_email" class="form-label">Email Owner</label>
-                                <input type="email" name="owner_email" id="owner_email" class="form-control" value="">
+                                <input type="email" name="owner_email" id="owner_email" class="form-control"
+                                    value="">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="owner_birth" class="form-label">Tanggal Lahir</label>
-                                <input type="date" name="owner_birth" id="owner_birth" class="form-control" value="{{ old('owner_birth') }}">
+                                <input type="date" name="owner_birth" id="owner_birth" class="form-control"
+                                    value="{{ old('owner_birth') }}">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="owner_gender" class="form-label">Jenis Kelamin</label>
@@ -74,7 +78,7 @@
                                 <label for="owner_address" class="form-label">Alamat Lengkap Owner</label>
                                 <textarea name="owner_address" id="owner_address" class="form-control" rows="5"></textarea>
                             </div>
-                            <div class="col-md-12 mb-3">        {{-- edit lagi --}}
+                            <div class="col-md-12 mb-3"> {{-- edit lagi --}}
                                 <label for="owner_photo" class="form-label">Dokumen Registrasi</label>
                                 <input type="file" accept="all/*" name="owner_photo" id="owner_photo"
                                     class="form-control" onchange="preview(event, 'imgOwner')">

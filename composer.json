@@ -60,10 +60,12 @@
             "@php artisan key:generate --ansi"
         ],
         "format": [
-            "./vendor/bin/pint"
+            "./vendor/bin/pint",
+            "npx blade-formatter --write resources/views/**/**/**/**/**/*.blade.php"
         ],
         "lint": [
-            "./vendor/bin/pint --test"
+            "./vendor/bin/pint --test",
+            "npx blade-formatter -c resources/views/**/**/**/**/**/*.blade.php"
         ],
         "ide-helper": [
             "./vendor/bin/sail artisan ide-helper:generate -q",

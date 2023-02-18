@@ -88,12 +88,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-footer d-flex {{ $staff->id !== Auth::id() ? 'justify-content-between' : 'justify-content-end' }}">
+                <div
+                    class="card-footer d-flex {{ $staff->id !== Auth::id() ? 'justify-content-between' : 'justify-content-end' }}">
                     @if ($staff->id !== Auth::id())
-                    <button type="button" class="btn btn-danger text-white" data-coreui-toggle="modal"
-                        data-coreui-target="#deleteModal">
-                        Hapus Pegawai
-                    </button>
+                        <button type="button" class="btn btn-danger text-white" data-coreui-toggle="modal"
+                            data-coreui-target="#deleteModal">
+                            Hapus Pegawai
+                        </button>
                     @endif
                     <a href="{{ route('business.employeeMenu.edit', ['id' => $staff->id]) }}"
                         class="text-white btn btn-info">Edit Pegawai</a>
@@ -115,7 +116,8 @@
                 </div>
                 <div class="modal-footer d-flex justify-content-between">
                     <button type="button" class="btn btn-success text-white" data-coreui-dismiss="modal">TIDAK</button>
-                    <a href="{{ route('business.employeeMenu.delete', ['id' => $staff->id]) }}" class="btn btn-danger text-white">YA</a>
+                    <a href="{{ route('business.employeeMenu.delete', ['id' => $staff->id]) }}"
+                        class="btn btn-danger text-white">YA</a>
                 </div>
             </div>
         </div>

@@ -86,10 +86,8 @@
                             <div class="fs-4 fw-semibold">{{ $upTime }}</div>
                             <div>Server Uptime</div>
                             <div class="progress progress-thin my-2">
-                                <div class="progress-bar bg-success" role="progressbar"
-                                    style="width: 100%"
-                                    aria-valuenow="0" aria-valuemin="0"
-                                    aria-valuemax="100"></div>
+                                <div class="progress-bar bg-success" role="progressbar" style="width: 100%"
+                                    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                             {{-- <small class="text-medium-emphasis-inverse">Widget helper text</small> --}}
                         </div>
@@ -190,24 +188,28 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($mitras as $mitra)
-                                    <tr>
-                                        <td class="text-center">
-                                            <div class="avatar avatar-md">
-                                                <img alt="{{ $mitra->user->fullname }}" src="{{ asset($mitra->user->photo ?? 'assets/brand/GMDP_100x100.png') }}" class="avatar-img">
-                                        </td>
-                                        <td>
-                                            <div class="fw-semibold text-center">{{ $mitra->user->fullname }}</div>
-                                            <div class="small text-medium-emphasis text-center">Aktif sejak {{ $mitra->created_at->isoFormat('dddd, D MMMM g') }}
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="fw-semibold text-center">{{ $mitra->user->address }}</div>
-                                            <div class="small text-medium-emphasis text-center">{{ $mitra->user->phone_number }}</div>
-                                        </td>
-                                        <td>
-                                            <div class="fw-bold text-center">{{ $mitra->clients_count }}</div>
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td class="text-center">
+                                                <div class="avatar avatar-md">
+                                                    <img alt="{{ $mitra->user->fullname }}"
+                                                        src="{{ asset($mitra->user->photo ?? 'assets/brand/GMDP_100x100.png') }}"
+                                                        class="avatar-img">
+                                            </td>
+                                            <td>
+                                                <div class="fw-semibold text-center">{{ $mitra->user->fullname }}</div>
+                                                <div class="small text-medium-emphasis text-center">Aktif sejak
+                                                    {{ $mitra->created_at->isoFormat('dddd, D MMMM g') }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="fw-semibold text-center">{{ $mitra->user->address }}</div>
+                                                <div class="small text-medium-emphasis text-center">
+                                                    {{ $mitra->user->phone_number }}</div>
+                                            </td>
+                                            <td>
+                                                <div class="fw-bold text-center">{{ $mitra->clients_count }}</div>
+                                            </td>
+                                        </tr>
                                     @endforeach
                                 </tbody>
                             </table>

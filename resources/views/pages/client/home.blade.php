@@ -27,8 +27,11 @@
                             <i class="icon icon-xl cil-chart-line"></i>
                         </div>
                         <div>
-                            <div class="fs-6 fw-semibold {{ $bill ? 'text-warning' : 'text-success' }}">{{ $bill->grand_total_formated ?? 'Lunas' }}</div>
-                            <div class="text-medium-emphasis text-uppercase fw-semibold small">Tagihan Bulan {{ $bill?->payment_month?->isoFormat('MMMM') ?? now()->setDay(1)->subMonth()->isoFormat('MMMM') }}</div>
+                            <div class="fs-6 fw-semibold {{ $bill ? 'text-warning' : 'text-success' }}">
+                                {{ $bill->grand_total_formated ?? 'Lunas' }}</div>
+                            <div class="text-medium-emphasis text-uppercase fw-semibold small">Tagihan Bulan
+                                {{ $bill?->payment_month?->isoFormat('MMMM') ??now()->setDay(1)->subMonth()->isoFormat('MMMM') }}
+                            </div>
                         </div>
                     </div>
                 </div>

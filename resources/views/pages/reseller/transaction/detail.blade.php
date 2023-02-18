@@ -180,7 +180,7 @@
         </div>
     </div>
 
-    @if ($transaction->payed_at  && empty($transaction->accepted_at))
+    @if ($transaction->payed_at && empty($transaction->accepted_at))
         <div class="modal fade" id="billPhoto" data-coreui-backdrop="static" data-coreui-keyboard="false" tabindex="-1"
             aria-labelledby="billPhotoLabel" aria-hidden="true">
             <div class="modal-dialog">
