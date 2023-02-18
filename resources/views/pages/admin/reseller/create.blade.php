@@ -16,7 +16,8 @@
                         @foreach ($errors->all() as $error)
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                 <strong>Galat!</strong> {{ $error }}
-                                <button type="button" class="btn-close" data-coreui-dismiss="alert" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-coreui-dismiss="alert"
+                                    aria-label="Close"></button>
                             </div>
                         @endforeach
                     @endif
@@ -31,11 +32,13 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label" for="email">Email Reseller</label>
-                                <input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}">
+                                <input type="email" name="email" id="email" class="form-control"
+                                    value="{{ old('email') }}">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label" for="phoneNumber">Nomor Telepon Reseller</label>
-                                <input type="text" name="phoneNumber" id="phoneNumber" class="form-control" value="{{ old('phoneNumber') }}">
+                                <input type="text" name="phoneNumber" id="phoneNumber" class="form-control"
+                                    value="{{ old('phoneNumber') }}">
                             </div>
                             <div class="col-md-12 mb-3">
                                 <label for="address" class="form-label">Alamat Lengkap Reseller</label>
@@ -43,11 +46,13 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="contractStartDate" class="form-label">Tanggal Mulai Kontrak</label>
-                                <input type="date" name="contractStartDate" id="contractStartDate" class="form-control" value="{{ old('contractStartDate') }}">
+                                <input type="date" name="contractStartDate" id="contractStartDate" class="form-control"
+                                    value="{{ old('contractStartDate') }}">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="contractEndDate" class="form-label">Tanggal Berakhir Kontrak</label>
-                                <input type="date" name="contractEndDate" id="contractEndDate" class="form-control" value="{{ old('contractEndDate') }}">
+                                <input type="date" name="contractEndDate" id="contractEndDate" class="form-control"
+                                    value="{{ old('contractEndDate') }}">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="logo" class="form-label">Logo</label>
@@ -64,18 +69,21 @@
                             <legend class="float-none w-auto px-4">Informasi Owner</legend>
                             <div class="col-md-12 mb-3">
                                 <label for="owner_fullname" class="form-label">Nama Lengkap</label>
-                                <input type="text" name="owner_fullname" id="owner_fullname" class="form-control" value="{{ old('owner_fullname') }}">
+                                <input type="text" name="owner_fullname" id="owner_fullname" class="form-control"
+                                    value="{{ old('owner_fullname') }}">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="owner_username" class="form-label">Username Sistem</label>
                                 <div class="input-group">
                                     <span class="input-group-text">@</span>
-                                    <input type="text" name="owner_username" id="owner_username" class="form-control" value="{{ old('owner_username') }}">
+                                    <input type="text" name="owner_username" id="owner_username" class="form-control"
+                                        value="{{ old('owner_username') }}">
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="owner_email" class="form-label">Email Owner</label>
-                                <input type="email" name="owner_email" id="owner_email" class="form-control" value="{{ old('owner_email') }}">
+                                <input type="email" name="owner_email" id="owner_email" class="form-control"
+                                    value="{{ old('owner_email') }}">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="owner_password" class="form-label">Kata Sandi Sistem</label>
@@ -83,12 +91,13 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="owner_password_confirmation" class="form-label">Konfirmasi Kata Sandi</label>
-                                <input type="password" name="owner_password_confirmation" id="owner_password_confirmation"
-                                    class="form-control">
+                                <input type="password" name="owner_password_confirmation"
+                                    id="owner_password_confirmation" class="form-control">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="owner_birth" class="form-label">Tanggal Lahir</label>
-                                <input type="date" name="owner_birth" id="owner_birth" class="form-control" value="{{ old('owner_birth') }}">
+                                <input type="date" name="owner_birth" id="owner_birth" class="form-control"
+                                    value="{{ old('owner_birth') }}">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="owner_gender" class="form-label">Jenis Kelamin</label>
@@ -102,7 +111,7 @@
                                 <label for="owner_address" class="form-label">Alamat Lengkap Owner</label>
                                 <textarea name="owner_address" id="owner_address" class="form-control" rows="5">{{ old('owner_address') }}</textarea>
                             </div>
-                            <div class="col-md-12 mb-3">        {{-- edit lagi --}}
+                            <div class="col-md-12 mb-3"> {{-- edit lagi --}}
                                 <label for="owner_photo" class="form-label">Dokumen Registrasi</label>
                                 <input type="file" accept="all/*" name="owner_photo" id="owner_photo"
                                     class="form-control" onchange="preview(event, 'imgOwner')">

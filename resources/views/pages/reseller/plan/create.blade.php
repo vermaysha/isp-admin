@@ -66,7 +66,8 @@
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="tax_type" value="{{ App\Models\Plan::TAX_EXCLUDED }}">
+                                        <input class="form-check-input" type="radio" name="tax_type"
+                                            value="{{ App\Models\Plan::TAX_EXCLUDED }}">
                                         Belum termasuk
                                     </label>
                                 </div>
@@ -83,7 +84,8 @@
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="subscription" disabled value="{{ App\Models\Plan::SUBSCRIPTION_POSTPAID }}">
+                                        <input class="form-check-input" type="radio" name="subscription" disabled
+                                            value="{{ App\Models\Plan::SUBSCRIPTION_POSTPAID }}">
                                         Prabayar
                                     </label>
                                 </div>

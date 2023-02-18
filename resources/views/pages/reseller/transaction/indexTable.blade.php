@@ -21,7 +21,7 @@
                 <td>
                     <a href="{{ route('business.clientMenu.detail', ['id' => $bill->client_id]) }}">
                         <img alt="{{ $bill->client->user->fullname ?? $bill->client_name }}"
-                            src="{{ asset($bill->client->user->photo ?? $bill->client_name ?? 'assets/brand/GMDP_100x100.png') }}"
+                            src="{{ asset($bill->client->user->photo ?? ($bill->client_name ?? 'assets/brand/GMDP_100x100.png')) }}"
                             class="img-thumbnail rounded-circle" style="width: 60px">
                         <span class="ms-2">{{ $bill->client->user->fullname }}</span>
                     </a>

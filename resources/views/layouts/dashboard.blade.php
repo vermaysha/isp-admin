@@ -30,7 +30,7 @@
             {{-- Admin --}}
             {{-- reference: https://spatie.be/docs/laravel-permission/v5/basic-usage/blade-directives --}}
             @hasanyrole(\App\Models\Role::ADMIN)
-            <li class="nav-title">Data Master</li>
+                <li class="nav-title">Data Master</li>
                 <li class="nav-item">
                     <a class="nav-link {{ Request::route()->getName() == 'admin.reseller' ? 'active' : '' }}"
                         href="{{ route('admin.resellerMenu.index') }}">
@@ -63,7 +63,7 @@
             {{-- Reseller_Owner --}}
             {{-- reference: https://spatie.be/docs/laravel-permission/v5/basic-usage/blade-directives --}}
             @hasanyrole(\App\Models\Role::RESELLER_OWNER)
-            <li class="nav-title">Data Master</li>
+                <li class="nav-title">Data Master</li>
                 <li class="nav-item">
                     <a class="nav-link {{ Request::route()->getName() == 'business.clientMenu.index' ? 'active' : '' }}"
                         href="{{ route('business.clientMenu.index') }}">
@@ -101,31 +101,31 @@
                 </li> --}}
 
 
-            <li class="nav-title">Data Tagihan</li>
+                <li class="nav-title">Data Tagihan</li>
 
-            <li
-                class="nav-item {{ Str::contains(Request::route()->getName(), ['business.billMenu.paidOff', 'business.billMenu.paid', 'business.billMenu.outstanding']) ? 'show' : '' }}">
-                <a class="nav-link" href="{{ route('business.billMenu.outstanding') }}">
-                    <i class="nav-icon cil cil-chart"></i>
-                    Tagihan Terhutang
-                    @if ($totalOutstandingBill)
-                        <span class="badge badge-pills bg-danger ms-auto badge-sm">{{ $totalOutstandingBill }}</span>
-                    @endif
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('business.billMenu.paid') }}">
-                    <i class="nav-icon cil cil-chart-line"></i>
-                    Tagihan dibayar
-                    @if ($totalPaidBill)
-                        <span class="badge badge-pills bg-info ms-auto badge-sm">{{ $totalPaidBill }}</span>
-                    @endif
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('business.billMenu.paidOff') }}">
-                    <i class="nav-icon cil cil-chart-pie"></i> Tagihan Selesai</a>
-            </li>
+                <li
+                    class="nav-item {{ Str::contains(Request::route()->getName(), ['business.billMenu.paidOff', 'business.billMenu.paid', 'business.billMenu.outstanding']) ? 'show' : '' }}">
+                    <a class="nav-link" href="{{ route('business.billMenu.outstanding') }}">
+                        <i class="nav-icon cil cil-chart"></i>
+                        Tagihan Terhutang
+                        @if ($totalOutstandingBill)
+                            <span class="badge badge-pills bg-danger ms-auto badge-sm">{{ $totalOutstandingBill }}</span>
+                        @endif
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('business.billMenu.paid') }}">
+                        <i class="nav-icon cil cil-chart-line"></i>
+                        Tagihan dibayar
+                        @if ($totalPaidBill)
+                            <span class="badge badge-pills bg-info ms-auto badge-sm">{{ $totalPaidBill }}</span>
+                        @endif
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('business.billMenu.paidOff') }}">
+                        <i class="nav-icon cil cil-chart-pie"></i> Tagihan Selesai</a>
+                </li>
             @endhasanyrole
 
             {{-- @hasanyrole(\App\Models\Role::RESELLER_ADMIN)
@@ -165,27 +165,27 @@
             @endhasanyrole --}}
 
             @hasanyrole(\App\Models\Role::CLIENT)
-            <li class="nav-title">Data Tagihan</li>
-            <li class="nav-item">
-                <a class="nav-link {{ Request::route()->getName() == 'client.billMenu.outstanding' ? 'active' : '' }}"
-                    href="{{ route('client.billMenu.outstanding') }}">
-                    <i class="nav-icon cil cil-user"></i>
-                    Tagihan Terhutang
-                    @if ($totalOutstandingBill)
-                        <span class="badge badge-pills bg-danger ms-auto badge-sm">{{ $totalOutstandingBill }}</span>
-                    @endif
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {{ Request::route()->getName() == 'client.billMenu.history' ? 'active' : '' }}"
-                    href="{{ route('client.billMenu.history') }}">
-                    <i class="nav-icon cil cil-user"></i>
-                    Riwayat Tagihan
-                    @if ($totalPaidBill)
-                        <span class="badge badge-pills bg-warning ms-auto badge-sm">{{ $totalPaidBill }}</span>
-                    @endif
-                </a>
-            </li>
+                <li class="nav-title">Data Tagihan</li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::route()->getName() == 'client.billMenu.outstanding' ? 'active' : '' }}"
+                        href="{{ route('client.billMenu.outstanding') }}">
+                        <i class="nav-icon cil cil-user"></i>
+                        Tagihan Terhutang
+                        @if ($totalOutstandingBill)
+                            <span class="badge badge-pills bg-danger ms-auto badge-sm">{{ $totalOutstandingBill }}</span>
+                        @endif
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::route()->getName() == 'client.billMenu.history' ? 'active' : '' }}"
+                        href="{{ route('client.billMenu.history') }}">
+                        <i class="nav-icon cil cil-user"></i>
+                        Riwayat Tagihan
+                        @if ($totalPaidBill)
+                            <span class="badge badge-pills bg-warning ms-auto badge-sm">{{ $totalPaidBill }}</span>
+                        @endif
+                    </a>
+                </li>
                 {{-- <li class="nav-item">
                     <a class="nav-link {{ Request::route()->getName() == 'client.invoiceMenu.index' ? 'active' : '' }}"
                         href="{{ route('client.invoiceMenu.index') }}">
