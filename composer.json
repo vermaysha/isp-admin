@@ -60,10 +60,12 @@
             "@php artisan key:generate --ansi"
         ],
         "format": [
-            "./vendor/bin/pint"
+            "./vendor/bin/pint",
+            "./node_modules/.bin/blade-formatter --write resources/**/*.blade.php"
         ],
         "lint": [
-            "./vendor/bin/pint --test"
+            "./vendor/bin/pint --test",
+            "./node_modules/.bin/blade-formatter resources/**/*.blade.php -c"
         ],
         "ide-helper": [
             "./vendor/bin/sail artisan ide-helper:generate -q",
