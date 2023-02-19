@@ -3,6 +3,7 @@
         "shufo.vscode-blade-formatter",
         "onecentlin.laravel-blade",
         "austenc.laravel-blade-spacer",
-        "bmewburn.vscode-intelephense-client"
+        "bmewburn.vscode-intelephense-client",
+        "xdebug.php-debug"
     ]
 }
