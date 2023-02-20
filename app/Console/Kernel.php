@@ -21,6 +21,20 @@ class Kernel extends ConsoleKernel
             ->runInBackground()
             ->withoutOverlapping()
             ->monthly();
+
+        $schedule->command('backup:clean')
+            ->runInBackground()
+            ->withoutOverlapping()
+            ->name('Auto remove all backups')
+            ->evenInMaintenanceMode()
+            ->dailyAt('00:00');
+
+        $schedule->command('backup:run', ['--only-db'])
+            ->runInBackground()
+            ->withoutOverlapping()
+            ->name('Auto backup database')
+            ->evenInMaintenanceMode()
+            ->dailyAt('00:00');
     }
 
     /**
