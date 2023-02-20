@@ -2,8 +2,6 @@
 
 namespace App\Checks;
 
-use Carbon\CarbonInterface;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Process;
 use Spatie\Health\Checks\Check;
 use Spatie\Health\Checks\Result;
@@ -20,37 +18,33 @@ class UptimeCheck extends Check
         $uptime = $this->uptime();
         $result = Result::make();
 
-        $uptimeHuman = str_replace(
-            ['before', 'ago'],
-            '',
-            $uptime->diffForHumans(
-                now(),
-                CarbonInterface::DIFF_RELATIVE_AUTO,
-                false, 6
-            )
-        );
-
-        $result->shortSummary($uptimeHuman);
+        $result->shortSummary($uptime);
 
         $result->meta([
-            'uptime_since' => $uptime->toIso8601String(),
-            'uptime' => $uptimeHuman,
+            'uptime_since' => $uptime,
+            'uptime' => $uptime,
         ]);
 
-        return $result->ok($uptimeHuman);
+        return $result->ok($uptime);
     }
 
     /**
      * Get uptime
-     *
-     * @return Illuminate\Support\Carbon
      */
-    public function uptime(): Carbon
+    public function uptime(): string
     {
-        $process = Process::run('uptime -s');
+        $process = Process::run('cat /proc/uptime');
 
         $uptime = trim($process->output());
 
-        return Carbon::parse($uptime)->locale('en');
+        $uptime = explode(' ', $uptime);
+        $uptime = $uptime[0];
+        $days = explode('.', (($uptime % 31556926) / 86400));
+        $hours = explode('.', ((($uptime % 31556926) % 86400) / 3600));
+        $minutes = explode('.', (((($uptime % 31556926) % 86400) % 3600) / 60));
+
+        $time = $days[0] . ' days ' . $hours[0] . ' hours ' . $minutes[0] . ' minutes';
+
+        return $time;
     }
 }
