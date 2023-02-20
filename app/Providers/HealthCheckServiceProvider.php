@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Checks\UptimeCheck;
 use Illuminate\Support\ServiceProvider;
 use Spatie\CpuLoadHealthCheck\CpuLoadCheck;
 use Spatie\Health\Checks\Checks\CacheCheck;
@@ -45,6 +46,7 @@ class HealthCheckServiceProvider extends ServiceProvider
             UsedDiskSpaceCheck::new()
                 ->warnWhenUsedSpaceIsAbovePercentage(70)
                 ->failWhenUsedSpaceIsAbovePercentage(95),
+            UptimeCheck::new(),
         ]);
     }
 
