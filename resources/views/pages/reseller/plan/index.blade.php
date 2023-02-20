@@ -13,9 +13,9 @@
                 </div>
                 <div class="card-body py-4">
                     <div class="d-flex justify-content-between mb-3">
-                        {{-- <div class="px-3">
-                            <input type="text" class="form-control" placeholder="Search ..">
-                        </div> --}}
+                        <div class="px-3">
+                            <a href=""> </a>
+                        </div>
                         <div class="px-3">
                             <a href="{{ route('business.planMenu.create') }}" class="btn btn-primary btn-outline">Tambah
                                 Paket</a>

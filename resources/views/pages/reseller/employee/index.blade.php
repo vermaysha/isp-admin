@@ -9,13 +9,16 @@
         <div class="row g-0">
             <div class="card">
                 <div class="card-header">
-                    <strong>Paket</strong>
+                    <strong>Pagawai</strong>
                 </div>
                 <div class="card-body py-4">
                     <div class="d-flex justify-content-between mb-3">
                         <div class="px-3">
+                            <a href=""> </a>
+                        </div>
+                        <div class="px-3">
                             <a href="{{ route('business.employeeMenu.create') }}" class="btn btn-primary btn-outline">Tambah
-                                Karyawan</a>
+                                Pegawai</a>
                         </div>
                     </div>
                     @if (session('status'))
