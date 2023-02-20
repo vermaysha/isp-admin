@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ClientController;
+use App\Http\Controllers\Admin\PasswordController;
 use App\Http\Controllers\Admin\RegisterController;
 use App\Http\Controllers\Admin\ResellerController;
 use Illuminate\Support\Facades\Route;
@@ -53,3 +54,12 @@ Route::name('registerMenu.')
     ->group(function () {
         Route::get('/', [RegisterController::class, 'index'])->name('index');
     });
+
+/**
+ * Reset Password menu
+ */
+Route::name('passwordMenu.')
+->prefix('password')
+->group(function () {
+    Route::get('/', [PasswordController::class, 'index'])->name('index');
+});
