@@ -51,11 +51,11 @@
                 <li class="nav-item">
                     <a class="nav-link {{ Request::route()->getName() == 'admin.register' ? 'active' : '' }}"
                         href="{{ route('admin.registerMenu.index') }}">
-                        <i class="nav-icon cil cil-people"></i> Pendaftaran Akun </a>
+                        <i class="nav-icon cil cil-people"></i> Pendaftaran Reseller </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::route()->getName() == 'admin.client' ? 'active' : '' }}"
-                        href="{{ route('admin.clientMenu.index') }}">
+                    <a class="nav-link {{ Request::route()->getName() == 'admin.password' ? 'active' : '' }}"
+                        href="{{ route('admin.passwordMenu.index') }}">
                         <i class="nav-icon cil cil-people"></i> Reset Password </a>
                 </li>
             @endhasanyrole
