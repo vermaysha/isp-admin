@@ -4,6 +4,9 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Spatie\Health\Commands\DispatchQueueCheckJobsCommand;
+use Spatie\Health\Commands\RunHealthChecksCommand;
+use Spatie\Health\Commands\ScheduleCheckHeartbeatCommand;
 
 class Kernel extends ConsoleKernel
 {
@@ -35,6 +38,24 @@ class Kernel extends ConsoleKernel
             ->name('Auto backup database')
             ->evenInMaintenanceMode()
             ->dailyAt('00:00');
+
+        $schedule->command(RunHealthChecksCommand::class)
+            ->runInBackground()
+            ->name('Run Health Checks')
+            ->evenInMaintenanceMode()
+            ->everyMinute();
+
+        $schedule->command(ScheduleCheckHeartbeatCommand::class)
+            ->runInBackground()
+            ->name('Run Scheduler Check')
+            ->evenInMaintenanceMode()
+            ->everyMinute();
+
+        $schedule->command(DispatchQueueCheckJobsCommand::class)
+            ->runInBackground()
+            ->name('Run Queue Checks')
+            ->evenInMaintenanceMode()
+            ->everyMinute();
     }
 
     /**
