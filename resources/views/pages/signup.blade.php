@@ -32,7 +32,7 @@
                                         <div class="col-md-12 mb-2">
                                             <label class="form-label" for="email">Email Reseller</label>
                                             <input type="email" name="email" id="email" class="form-control"
-                                                placeholder="info@gmdp.net.id" value="">
+                                                placeholder="admin@gmdp.net.id" value="">
                                         </div>
                                         <div class="col-md-12 mb-2">
                                             <label class="form-label" for="email">Alamat Reseller</label>
@@ -51,9 +51,14 @@
                                     <fieldset class="border row p-3 mb-4 rounded-2">
                                         <legend class="float-none w-auto px-4">Informasi Owner</legend>
                                         <div class="col-md-12 mb-2">
-                                            <label class="form-label" for="email">Nama Owner Reseller</label>
+                                            <label class="form-label" for="owner_name">Nama Owner Reseller</label>
                                             <input type="text" name="owner_name" id="owner_name" class="form-control"
                                                 placeholder="Nama Owner" value="">
+                                        </div>
+                                        <div class="col-md-12 mb-2">
+                                            <label class="form-label" for="number">No. Telp</label>
+                                            <input type="number" name="number" id="number" class="form-control"
+                                                placeholder="+62812345678" value="">
                                         </div>
                                     </fieldset>
 

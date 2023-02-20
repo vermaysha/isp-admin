@@ -14,6 +14,9 @@
                 <div class="card-body py-4">
                     <div class="d-flex justify-content-between mb-3">
                         <div class="px-3">
+                            <a href=""> </a>
+                        </div>
+                        <div class="px-3">
                             <a href="{{ route('business.clientMenu.create') }}" class="btn btn-primary btn-outline">Tambah
                                 Pelanggan</a>
                         </div>
