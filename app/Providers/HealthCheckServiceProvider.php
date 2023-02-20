@@ -27,9 +27,7 @@ class HealthCheckServiceProvider extends ServiceProvider
         Health::checks([
             CacheCheck::new(),
             OptimizedAppCheck::new(),
-            CpuLoadCheck::new()
-                ->failWhenLoadIsHigherInTheLast5Minutes(2.0)
-                ->failWhenLoadIsHigherInTheLast15Minutes(1.5),
+            CpuLoadCheck::new(),
             DatabaseCheck::new(),
             DatabaseConnectionCountCheck::new()
                 ->warnWhenMoreConnectionsThan(50)
