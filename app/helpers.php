@@ -1,6 +1,9 @@
 <?php
 
 if (! function_exists('random_number')) {
+    /**
+     * Generate random number with fixed digit
+     */
     function random_number(int $digit): string
     {
         $randNumber = sprintf(
@@ -9,5 +12,23 @@ if (! function_exists('random_number')) {
         );
 
         return $randNumber;
+    }
+}
+
+if (! function_exists('rupiah_format')) {
+    /**
+     * Format Rupiah Currency
+     */
+    function rupiah_format(float $currency): string
+    {
+        return sprintf(
+            'Rp%s',
+            number_format(
+                $currency,
+                0,
+                ',',
+                '.'
+            )
+        );
     }
 }
