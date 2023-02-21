@@ -5,10 +5,6 @@
 @endsection
 
 @section('stylesheet')
-    <link rel="stylesheet" href="https://unpkg.com/@coreui/icons/css/all.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/@coreui/icons/css/free.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/@coreui/icons/css/brand.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/@coreui/icons/css/flag.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@coreui/chartjs@3.0.0/dist/css/coreui-chartjs.min.css">
 @endsection
 
