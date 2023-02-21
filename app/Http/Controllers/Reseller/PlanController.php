@@ -21,7 +21,7 @@ class PlanController extends Controller
      */
     public function index(Request $request)
     {
-        $plans = Plan::whereHas('reseller', function ($q) {
+        $plans = Plan::whereHas('reseller.employees', function ($q) {
             $q->where('user_id', Auth::id());
         })->withCount('clients');
 
@@ -37,7 +37,7 @@ class PlanController extends Controller
 
     public function dataTable(Request $request)
     {
-        $plans = Plan::whereHas('reseller', function ($q) {
+        $plans = Plan::whereHas('reseller.employees', function ($q) {
             $q->where('user_id', Auth::id());
         })->withCount('clients');
 
@@ -51,7 +51,7 @@ class PlanController extends Controller
      */
     public function detail(Request $request, string $id)
     {
-        $plan = Plan::whereHas('reseller', function ($q) {
+        $plan = Plan::whereHas('reseller.employees', function ($q) {
             $q->where('user_id', Auth::id());
         })->withCount('clients')->findOrFail($id);
 
@@ -127,7 +127,7 @@ class PlanController extends Controller
      */
     public function edit(Request $request, string $id)
     {
-        $plan = Plan::whereHas('reseller', function ($q) {
+        $plan = Plan::whereHas('reseller.employees', function ($q) {
             $q->where('user_id', Auth::id());
         })->findOrFail($id);
 
@@ -163,7 +163,7 @@ class PlanController extends Controller
             ],
         ]);
 
-        $plan = Plan::whereHas('reseller', function ($q) {
+        $plan = Plan::whereHas('reseller.employees', function ($q) {
             $q->where('user_id', Auth::id());
         })->findOrFail($id);
 
@@ -190,7 +190,7 @@ class PlanController extends Controller
      */
     public function delete(Request $request, string $id)
     {
-        $plan = Plan::whereHas('reseller', function ($q) {
+        $plan = Plan::whereHas('reseller.employees', function ($q) {
             $q->where('user_id', Auth::id());
         })->withCount('clients')->findOrFail($id);
 
