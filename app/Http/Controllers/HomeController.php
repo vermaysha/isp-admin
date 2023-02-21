@@ -183,7 +183,7 @@ class HomeController extends Controller
             ->whereNotNull('payed_at')
             ->first()?->total ?? 0;
 
-        return view('pages.reseller.home', [
+        return view('pages.reseller.home.owner', [
             'client' => [
                 'labels' => $clients->keys,
                 'data' => $clientsData,
@@ -223,6 +223,7 @@ class HomeController extends Controller
      */
     public function resellerAdminPages(Request $request)
     {
+        return view('pages.reseller.home.admin');
     }
 
     /**
