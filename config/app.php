@@ -197,6 +197,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\HealthCheckServiceProvider::class,
+        App\Providers\ViewServiceProvider::class,
 
     ],
 
