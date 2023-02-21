@@ -128,41 +128,47 @@
                 </li>
             @endhasanyrole
 
-            {{-- @hasanyrole(\App\Models\Role::RESELLER_ADMIN)
-                <li class="nav-item">
-                    <a class="nav-link {{ Request::route()->getName() == 'reseller_owner.client' ? 'active' : '' }}"
-                        href="{{ route('business.clientMenu.index') }}">
-                        <i class="nav-icon cil cil-user"></i> Pelanggan </a>
+            @hasanyrole(\App\Models\Role::RESELLER_ADMIN)
+                <li class="nav-title">Data Tagihan</li>
+
+                <li
+                    class="nav-item {{ Str::contains(Request::route()->getName(), ['business.billMenu.paidOff', 'business.billMenu.paid', 'business.billMenu.outstanding']) ? 'show' : '' }}">
+                    <a class="nav-link" href="{{ route('business.billMenu.outstanding') }}">
+                        <i class="nav-icon cil cil-chart"></i>
+                        Tagihan Terhutang
+                        @if ($totalOutstandingBill)
+                            <span class="badge badge-pills bg-danger ms-auto badge-sm">{{ $totalOutstandingBill }}</span>
+                        @endif
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::route()->getName() == 'reseller_owner.paket' ? 'active' : '' }}"
-                        href="{{ route('business.planMenu.index') }}">
-                        <i class="nav-icon cil cil-people"></i> Paket </a>
+                    <a class="nav-link" href="{{ route('business.billMenu.paid') }}">
+                        <i class="nav-icon cil cil-chart-line"></i>
+                        Tagihan dibayar
+                        @if ($totalPaidBill)
+                            <span class="badge badge-pills bg-info ms-auto badge-sm">{{ $totalPaidBill }}</span>
+                        @endif
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::route()->getName() == 'reseller_owner.transaction.bill' ? 'active' : '' }}"
-                        href="{{ route('business.billMenu.index') }}">
-                        <i class="nav-icon cil cil-people"></i> Tagihan </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ Request::route()->getName() == 'reseller_owner.history' ? 'active' : '' }}"
-                        href="{{ route('business.history') }}">
-                        <i class="nav-icon cil cil-people"></i> Riwayat </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ Request::route()->getName() == 'reseller_owner.transaction' ? 'active' : '' }}"
-                        href="{{ route('business.billMenu.index') }}">
-                        <i class="nav-icon cil cil-gem"></i> Transaksi</a>
+                    <a class="nav-link" href="{{ route('business.billMenu.paidOff') }}">
+                        <i class="nav-icon cil cil-chart-pie"></i> Tagihan Selesai</a>
                 </li>
             @endhasanyrole
 
             @hasanyrole(\App\Models\Role::RESELLER_TECHNICIAN)
+                <li class="nav-title">Data Master</li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::route()->getName() == 'reseller_owner.client' ? 'active' : '' }}"
+                    <a class="nav-link {{ Request::route()->getName() == 'business.planMenu.index' ? 'active' : '' }}"
+                        href="{{ route('business.planMenu.index') }}">
+                        <i class="nav-icon cil cil-globe-alt"></i> Paket </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::route()->getName() == 'business.client' ? 'active' : '' }}"
                         href="{{ route('business.clientMenu.index') }}">
                         <i class="nav-icon cil cil-user"></i> Pelanggan </a>
                 </li>
-            @endhasanyrole --}}
+            @endhasanyrole
 
             @hasanyrole(\App\Models\Role::CLIENT)
                 <li class="nav-title">Data Tagihan</li>

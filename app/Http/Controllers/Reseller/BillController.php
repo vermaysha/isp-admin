@@ -122,7 +122,7 @@ class BillController extends Controller
      */
     private function _getTransactions(Request $request): Builder
     {
-        $bills = Bill::whereHas('reseller', fn ($q) => $q->where('user_id', Auth::id()))
+        $bills = Bill::whereHas('reseller.employees', fn ($q) => $q->where('user_id', Auth::id()))
             ->with([
                 'client:id,user_id',
                 'client.user',

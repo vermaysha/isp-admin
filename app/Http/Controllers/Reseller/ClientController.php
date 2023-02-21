@@ -34,7 +34,7 @@ class ClientController extends Controller
         $clients = Client::with([
             'user:id,fullname,username,photo,phone_number,address',
             'plan:id,name',
-        ])->whereHas('reseller', function ($q) {
+        ])->whereHas('reseller.employees', function ($q) {
             $q->where('user_id', Auth::id());
         });
 
@@ -61,7 +61,7 @@ class ClientController extends Controller
                 $q->limit(5);
                 $q->orderBy('id', 'desc');
             },
-        ])->whereHas('reseller', function ($q) {
+        ])->whereHas('reseller.employees', function ($q) {
             $q->where('user_id', Auth::id());
         })->findOrFail($id);
 
@@ -85,11 +85,11 @@ class ClientController extends Controller
                 $q->limit(5);
                 $q->orderBy('id', 'desc');
             },
-        ])->whereHas('reseller', function ($q) {
+        ])->whereHas('reseller.employees', function ($q) {
             $q->where('user_id', Auth::id());
         })->findOrFail($id);
 
-        $plans = Plan::whereHas('reseller', function ($q) {
+        $plans = Plan::whereHas('reseller.employees', function ($q) {
             $q->where('user_id', Auth::id());
         })->latest()->get();
 
@@ -107,11 +107,11 @@ class ClientController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $client = Client::whereHas('reseller', function ($q) {
+        $client = Client::whereHas('reseller.employees', function ($q) {
             $q->where('user_id', Auth::id());
         })->findOrFail($id);
 
-        $bandwidts = Plan::whereHas('reseller', function ($q) {
+        $bandwidts = Plan::whereHas('reseller.employees', function ($q) {
             $q->where('user_id', Auth::id());
         })->select('id')->get();
 
@@ -217,7 +217,7 @@ class ClientController extends Controller
      */
     public function create(Request $request)
     {
-        $plans = Plan::whereHas('reseller', function ($q) {
+        $plans = Plan::whereHas('reseller.employees', function ($q) {
             $q->where('user_id', Auth::id());
         })->latest()->get();
 
@@ -234,7 +234,7 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        $bandwidts = Plan::whereHas('reseller', function ($q) {
+        $bandwidts = Plan::whereHas('reseller.employees', function ($q) {
             $q->where('user_id', Auth::id());
         })->select('id')->get();
 
