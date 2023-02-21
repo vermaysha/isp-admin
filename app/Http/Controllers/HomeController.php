@@ -12,6 +12,7 @@ use Carbon\CarbonInterval;
 use DatePeriod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -31,7 +32,7 @@ class HomeController extends Controller
         } elseif ($user->hasRole(Role::RESELLER_OWNER)) {
             return $this->resellerOwnerPages($request);
         } elseif ($user->hasRole(Role::RESELLER_TECHNICIAN)) {
-            return $this->resellerTeknisiPages($request);
+            return $this->resellerTechnicianPages($request);
         } elseif ($user->hasRole(Role::RESELLER_ADMIN)) {
             return $this->resellerAdminPages($request);
         } elseif ($user->hasRole(Role::CLIENT)) {
@@ -110,70 +111,37 @@ class HomeController extends Controller
         $from = $currentMonth->subMonth(12)->toDateTimeString();
         $to = $currentMonth->toDateTimeString();
 
-        $bills = Bill::whereHas('reseller', function ($q) {
-            $q->where('user_id', Auth::id());
-        })
-        ->select(DB::raw('sum(grand_total) as total'), DB::raw('DATE_FORMAT(payment_month,\'%Y-%m-01\') as monthNum'))
-            ->whereBetween('payment_month', [$from, $to])
-            ->orderBy('monthNum')
-            ->groupBy('monthNum')
-            ->whereNotNull('payed_at')
-            ->whereNotNull('accepted_at')->get();
+        $bills = $this->billGraph($from, $to);
 
-        $bills = $this->graph($bills, $from, $to);
+        $outstanding = $this->outstandingGraph($from, $to);
 
-        $outstanding = Bill::whereHas('reseller', function ($q) {
-            $q->where('user_id', Auth::id());
-        })
-            ->select(DB::raw('sum(grand_total) as total'), DB::raw('DATE_FORMAT(payment_month,\'%Y-%m-01\') as monthNum'))
-            ->whereBetween('payment_month', [$from, $to])
-            ->orderBy('monthNum')
-            ->groupBy('monthNum')
-            ->whereNull('payed_at')
-            ->orWhereNull('accepted_at')->get();
+        $clients = $this->clientGraph($from, $to);
 
-        $outstanding = $this->graph($outstanding, $from, $to);
-
-        $clients = Client::whereHas('reseller', function ($q) {
-            $q->where('user_id', Auth::id());
-        })
-            ->select(DB::raw('count(id) as total'), DB::raw('DATE_FORMAT(created_at,\'%Y-%m-01\') as monthNum'))
-            ->whereBetween('created_at', [$from, $to])
-            ->orderBy('monthNum')
-            ->groupBy('monthNum')->get();
-
-        $clients = $this->graph($clients, $from, $to);
-
-        $clientsData = [];
-        foreach ($clients->values as $value) {
-            $clientsData[] = (last($clientsData) ?? 0) + $value;
-        }
-
-        $totalClient = Client::select(DB::raw('count(id) as total'))->whereHas('reseller', function ($q) {
+        $totalClient = Client::select(DB::raw('count(id) as total'))->whereHas('reseller.employees', function ($q) {
             $q->where('user_id', Auth::id());
         })->first()?->total ?? 0;
 
-        $totalPPNUsers = Client::select(DB::raw('count(id) as total'))->whereHas('reseller', function ($q) {
+        $totalPPNUsers = Client::select(DB::raw('count(id) as total'))->whereHas('reseller.employees', function ($q) {
             $q->where('user_id', Auth::id());
         })->where('is_ppn', true)
             ->first()?->total ?? 0;
 
-        $totalNonPPNUsers = Client::select(DB::raw('count(id) as total'))->whereHas('reseller', function ($q) {
+        $totalNonPPNUsers = Client::select(DB::raw('count(id) as total'))->whereHas('reseller.employees', function ($q) {
             $q->where('user_id', Auth::id());
         })->where('is_ppn', false)
             ->first()?->total ?? 0;
 
-        $totalEmployee = Reseller::where('user_id', Auth::id())
+        $totalEmployee = Reseller::whereHas('employees', fn ($q) => $q->where('user_id', Auth::id()))
             ->withCount('employees')->first()->employees_count;
 
-        $unpayedBill = Bill::select(DB::raw('count(id) as total'))->whereHas('reseller', function ($q) {
+        $unpayedBill = Bill::select(DB::raw('count(id) as total'))->whereHas('reseller.employees', function ($q) {
             $q->where('user_id', Auth::id());
         })
             ->whereNull('payed_at')
             ->first()->total ?? 0;
 
         $lastMonth = $currentMonth->subMonth();
-        $totalEarning = Bill::whereHas('reseller', function ($q) {
+        $totalEarning = Bill::whereHas('reseller.employees', function ($q) {
             $q->where('user_id', Auth::id());
         })
             ->select(DB::raw('SUM(grand_total) as total'))
@@ -186,7 +154,7 @@ class HomeController extends Controller
         return view('pages.reseller.home.owner', [
             'client' => [
                 'labels' => $clients->keys,
-                'data' => $clientsData,
+                'data' => $clients->values,
             ],
             'earning' => [
                 'labels' => $bills->keys,
@@ -208,12 +176,13 @@ class HomeController extends Controller
     }
 
     /**
-     * Reseller Teknisi pages
+     * Reseller Technician pages
      *
      * @return \Illuminate\Http\Response
      */
-    public function resellerTeknisiPages(Request $request)
+    public function resellerTechnicianPages(Request $request)
     {
+        return view('pages.reseller.home.technician');
     }
 
     /**
@@ -223,7 +192,30 @@ class HomeController extends Controller
      */
     public function resellerAdminPages(Request $request)
     {
-        return view('pages.reseller.home.admin');
+        $currentMonth = CarbonImmutable::parse(date('Y-m') . '-1');
+        $from = $currentMonth->subMonth(12)->toDateTimeString();
+        $to = $currentMonth->toDateTimeString();
+
+        $bills = $this->billGraph($from, $to);
+
+        $outstanding = $this->outstandingGraph($from, $to);
+
+        return view('pages.reseller.home.admin', [
+            'earning' => [
+                'labels' => $bills->keys,
+                'data' => $bills->values,
+            ],
+            'outstanding' => [
+                'labels' => $outstanding->keys,
+                'data' => $outstanding->values,
+            ],
+            'widget' => [
+                'totalClient' => $totalClient ?? 0,
+                'totalEmployee' => $totalEmployee ?? 0,
+                'unpayedBill' => $unpayedBill ?? 0,
+                'totalEarning' => $totalEarning ?? 0,
+            ],
+        ]);
     }
 
     /**
@@ -258,7 +250,7 @@ class HomeController extends Controller
     /**
      * Generate Graph data
      */
-    public function graph($results, $from, $to)
+    public function graph(Collection $results, string $from, string $to): object
     {
         $results = collect($results)->keyBy('monthNum')->map(function ($item) {
             $item->monthNum = Carbon::parse($item->monthNum);
@@ -281,6 +273,68 @@ class HomeController extends Controller
         return (object) [
             'keys' => $keys,
             'values' => $values,
+        ];
+    }
+
+    /**
+     * Bill Graph data
+     */
+    public function billGraph(string $start, string $end): object
+    {
+        $bills = Bill::whereHas('reseller.employees', function ($q) {
+            $q->where('user_id', Auth::id());
+        })
+        ->select(DB::raw('sum(grand_total) as total'), DB::raw('DATE_FORMAT(payment_month,\'%Y-%m-01\') as monthNum'))
+            ->whereBetween('payment_month', [$start, $end])
+            ->orderBy('monthNum')
+            ->groupBy('monthNum')
+            ->whereNotNull('payed_at')
+            ->whereNotNull('accepted_at')->get();
+
+        return $this->graph($bills, $start, $end);
+    }
+
+    /**
+     * Outstanding Graph data
+     */
+    public function outstandingGraph(string $start, string $end): object
+    {
+        $outstanding = Bill::whereHas('reseller.employees', function ($q) {
+            $q->where('user_id', Auth::id());
+        })
+            ->select(DB::raw('sum(grand_total) as total'), DB::raw('DATE_FORMAT(payment_month,\'%Y-%m-01\') as monthNum'))
+            ->whereBetween('payment_month', [$start, $end])
+            ->orderBy('monthNum')
+            ->groupBy('monthNum')
+            ->whereNull('payed_at')
+            ->orWhereNull('accepted_at')->get();
+
+        return $this->graph($outstanding, $start, $end);
+    }
+
+    /**
+     * Client Graph Data
+     */
+    public function clientGraph(string $start, string $end): object
+    {
+        $clients = Client::whereHas('reseller', function ($q) {
+            $q->where('user_id', Auth::id());
+        })
+            ->select(DB::raw('count(id) as total'), DB::raw('DATE_FORMAT(created_at,\'%Y-%m-01\') as monthNum'))
+            ->whereBetween('created_at', [$start, $end])
+            ->orderBy('monthNum')
+            ->groupBy('monthNum')->get();
+
+        $clients = $this->graph($clients, $start, $end);
+
+        $clientsData = [];
+        foreach ($clients->values as $value) {
+            $clientsData[] = (last($clientsData) ?? 0) + $value;
+        }
+
+        return (object) [
+            'values' => $clientsData,
+            'keys' => $clients->keys,
         ];
     }
 }
