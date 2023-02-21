@@ -37,28 +37,7 @@ Route::middleware([
 
     Route::name('business.')
         ->prefix('business')
-        ->group(function () {
-            /**
-             * Route for business owner
-             */
-            Route::middleware([
-                sprintf('role:%s', Role::RESELLER_OWNER),
-            ])->group(base_path('routes/roles/business_owner.php'));
-
-            /**
-             * Route for business admin
-             */
-            Route::middleware([
-                sprintf('role:%s', Role::RESELLER_ADMIN),
-            ])->group(base_path('routes/roles/business_admin.php'));
-
-            /**
-             * Route for business technician
-             */
-            Route::middleware([
-                sprintf('role:%s', Role::RESELLER_TECHNICIAN),
-            ])->group(base_path('routes/roles/business_technician.php'));
-        });
+        ->group(base_path('routes/roles/business.php'));
 
     /**
      * Route for client
