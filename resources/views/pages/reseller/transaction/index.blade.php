@@ -12,6 +12,38 @@
                     <strong>{{ $title }}</strong>
                 </div>
                 <div class="card-body py-4">
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <div class="col-12">
+                                <label class="visually-hidden" for="search">Search</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control form-control-sm" id="searchTable"
+                                        placeholder="Cari ...">
+                                    <div class="input-group-text">
+                                        <i class="cil-magnifying-glass"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <form action="" method="get">
+                                <div class="col-12">
+                                    <label class="visually-hidden" for="yearRange">Pembayaran Bulan</label>
+                                    <div class="input-group">
+                                        <input type="text" name="yearRange" id="yearRange" placeholder="Pembayaran Bulan"
+                                            class="form-control form-control-sm" value="{{ $yearRange ?? '' }}">
+                                        <button class="btn btn-primary btn-sm" type="submit">
+                                            Kirim
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-4 text-right">
+                            <a id="resetFilter" href="{{ route('business.billMenu.paidOff') }}"
+                                class="btn btn-danger btn-sm text-white">Reset</a>
+                        </div>
+                    </div>
                     <div class="table-responsive p-2">
                         <table class="table table-hover align-middle custom-table" id="billTable">
                             <thead class="align-middle">
@@ -40,19 +72,37 @@
 
 @section('stylesheet')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/plugins/monthSelect/style.min.css">
 @endsection
 
 @section('script')
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/plugins/monthSelect/index.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.js"></script>
     <script>
         $(document).ready(function() {
-            const table = $('#billTable').DataTable({
+            $('#yearRange').flatpickr({
+                mode: 'range',
+                altInput: true,
+                plugins: [
+                    new monthSelectPlugin({
+                        shorthand: true,
+                        dateFormat: "Y-m",
+                        altFormat: "F Y",
+                    })
+                ]
+            });
+
+            var table = $('#billTable').DataTable({
                 serverSide: true,
                 processing: true,
                 ajax: '',
-                info: true,
+                info: false,
+                lengthChange: false,
+                dom: 'trip',
                 language: {
                     url: '{{ asset('/js/datatable-id.json') }}',
                 },
@@ -120,7 +170,7 @@
                         name: 'payment_month',
                         className: 'text-center',
                         searchable: false,
-                        orderable: true,
+                        orderable: false,
                         render: (data, type, row, meta) => {
                             return `<span class="badge badge-pills bg-info">
                                 ${data}
@@ -158,6 +208,23 @@
                     cell.innerHTML = i + 1 + info.start;
                 });
             });
+
+            $('#searchTable').on('keyup', function() {
+                table.search(this.value).draw();
+            });
+
+            var state = table.state.loaded();
+
+            $('#searchTable').val(state.search.search)
+
+            $('#resetFilter').on('click', async function(e) {
+                e.preventDefault();
+
+                table.state.clear();
+                setTimeout(() => {
+                    window.location.assign($(this).attr('href'))
+                }, 250);
+            })
         })
     </script>
 @endsection
