@@ -30,11 +30,11 @@ class ViewServiceProvider extends ServiceProvider
                 Role::RESELLER_OWNER,
             ])) {
                 $totalOutstandingBill = Bill::select(DB::raw('count(id) as total'))
-                    ->whereHas('reseller', function ($q) {
+                    ->whereHas('reseller.employees', function ($q) {
                         $q->where('user_id', Auth::id());
                     })->whereNull('payed_at')->whereNull('accepted_at')->first()->total ?? 0;
                 $totalPaidBill = Bill::select(DB::raw('count(id) as total'))
-                    ->whereHas('reseller', function ($q) {
+                    ->whereHas('reseller.employees', function ($q) {
                         $q->where('user_id', Auth::id());
                     })->whereNotNull('payed_at')->whereNull('accepted_at')->first()->total ?? 0;
             }
