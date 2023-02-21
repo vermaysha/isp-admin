@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Bill;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -79,6 +80,7 @@ class BillController extends Controller
         return view('pages.reseller.transaction.index', [
             'title' => 'Tagihan Selesai',
             'transaction_type' => 'paidOff',
+            'yearRange' => $request->input('yearRange'),
             // 'bills' => $bills->paginate(20)->appends($request->all()),
         ]);
     }
@@ -130,6 +132,20 @@ class BillController extends Controller
 
         if ($request->has('client_id')) {
             $bills->where('client_id', $request->client_id);
+        }
+
+        if ($request->has('yearRange') && ! empty($request->input('yearRange'))) {
+            $yearRanges = explode(' to ', mb_strtolower($request->input('yearRange')));
+
+            if (count($yearRanges) > 1) {
+                $start = Carbon::parse($yearRanges[0]);
+                $end = Carbon::parse($yearRanges[1]);
+            } else {
+                $start = Carbon::parse($yearRanges[0]);
+                $end = Carbon::parse($yearRanges[0]);
+            }
+
+            $bills->whereBetween('payment_month', [$start, $end]);
         }
 
         return $bills;
