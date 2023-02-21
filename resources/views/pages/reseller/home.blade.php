@@ -62,7 +62,7 @@
                         </div>
                         <div>
                             <div class="fs-6 fw-semibold text-info">
-                                Rp{{ number_format($widget['totalEarning'], 2, ',', '.') }}</div>
+                                {{ rupiah_format($widget['totalEarning']) }}</div>
                             <div class="text-medium-emphasis text-uppercase fw-semibold small">Penghasilan Bulan
                                 {{ now()->setDay(1)->subMonth()->isoFormat('MMMM') }}</div>
                         </div>

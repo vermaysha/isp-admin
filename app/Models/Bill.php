@@ -115,10 +115,7 @@ class Bill extends Model
     {
         return Attribute::make(
             function ($value, $attributes) {
-                return sprintf(
-                    'Rp%s',
-                    number_format($attributes['grand_total'], 2, ',', '.')
-                );
+                return rupiah_format($attributes['grand_total']);
             }
         );
     }

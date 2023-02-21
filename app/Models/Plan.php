@@ -100,10 +100,7 @@ class Plan extends Model
                     $price = $attributes['price'] - ($attributes['price'] * self::TAX);
                 }
 
-                return sprintf(
-                    'Rp%s',
-                    number_format($price, 2, ',', '.')
-                );
+                return rupiah_format($price);
             }
         );
     }
@@ -116,10 +113,7 @@ class Plan extends Model
     protected function taxFormated(): Attribute
     {
         return Attribute::make(
-            fn ($value, $attributes) => sprintf(
-                'Rp%s',
-                number_format($attributes['price'] * .11, 2, ',', '.')
-            )
+            fn ($value, $attributes) => rupiah_format($attributes['price'] * .11)
         );
     }
 
@@ -138,10 +132,7 @@ class Plan extends Model
                     $price = $attributes['price'];
                 }
 
-                return sprintf(
-                    'Rp%s',
-                    number_format($price, 2, ',', '.')
-                );
+                return rupiah_format($price);
             }
         );
     }

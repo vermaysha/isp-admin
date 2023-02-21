@@ -72,7 +72,7 @@
                                                 {{ $plan->clients_count }} Pengguna
                                             </span>
                                         </td>
-                                        <td scope="col">Rp{{ number_format($plan->price, 2, ',', '.') }}</td>
+                                        <td scope="col">{{ rupiah_format($plan->price) }}</td>
                                         <td>
                                             @if ($plan->tax_type === App\Models\Plan::TAX_INCLUDED)
                                                 <span class="badge badge-pills bg-success">Sudah Termasuk</span>
