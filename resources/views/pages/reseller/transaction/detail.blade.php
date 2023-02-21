@@ -88,18 +88,18 @@
                                 <tr>
                                     <th scope="col">Nilai sebelum PPN</th>
                                     <td scope="col">:</td>
-                                    <td scope="col">Rp{{ number_format($transaction->amount, 2, ',', '.') }}</td>
+                                    <td scope="col">{{ rupiah_format($transaction->amount) }}</td>
                                 </tr>
                                 <tr>
                                     <th scope="col">Nilai PPN</th>
                                     <td scope="col">:</td>
-                                    <td scope="col">Rp{{ number_format($transaction->tax, 2, ',', '.') }}</td>
+                                    <td scope="col">{{ rupiah_format($transaction->tax) }}</td>
                                 </tr>
                                 <tr>
                                     <th scope="col">Nilai setelah Pajak/Nilai Invoice</th>
                                     <td scope="col">:</td>
                                     <td scope="col" class="fw-bold">
-                                        Rp{{ number_format($transaction->grand_total, 2, ',', '.') }}</td>
+                                        {{ rupiah_format($transaction->grand_total) }}</td>
                                 </tr>
                             </table>
                         </div>
@@ -140,7 +140,7 @@
                                 <tr>
                                     <th scope="col">Harga</th>
                                     <td scope="col">:</td>
-                                    <td scope="col">Rp{{ number_format($transaction->plan_price, 2, ',', '.') }}</td>
+                                    <td scope="col">{{ rupiah_format($transaction->plan_price) }}</td>
                                 </tr>
                             </table>
                         </div>

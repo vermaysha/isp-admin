@@ -54,7 +54,7 @@
                                                 </a>
                                             </td>
                                             <td>
-                                                Rp{{ number_format($transaction->grand_total, 2, ',', '.') }}
+                                                {{ rupiah_format($transaction->grand_total) }}
                                             </td>
                                             <td class="text-center">
                                                 <span
