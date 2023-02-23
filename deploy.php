@@ -38,6 +38,8 @@ task('npm:build', function () {
 
 // Hooks
 after('deploy:success', 'crontab:sync');
+after('deploy:success', 'artisan:queue:restart');
+after('deploy:success', 'artisan:optimize');
 
 add('crontab:jobs', [
     '* * * * * cd {{current_path}} && {{bin/php}} artisan schedule:run >> /dev/null 2>&1',
