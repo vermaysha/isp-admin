@@ -44,6 +44,13 @@ return [
             'throw' => false,
         ],
 
+        'invoices' => [
+            'driver' => 'local',
+            'root' => storage_path('app/invoices'),
+            'visibility' => 'private',
+            'throw' => false,
+        ],
+
         'backups' => [
             'driver' => 'local',
             'root' => storage_path('app'),

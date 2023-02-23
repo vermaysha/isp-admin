@@ -6,7 +6,8 @@
         }
     },
     "exclude": [
-        ".history"
+        ".history",
+        "resources"
     ],
     "notName": [
         "_ide_helper_models.php",
