@@ -21,6 +21,7 @@ set('repository', 'https://github.com/vermaysha/isp-admin.git');
 
 add('writable_dirs', [
     'storage/debugbar',
+    'storage/fonts',
 ]);
 
 host('production')
