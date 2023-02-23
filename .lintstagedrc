@@ -1,5 +1,5 @@
 {
-  "*.php": [
+  "!(resources/**/*)*.php": [
     "./vendor/bin/pint"
   ],
   "*.blade.php": [
