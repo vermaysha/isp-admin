@@ -19,10 +19,11 @@ if (! function_exists('rupiah_format')) {
     /**
      * Format Rupiah Currency
      */
-    function rupiah_format(float $currency): string
+    function rupiah_format(float $currency, $prefix = 'Rp'): string
     {
         return sprintf(
-            'Rp%s',
+            '%s%s',
+            $prefix,
             number_format(
                 $currency,
                 0,
