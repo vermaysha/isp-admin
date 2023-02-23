@@ -24,6 +24,7 @@ return new class extends Migration
             $table->decimal('grand_total', 62, 2)->comment('Balance With PPN & BHP USO');
             $table->foreignId('transaction_id')->nullable()->constrained((new Transaction())->getTable());
             $table->string('bill_photo')->nullable();
+            $table->string('invoice_file')->nullable();
             $table->foreignId('reseller_id')->nullable()->constrained();
             $table->string('reseller_name');
             $table->foreignId('client_id')->nullable()->constrained();
