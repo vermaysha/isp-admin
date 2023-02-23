@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\GenerateInvoice;
 use App\Models\Bill;
 use App\Models\Client;
 use App\Models\Plan;
@@ -107,6 +108,10 @@ class GenerateBill extends Command
             Log::error($e->getMessage(), $e->getTrace());
 
             return Command::FAILURE;
+        }
+
+        foreach (Bill::with(['client', 'client.user', 'reseller'])->whereNull('invoice_file')->get() as $bill) {
+            GenerateInvoice::dispatch($bill);
         }
 
         return Command::SUCCESS;
