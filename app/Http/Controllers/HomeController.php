@@ -182,7 +182,25 @@ class HomeController extends Controller
      */
     public function resellerTechnicianPages(Request $request)
     {
-        return view('pages.reseller.home.technician');
+        $currentMonth = CarbonImmutable::parse(date('Y-m') . '-1');
+        $from = $currentMonth->subMonth(12)->toDateTimeString();
+        $to = $currentMonth->toDateTimeString();
+
+        $clients = $this->clientGraph($from, $to);
+
+        $totalClient = Client::select(DB::raw('count(id) as total'))->whereHas('reseller.employees', function ($q) {
+            $q->where('user_id', Auth::id());
+        })->first()?->total ?? 0;
+
+        return view('pages.reseller.home.technician', [
+            'client' => [
+                'labels' => $clients->keys,
+                'data' => $clients->values,
+            ],
+            'widget' => [
+                'totalClient' => $totalClient ?? 0,
+            ],
+        ]);
     }
 
     /**
@@ -200,7 +218,44 @@ class HomeController extends Controller
 
         $outstanding = $this->outstandingGraph($from, $to);
 
+        $clients = $this->clientGraph($from, $to);
+
+        $totalClient = Client::select(DB::raw('count(id) as total'))->whereHas('reseller.employees', function ($q) {
+            $q->where('user_id', Auth::id());
+        })->first()?->total ?? 0;
+
+        $totalPPNUsers = Client::select(DB::raw('count(id) as total'))->whereHas('reseller.employees', function ($q) {
+            $q->where('user_id', Auth::id());
+        })->where('is_ppn', true)
+            ->first()?->total ?? 0;
+
+        $totalNonPPNUsers = Client::select(DB::raw('count(id) as total'))->whereHas('reseller.employees', function ($q) {
+            $q->where('user_id', Auth::id());
+        })->where('is_ppn', false)
+            ->first()?->total ?? 0;
+
+        $unpayedBill = Bill::select(DB::raw('count(id) as total'))->whereHas('reseller.employees', function ($q) {
+            $q->where('user_id', Auth::id());
+        })
+            ->whereNull('payed_at')
+            ->first()->total ?? 0;
+
+        $lastMonth = $currentMonth->subMonth();
+        $totalEarning = Bill::whereHas('reseller.employees', function ($q) {
+            $q->where('user_id', Auth::id());
+        })
+            ->select(DB::raw('SUM(grand_total) as total'))
+            ->whereMonth('payment_month', $lastMonth->format('m'))
+            ->whereYear('payment_month', $lastMonth->format('Y'))
+            ->whereNotNull('accepted_at')
+            ->whereNotNull('payed_at')
+            ->first()?->total ?? 0;
+
         return view('pages.reseller.home.admin', [
+            'client' => [
+                'labels' => $clients->keys,
+                'data' => $clients->values,
+            ],
             'earning' => [
                 'labels' => $bills->keys,
                 'data' => $bills->values,
@@ -211,10 +266,11 @@ class HomeController extends Controller
             ],
             'widget' => [
                 'totalClient' => $totalClient ?? 0,
-                'totalEmployee' => $totalEmployee ?? 0,
                 'unpayedBill' => $unpayedBill ?? 0,
                 'totalEarning' => $totalEarning ?? 0,
             ],
+            'totalPPNusers' => $totalPPNUsers,
+            'totalNonPPNUsers' => $totalNonPPNUsers,
         ]);
     }
 
