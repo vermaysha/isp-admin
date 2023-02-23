@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             ClientSeeder::class,
             BillSeeder::class,
             WalletSeeder::class,
+            InvoicePDFSeeder::class,
         ]);
     }
 }
