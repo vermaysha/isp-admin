@@ -13,4 +13,11 @@ class RegisterController extends Controller
             'title' => 'Pendaftaran Akun',
         ]);
     }
+
+    public function review(Request $request)
+    {
+        return view('pages.admin.register.review', [
+            'title' => 'Pendaftaran Akun',
+        ]);
+    }
 }

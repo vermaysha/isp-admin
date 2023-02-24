@@ -32,7 +32,8 @@
                                     <th> agusnet </th>
                                     <th> agus </th>
                                     <th> +6234721934 </th>
-                                    <th> <button type="button" class="btn btn-primary rounded-pill">Review</button> </th>
+                                    <th> <a href="{{ route('admin.registerMenu.review') }}"
+                                            class="btn btn-primary rounded-pill">Review</a> </th>
                                 </tr>
                             </tbody>
                         </table>
