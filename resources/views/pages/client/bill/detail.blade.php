@@ -98,14 +98,16 @@
                             </table>
                         </div>
                     </div>
-                    @if (empty($bill->payed_at) && empty($bill->accepted_at))
-                        <div class="card-footer d-flex justify-content-end">
+                    <div class="card-footer d-flex justify-content-between">
+                        <a href="{{ route('client.billMenu.invoice', ['id' => $bill->id]) }}"
+                            class="btn btn-info text-white btn-sm">Invoice</a>
+                        @if (empty($bill->payed_at) && empty($bill->accepted_at))
                             <button type="button" class="btn btn-sm btn-primary" data-coreui-toggle="modal"
                                 data-coreui-target="#billPhoto">
                                 Unggah Bukti Bayar
                             </button>
-                        </div>
-                    @endif
+                        @endif
+                    </div>
                 </div>
             </div>
             <div class="col-md-6">
