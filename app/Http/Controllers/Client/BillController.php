@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Throwable;
@@ -137,5 +138,38 @@ class BillController extends Controller
         return redirect()
             ->route('client.billMenu.detail', $id)
             ->with('status', 'Tagihan Telah Dibayar, menunggu konfirmasi reseller');
+    }
+
+    /**
+     * Show invoice file
+     *
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function invoice(Request $request, string $id)
+    {
+        $bill = Bill::where('id', $id)
+            ->select('invoice_id', 'invoice_file')
+            ->whereHas('client.user', function ($q) {
+                $q->where('id', Auth::id());
+            })->firstOrFail();
+
+        if (empty($bill->invoice_file) || Storage::disk('invoices')->missing($bill->invoice_file)) {
+            return redirect()
+                ->route('business.billMenu.detail', $id)
+                ->with('warning', 'Invoice belum siap, silahkan tunggu beberapa menit');
+        }
+
+        $filename = sprintf(
+            'Invoice %s.pdf',
+            preg_replace('/\W/', '-', $bill->invoice_id)
+        );
+
+        return Response::stream(function () use ($bill) {
+            echo Storage::disk('invoices')->get($bill->invoice_file);
+        }, 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="' . $filename . '"',
+        ]);
     }
 }
