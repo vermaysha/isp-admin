@@ -16,6 +16,14 @@
                     </div>
                 </div>
             @endif
+            @if (session('warning'))
+                <div class="col-md-12">
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Berhasil!</strong> {{ session('warning') }}
+                        <button type="button" class="btn-close" data-coreui-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+            @endif
             <div class="col-md-6">
                 <div class="card mb-4">
                     <div class="card-header">
@@ -104,14 +112,16 @@
                             </table>
                         </div>
                     </div>
-                    @if ($transaction->payed_at && empty($transaction->accepted_at))
-                        <div class="card-footer d-flex justify-content-end">
+                    <div class="card-footer d-flex justify-content-between">
+                        <a href="{{ route('business.billMenu.invoice', ['id' => $transaction->id]) }}"
+                            class="btn btn-info text-white btn-sm">Invoice</a>
+                        @if ($transaction->payed_at && empty($transaction->accepted_at))
                             <button type="button" class="btn btn-sm btn-primary" data-coreui-toggle="modal"
                                 data-coreui-target="#billPhoto">
                                 Tampilkan Bukti Bayar
                             </button>
-                        </div>
-                    @endif
+                        @endif
+                    </div>
                 </div>
             </div>
 
@@ -181,8 +191,8 @@
     </div>
 
     @if ($transaction->payed_at && empty($transaction->accepted_at))
-        <div class="modal fade" id="billPhoto" data-coreui-backdrop="static" data-coreui-keyboard="false" tabindex="-1"
-            aria-labelledby="billPhotoLabel" aria-hidden="true">
+        <div class="modal fade" id="billPhoto" data-coreui-backdrop="static" data-coreui-keyboard="false"
+            tabindex="-1" aria-labelledby="billPhotoLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">

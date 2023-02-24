@@ -51,4 +51,5 @@ Route::prefix('bill')->name('billMenu.')->group(function () {
     Route::get('/paid-off', [BillController::class, 'paidOff'])->name('paidOff');
 
     Route::post('/confirm/{id}', [BillController::class, 'confirm'])->name('confirm')->whereNumber('id');
+    Route::get('/invoice/{id}', [BillController::class, 'invoice'])->name('invoice')->whereNumber('id');
 })->middleware(sprintf('role:%s|%s', ROWNER, RADMIN));
