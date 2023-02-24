@@ -29,8 +29,14 @@ class GenerateInvoice implements ShouldQueue
      */
     public function handle()
     {
+        $title = sprintf(
+            'Invoice: %s',
+            preg_replace('/\W/', '-', $this->bill->invoice_id)
+        );
+
         $pdf = Pdf::loadView('pdf.invoice', [
             'bill' => $this->bill,
+            'title' => $title,
         ]);
 
         // Generate Client id with zero prefix
