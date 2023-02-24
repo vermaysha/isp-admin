@@ -10,6 +10,8 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
 use Throwable;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -207,5 +209,37 @@ class BillController extends Controller
         return redirect()
             ->route('business.billMenu.detail', $id)
             ->with('status', 'Tagihan Telah dikonfirmasi');
+    }
+
+    /**
+     * Show invoice file
+     *
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function invoice(Request $request, string $id)
+    {
+        $bill = Bill::select('invoice_file', 'invoice_id')
+            ->whereHas('reseller.employees', fn ($q) => $q->where('user_id', Auth::id()))
+            ->where('id', $id)
+            ->firstOrFail();
+
+        if (empty($bill->invoice_file) || Storage::disk('invoices')->missing($bill->invoice_file)) {
+            return redirect()
+                ->route('business.billMenu.detail', $id)
+                ->with('warning', 'Invoice belum siap, silahkan tunggu beberapa menit');
+        }
+
+        $filename = sprintf(
+            'Invoice %s.pdf',
+            preg_replace('/\W/', '-', $bill->invoice_id)
+        );
+
+        return Response::stream(function () use ($bill) {
+            echo Storage::disk('invoices')->get($bill->invoice_file);
+        }, 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="' . $filename . '"',
+        ]);
     }
 }
