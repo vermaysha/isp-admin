@@ -115,7 +115,11 @@ class Bill extends Model
     {
         return Attribute::make(
             function ($value, $attributes) {
-                return rupiah_format($attributes['grand_total']);
+                if (isset($attributes['grand_total'])) {
+                    return rupiah_format($attributes['grand_total']);
+                }
+
+                return null;
             }
         );
     }
@@ -129,8 +133,12 @@ class Bill extends Model
     {
         return Attribute::make(
             function ($value, $attributes) {
-                return Carbon::parse($attributes['created_at'])
-                    ->isoFormat('dddd, D MMMM g');
+                if (isset($attributes['created_at'])) {
+                    return Carbon::parse($attributes['created_at'])
+                        ->isoFormat('dddd, D MMMM g');
+                }
+
+                return null;
             }
         );
     }
@@ -144,8 +152,12 @@ class Bill extends Model
     {
         return Attribute::make(
             function ($value, $attributes) {
-                return Carbon::parse($attributes['payed_at'])
-                    ->isoFormat('dddd, D MMMM g');
+                if (isset($attributes['payed_at'])) {
+                    return Carbon::parse($attributes['payed_at'])
+                        ->isoFormat('dddd, D MMMM g');
+                }
+
+                return null;
             }
         );
     }
@@ -159,8 +171,12 @@ class Bill extends Model
     {
         return Attribute::make(
             function ($value, $attributes) {
-                return Carbon::parse($attributes['payment_month'])
-                    ->isoFormat('MMMM g');
+                if (isset($attributes['payment_month'])) {
+                    return Carbon::parse($attributes['payment_month'])
+                        ->isoFormat('MMMM g');
+                }
+
+                return null;
             }
         );
     }
