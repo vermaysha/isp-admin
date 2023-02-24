@@ -373,7 +373,7 @@ class HomeController extends Controller
      */
     public function clientGraph(string $start, string $end): object
     {
-        $clients = Client::whereHas('reseller', function ($q) {
+        $clients = Client::whereHas('reseller.employees', function ($q) {
             $q->where('user_id', Auth::id());
         })
             ->select(DB::raw('count(id) as total'), DB::raw('DATE_FORMAT(created_at,\'%Y-%m-01\') as monthNum'))
