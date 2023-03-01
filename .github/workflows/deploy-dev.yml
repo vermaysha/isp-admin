@@ -39,7 +39,7 @@ jobs:
           cache: npm
 
       - name: Activate maintenance mode
-        uses: appleboy/ssh-action@v0.1.7
+        uses: appleboy/ssh-action@v0.1.8
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
@@ -50,7 +50,7 @@ jobs:
             php artisan down
 
       - name: Fetch latest code
-        uses: appleboy/ssh-action@v0.1.7
+        uses: appleboy/ssh-action@v0.1.8
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
@@ -62,7 +62,7 @@ jobs:
             git reset --hard FETCH_HEAD
 
       - name: Installing composer package
-        uses: appleboy/ssh-action@v0.1.7
+        uses: appleboy/ssh-action@v0.1.8
         if: steps.filter.outputs.composer == 'true'
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -74,7 +74,7 @@ jobs:
             composer install -n
 
       - name: Installing and rebuild resources
-        uses: appleboy/ssh-action@v0.1.7
+        uses: appleboy/ssh-action@v0.1.8
         if: steps.filter.outputs.resources == 'true'
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -88,7 +88,7 @@ jobs:
             php artisan storage:link
 
       - name: Running migration
-        uses: appleboy/ssh-action@v0.1.7
+        uses: appleboy/ssh-action@v0.1.8
         if: steps.filter.outputs.database == 'true'
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -100,7 +100,7 @@ jobs:
             php artisan migrate:fresh --seed --force
 
       - name: Deactivate maintenance mode
-        uses: appleboy/ssh-action@v0.1.7
+        uses: appleboy/ssh-action@v0.1.8
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
