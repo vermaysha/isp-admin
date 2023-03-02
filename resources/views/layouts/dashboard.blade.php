@@ -34,7 +34,7 @@
                 <li class="nav-item">
                     <a class="nav-link {{ Request::route()->getName() == 'admin.reseller' ? 'active' : '' }}"
                         href="{{ route('admin.resellerMenu.index') }}">
-                        <i class="nav-icon cil cil-user"></i> Reseller</a>
+                        <i class="nav-icon cil cil-vector"></i> Reseller</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ Request::route()->getName() == 'admin.client' ? 'active' : '' }}"
@@ -42,13 +42,13 @@
                         <i class="nav-icon cil cil-people"></i> Pelanggan </a>
                 </li>
 
-                <li class="nav-title">Data Sistem</li>
+                {{-- <li class="nav-title">Data Sistem</li> --}}
                 <li class="nav-item">
                     <a class="nav-link {{ Request::route()->getName() == 'admin.admin' ? 'active' : '' }}"
                         href="{{ route('admin.adminMenu.index') }}">
-                        <i class="nav-icon cil cil-people"></i> Admin </a>
+                        <i class="nav-icon cil cil-featured-playlist"></i> Admin </a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link {{ Request::route()->getName() == 'admin.register' ? 'active' : '' }}"
                         href="{{ route('admin.registerMenu.index') }}">
                         <i class="nav-icon cil cil-people"></i> Pendaftaran Reseller </a>
@@ -57,7 +57,7 @@
                     <a class="nav-link {{ Request::route()->getName() == 'admin.password' ? 'active' : '' }}"
                         href="{{ route('admin.passwordMenu.index') }}">
                         <i class="nav-icon cil cil-people"></i> Reset Password </a>
-                </li>
+                </li> --}}
             @endhasanyrole
 
             {{-- Reseller_Owner --}}
