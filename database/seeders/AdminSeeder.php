@@ -2,11 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\Admin;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
-class MainUserSeeder extends Seeder
+class AdminSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -19,6 +20,11 @@ class MainUserSeeder extends Seeder
             'username' => 'admin',
         ])->create()->each(function (User $user) {
             $user->assignRole(Role::ADMIN);
+
+            Admin::create([
+                'user_id' => $user->id,
+                'office_location' => 'Solo',
+            ]);
         });
     }
 }

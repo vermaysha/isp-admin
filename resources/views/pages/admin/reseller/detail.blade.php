@@ -73,7 +73,8 @@
                                         <tr>
                                             <td>Pemilik</td>
                                             <td>
-                                                <a href="{{ route('admin.userMenu', ['id' => $reseller->user->id]) }}">
+                                                <a
+                                                    href="{{ route('admin.userMenu.detail', ['id' => $reseller->user->id]) }}">
                                                     {{ $reseller->user->fullname }}
                                                 </a>
                                             </td>
@@ -82,7 +83,7 @@
                                             <td>Total Pelanggan</td>
                                             <td>
                                                 <a
-                                                    href="{{ route('admin.client', [
+                                                    href="{{ route('admin.clientMenu.index', [
                                                         'reseller' => $reseller->id,
                                                     ]) }}">
                                                     <span class="badge rounded-pill bg-primary">
@@ -95,7 +96,7 @@
                                             <td>Pelanggan PPN</td>
                                             <td>
                                                 <a
-                                                    href="{{ route('admin.client', [
+                                                    href="{{ route('admin.clientMenu.index', [
                                                         'reseller' => $reseller->id,
                                                         'is_ppn' => true,
                                                     ]) }}">
@@ -134,7 +135,7 @@
                             </div>
                             <div class="d-flex flex-row-reverse px-3">
                                 <a
-                                    href="{{ route('admin.client', [
+                                    href="{{ route('admin.clientMenu.index', [
                                         'reseller' => $reseller->id,
                                     ]) }}">Selengkapnya
                                     ..</a>
