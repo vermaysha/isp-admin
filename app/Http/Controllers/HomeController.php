@@ -45,28 +45,9 @@ class HomeController extends Controller
      */
     public function adminPages(Request $request)
     {
-        $data = shell_exec('uptime');
-        $uptime = explode(' up ', $data);
-        $uptime = explode(',', $uptime[1]);
-        $uptime = $uptime[0] . '';
-
-        $cpu = shell_exec('nproc') ?? 1;
-        $cpuLoad = sys_getloadavg()[0] / $cpu ?? 0;
-
-        $free = shell_exec('free');
-        $free = (string) trim($free);
-        $free_arr = explode("\n", $free);
-        $mem = explode(' ', $free_arr[1]);
-        $mem = array_filter($mem, function ($value) {
-            return $value !== null && $value !== false && $value !== '';
-        }); // removes nulls from array
-        $mem = array_merge($mem); // puts arrays back to [0],[1],[2] after
-        $memtotal = round($mem[1] / 1000000, 2);
-        $memused = round($mem[2] / 1000000, 2);
-
-        $diskfree = round(disk_free_space('.') / 1000000000);
-        $disktotal = round(disk_total_space('.') / 1000000000);
-        $diskused = round($disktotal - $diskfree);
+        $currentMonth = CarbonImmutable::parse(date('Y-m') . '-1');
+        $from = $currentMonth->subMonth(12)->toDateTimeString();
+        $to = $currentMonth->toDateTimeString();
 
         $userTotal = User::select('id')->count();
         $mitraTotal = Reseller::select('id')->count();
@@ -79,20 +60,45 @@ class HomeController extends Controller
             ->limit(10)
             ->get();
 
+        $allClients = Client::select(DB::raw('count(id) as total'), DB::raw('DATE_FORMAT(created_at,\'%Y-%m-01\') as monthNum'))
+            ->whereBetween('created_at', [$from, $to])
+            ->orderBy('monthNum')
+            ->groupBy('monthNum')->get();
+
+        $clientsLabels = graph($allClients, $from, $to);
+
+        $clientsData = [];
+        foreach ($clientsLabels->values as $value) {
+            $clientsData[] = (last($clientsData) ?? 0) + $value;
+        }
+
+        $allResellers = Reseller::select(DB::raw('count(id) as total'), DB::raw('DATE_FORMAT(created_at,\'%Y-%m-01\') as monthNum'))
+            ->whereBetween('created_at', [$from, $to])
+            ->orderBy('monthNum')
+            ->groupBy('monthNum')->get();
+
+        $resellerLabels = graph($allResellers, $from, $to);
+
+        $resellerData = [];
+        foreach ($resellerLabels->values as $value) {
+            $resellerData[] = (last($resellerData) ?? 0) + $value;
+        }
+
         return view('pages.admin.home', [
             'title' => 'Admin Dashboard',
-            'upTime' => $uptime,
-            'cpuLoad' => $cpuLoad,
-            'memTotal' => $memtotal,
-            'memUsed' => $memused,
-            'diskFree' => $diskfree,
-            'diskTotal' => $disktotal,
-            'diskUsed' => $diskused,
             'userTotal' => $userTotal,
             'mitraTotal' => $mitraTotal,
             'mitraNonaktif' => $mitraNonaktif,
             'clientTotal' => $clientTotal,
             'mitras' => $mitras,
+            'client' => [
+                'labels' => $clientsLabels->keys,
+                'data' => $clientsData,
+            ],
+            'reseller' => [
+                'labels' => $resellerLabels->keys,
+                'data' => $resellerData,
+            ],
         ]);
     }
 
