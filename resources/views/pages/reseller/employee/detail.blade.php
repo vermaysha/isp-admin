@@ -59,7 +59,7 @@
                                             <td scope="col"><strong>Jenis Kelamin</strong></td>
                                             <td>:</td>
                                             <td>
-                                                @if ($staff->gender == 'female')
+                                                @if ($staff->gender == 'male')
                                                     Laki-Laki
                                                 @else
                                                     Wanita
