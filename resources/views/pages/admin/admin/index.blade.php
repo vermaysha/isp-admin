@@ -106,7 +106,7 @@
                         searchable: false,
                         orderable: false,
                         render: (data, type, row, meta) => {
-                            if (row.gender == 'male') {
+                            if (row.user.gender == 'male') {
                                 return `<span class="badge badge-pills bg-info">Laki-laki</span>`;
                             } else {
                                 return `<span class="badge badge-pills bg-primary">Perempuan</span>`;
