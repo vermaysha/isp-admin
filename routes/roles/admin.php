@@ -26,6 +26,7 @@ Route::name('clientMenu.')
     ->prefix('client')
     ->group(function () {
         Route::get('/', [ClientController::class, 'index'])->name('index');
+        Route::get('/{id}', [ClientController::class, 'detail'])->name('detail')->whereNumber('id');
     });
 
 /**
@@ -44,6 +45,11 @@ Route::name('adminMenu.')
     ->prefix('admin')
     ->group(function () {
         Route::get('/', [AdminController::class, 'index'])->name('index');
+        Route::get('/{id?}', [AdminController::class, 'detail'])->name('detail')->whereNumber('id');
+        Route::get('/create', [AdminController::class, 'create'])->name('create');
+        Route::post('/store', [AdminController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [AdminController::class, 'edit'])->name('edit');
+        Route::post('/update/{id}', [AdminController::class, 'update'])->name('update')->whereNumber('id');
     });
 
 /**
