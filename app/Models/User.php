@@ -95,6 +95,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Relation to admin data (if exists)
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function admin()
+    {
+        return $this->hasOne(Admin::class);
+    }
+
+    /**
      * Relation to reseller owner data (if exitst)
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
