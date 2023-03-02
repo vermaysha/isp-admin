@@ -12,7 +12,7 @@
         @foreach ($clients as $client)
             <tr>
                 <th>
-                    <a href="">
+                    <a href="{{ route('admin.clientMenu.detail', ['id' => $client->id]) }}">
                         <img alt="{{ $client->user->fullname }}"
                             src="{{ asset($client->user->photo ?? 'assets/brand/GMDP_100x100.png') }}"
                             class="img-thumbnail rounded-circle" style="width: 60px">
@@ -20,7 +20,7 @@
                     </a>
                 </th>
                 <td>
-                    <a href="">
+                    <a href="{{ route('admin.resellerMenu.detail', ['id' => $client->reseller->id]) }}">
                         {{ $client->reseller->name }}
                     </a>
                 </td>
