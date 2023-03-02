@@ -84,6 +84,12 @@ class HomeController extends Controller
             $resellerData[] = (last($resellerData) ?? 0) + $value;
         }
 
+        $totalPPNUsers = Client::select(DB::raw('count(id) as total'))->where('is_ppn', true)
+            ->first()?->total ?? 0;
+
+        $totalNonPPNUsers = Client::select(DB::raw('count(id) as total'))->where('is_ppn', false)
+            ->first()?->total ?? 0;
+
         return view('pages.admin.home', [
             'title' => 'Admin Dashboard',
             'userTotal' => $userTotal,
@@ -99,6 +105,8 @@ class HomeController extends Controller
                 'labels' => $resellerLabels->keys,
                 'data' => $resellerData,
             ],
+            'totalPPNusers' => $totalPPNUsers,
+            'totalNonPPNUsers' => $totalNonPPNUsers,
         ]);
     }
 
