@@ -32,7 +32,7 @@
                     </a>
                 </td>
                 <td>
-                    {{ $transaction->grand_total_formated }}
+                    {{ $bill->grand_total_formated }}
                 </td>
                 <td class="text-center">
                     <span
