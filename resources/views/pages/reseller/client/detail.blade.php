@@ -46,7 +46,7 @@
                                             <td scope="col"><strong>Jenis Kelamin</strong></td>
                                             <td>:</td>
                                             <td>
-                                                @if ($client->user->gender == 'female')
+                                                @if ($client->user->gender == 'male')
                                                     Laki-Laki
                                                 @else
                                                     Wanita
