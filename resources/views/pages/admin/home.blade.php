@@ -30,7 +30,7 @@
                         </div>
                         <div>
                             <div class="fs-6 fw-semibold text-primary">{{ $userTotal }}</div>
-                            <div class="text-medium-emphasis text-uppercase fw-semibold small">Akun Pengguna</div>
+                            <div class="text-medium-emphasis text-uppercase fw-semibold small">TOTAL Akun Pengguna</div>
                         </div>
                     </div>
                 </div>
@@ -43,7 +43,7 @@
                         </div>
                         <div>
                             <div class="fs-6 fw-semibold text-primary">{{ $mitraTotal }}</div>
-                            <div class="text-medium-emphasis text-uppercase fw-semibold small">Reseller AKTIF</div>
+                            <div class="text-medium-emphasis text-uppercase fw-semibold small">TOTAL Reseller AKTIF</div>
                         </div>
                     </div>
                 </div>
@@ -56,7 +56,8 @@
                         </div>
                         <div>
                             <div class="fs-6 fw-semibold text-primary">{{ $clientTotal }}</div>
-                            <div class="text-medium-emphasis text-uppercase fw-semibold small">Pelanggan RESELLER</div>
+                            <div class="text-medium-emphasis text-uppercase fw-semibold small">TOTAL Pelanggan RESELLER
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -69,7 +70,7 @@
                         </div>
                         <div>
                             <div class="fs-6 fw-semibold text-primary">{{ $mitraNonaktif }}</div>
-                            <div class="text-medium-emphasis text-uppercase fw-semibold small">RESELLER NONAKTIF</div>
+                            <div class="text-medium-emphasis text-uppercase fw-semibold small">TOTAL RESELLER NONAKTIF</div>
                         </div>
                     </div>
                 </div>
