@@ -8,11 +8,7 @@ use App\Models\Reseller;
 use App\Models\Role;
 use App\Models\User;
 use Carbon\CarbonImmutable;
-use Carbon\CarbonInterval;
-use DatePeriod;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -304,35 +300,6 @@ class HomeController extends Controller
     }
 
     /**
-     * Generate Graph data
-     */
-    public function graph(Collection $results, string $from, string $to): object
-    {
-        $results = collect($results)->keyBy('monthNum')->map(function ($item) {
-            $item->monthNum = Carbon::parse($item->monthNum);
-
-            return $item;
-        });
-
-        $periods = new DatePeriod(Carbon::parse($from), CarbonInterval::month(), Carbon::parse($to));
-
-        $keys = [];
-        $values = [];
-
-        foreach ($periods as $period) {
-            $monthKey = $period->format('Y-m-') . '01';
-
-            $keys[] = Carbon::parse($period)->isoFormat('MMMM g');
-            $values[] = $results->get($monthKey)->total ?? 0;
-        }
-
-        return (object) [
-            'keys' => $keys,
-            'values' => $values,
-        ];
-    }
-
-    /**
      * Bill Graph data
      */
     public function billGraph(string $start, string $end): object
@@ -347,7 +314,7 @@ class HomeController extends Controller
             ->whereNotNull('payed_at')
             ->whereNotNull('accepted_at')->get();
 
-        return $this->graph($bills, $start, $end);
+        return graph($bills, $start, $end);
     }
 
     /**
@@ -365,7 +332,7 @@ class HomeController extends Controller
             ->whereNull('payed_at')
             ->orWhereNull('accepted_at')->get();
 
-        return $this->graph($outstanding, $start, $end);
+        return graph($outstanding, $start, $end);
     }
 
     /**
@@ -381,7 +348,7 @@ class HomeController extends Controller
             ->orderBy('monthNum')
             ->groupBy('monthNum')->get();
 
-        $clients = $this->graph($clients, $start, $end);
+        $clients = graph($clients, $start, $end);
 
         $clientsData = [];
         foreach ($clients->values as $value) {
