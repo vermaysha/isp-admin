@@ -9,7 +9,7 @@ use App\Models\Plan;
 use Carbon\CarbonImmutable;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
-use Log;
+use Illuminate\Support\Facades\Log;
 use Throwable;
 
 class GenerateBill extends Command

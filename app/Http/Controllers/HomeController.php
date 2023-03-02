@@ -8,11 +8,7 @@ use App\Models\Reseller;
 use App\Models\Role;
 use App\Models\User;
 use Carbon\CarbonImmutable;
-use Carbon\CarbonInterval;
-use DatePeriod;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -49,28 +45,9 @@ class HomeController extends Controller
      */
     public function adminPages(Request $request)
     {
-        $data = shell_exec('uptime');
-        $uptime = explode(' up ', $data);
-        $uptime = explode(',', $uptime[1]);
-        $uptime = $uptime[0] . '';
-
-        $cpu = shell_exec('nproc') ?? 1;
-        $cpuLoad = sys_getloadavg()[0] / $cpu ?? 0;
-
-        $free = shell_exec('free');
-        $free = (string) trim($free);
-        $free_arr = explode("\n", $free);
-        $mem = explode(' ', $free_arr[1]);
-        $mem = array_filter($mem, function ($value) {
-            return $value !== null && $value !== false && $value !== '';
-        }); // removes nulls from array
-        $mem = array_merge($mem); // puts arrays back to [0],[1],[2] after
-        $memtotal = round($mem[1] / 1000000, 2);
-        $memused = round($mem[2] / 1000000, 2);
-
-        $diskfree = round(disk_free_space('.') / 1000000000);
-        $disktotal = round(disk_total_space('.') / 1000000000);
-        $diskused = round($disktotal - $diskfree);
+        $currentMonth = CarbonImmutable::parse(date('Y-m') . '-1');
+        $from = $currentMonth->subMonth(12)->toDateTimeString();
+        $to = $currentMonth->toDateTimeString();
 
         $userTotal = User::select('id')->count();
         $mitraTotal = Reseller::select('id')->count();
@@ -83,20 +60,45 @@ class HomeController extends Controller
             ->limit(10)
             ->get();
 
+        $allClients = Client::select(DB::raw('count(id) as total'), DB::raw('DATE_FORMAT(created_at,\'%Y-%m-01\') as monthNum'))
+            ->whereBetween('created_at', [$from, $to])
+            ->orderBy('monthNum')
+            ->groupBy('monthNum')->get();
+
+        $clientsLabels = graph($allClients, $from, $to);
+
+        $clientsData = [];
+        foreach ($clientsLabels->values as $value) {
+            $clientsData[] = (last($clientsData) ?? 0) + $value;
+        }
+
+        $allResellers = Reseller::select(DB::raw('count(id) as total'), DB::raw('DATE_FORMAT(created_at,\'%Y-%m-01\') as monthNum'))
+            ->whereBetween('created_at', [$from, $to])
+            ->orderBy('monthNum')
+            ->groupBy('monthNum')->get();
+
+        $resellerLabels = graph($allResellers, $from, $to);
+
+        $resellerData = [];
+        foreach ($resellerLabels->values as $value) {
+            $resellerData[] = (last($resellerData) ?? 0) + $value;
+        }
+
         return view('pages.admin.home', [
             'title' => 'Admin Dashboard',
-            'upTime' => $uptime,
-            'cpuLoad' => $cpuLoad,
-            'memTotal' => $memtotal,
-            'memUsed' => $memused,
-            'diskFree' => $diskfree,
-            'diskTotal' => $disktotal,
-            'diskUsed' => $diskused,
             'userTotal' => $userTotal,
             'mitraTotal' => $mitraTotal,
             'mitraNonaktif' => $mitraNonaktif,
             'clientTotal' => $clientTotal,
             'mitras' => $mitras,
+            'client' => [
+                'labels' => $clientsLabels->keys,
+                'data' => $clientsData,
+            ],
+            'reseller' => [
+                'labels' => $resellerLabels->keys,
+                'data' => $resellerData,
+            ],
         ]);
     }
 
@@ -304,35 +306,6 @@ class HomeController extends Controller
     }
 
     /**
-     * Generate Graph data
-     */
-    public function graph(Collection $results, string $from, string $to): object
-    {
-        $results = collect($results)->keyBy('monthNum')->map(function ($item) {
-            $item->monthNum = Carbon::parse($item->monthNum);
-
-            return $item;
-        });
-
-        $periods = new DatePeriod(Carbon::parse($from), CarbonInterval::month(), Carbon::parse($to));
-
-        $keys = [];
-        $values = [];
-
-        foreach ($periods as $period) {
-            $monthKey = $period->format('Y-m-') . '01';
-
-            $keys[] = Carbon::parse($period)->isoFormat('MMMM g');
-            $values[] = $results->get($monthKey)->total ?? 0;
-        }
-
-        return (object) [
-            'keys' => $keys,
-            'values' => $values,
-        ];
-    }
-
-    /**
      * Bill Graph data
      */
     public function billGraph(string $start, string $end): object
@@ -347,7 +320,7 @@ class HomeController extends Controller
             ->whereNotNull('payed_at')
             ->whereNotNull('accepted_at')->get();
 
-        return $this->graph($bills, $start, $end);
+        return graph($bills, $start, $end);
     }
 
     /**
@@ -365,7 +338,7 @@ class HomeController extends Controller
             ->whereNull('payed_at')
             ->orWhereNull('accepted_at')->get();
 
-        return $this->graph($outstanding, $start, $end);
+        return graph($outstanding, $start, $end);
     }
 
     /**
@@ -381,7 +354,7 @@ class HomeController extends Controller
             ->orderBy('monthNum')
             ->groupBy('monthNum')->get();
 
-        $clients = $this->graph($clients, $start, $end);
+        $clients = graph($clients, $start, $end);
 
         $clientsData = [];
         foreach ($clients->values as $value) {
