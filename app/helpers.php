@@ -1,5 +1,9 @@
 <?php
 
+use Carbon\CarbonInterval;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
+
 if (! function_exists('random_number')) {
     /**
      * Generate random number with fixed digit
@@ -31,5 +35,36 @@ if (! function_exists('rupiah_format')) {
                 '.'
             )
         );
+    }
+}
+
+if (! function_exists('graph')) {
+    /**
+     * Generate Graph data
+     */
+    function graph(Collection $results, string $from, string $to): object
+    {
+        $results = collect($results)->keyBy('monthNum')->map(function ($item) {
+            $item->monthNum = Carbon::parse($item->monthNum);
+
+            return $item;
+        });
+
+        $periods = new DatePeriod(Carbon::parse($from), CarbonInterval::month(), Carbon::parse($to));
+
+        $keys = [];
+        $values = [];
+
+        foreach ($periods as $period) {
+            $monthKey = $period->format('Y-m-') . '01';
+
+            $keys[] = Carbon::parse($period)->isoFormat('MMMM g');
+            $values[] = $results->get($monthKey)->total ?? 0;
+        }
+
+        return (object) [
+            'keys' => $keys,
+            'values' => $values,
+        ];
     }
 }
