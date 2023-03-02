@@ -145,8 +145,6 @@
             }
         });
 
-        {{ $totalNonPPNUsers }}
-
         new Chart(ppnCtx, {
             type: 'doughnut',
             data: {
