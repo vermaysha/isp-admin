@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Client;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -34,6 +35,23 @@ class ClientController extends Controller
         return view('pages.admin.client.index', [
             'title' => 'Pelanggan',
             'clients' => $clients->paginate(20)->appends($request->all()),
+        ]);
+    }
+
+    public function detail(Request $request, string $id)
+    {
+        $client = Client::with([
+            'user',
+            'plan',
+            'bills' => function (HasMany $q) {
+                $q->limit(5);
+                $q->orderBy('id', 'desc');
+            },
+        ])->findOrFail($id);
+
+        return view('pages.admin.client.detail', [
+            'title' => 'Detail Pelanggan: ' . $client->user->fullname,
+            'client' => $client,
         ]);
     }
 }
