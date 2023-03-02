@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
         // Load seeder sequentially
         $this->call([
             RoleSeeder::class,
-            MainUserSeeder::class,
+            AdminSeeder::class,
             ResellerSeeder::class,
             PlanSeeder::class,
             ClientSeeder::class,
