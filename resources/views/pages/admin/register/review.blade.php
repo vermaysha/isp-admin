@@ -31,14 +31,17 @@
                                     placeholder="Kawasan Bisnis Terpadu The Park, Office Park, Jl. Ir. Soekarno No.25, Dusun II, Madegondo, Kec. Grogol, Kabupaten Sukoharjo, Jawa Tengah 57552"
                                     rows="3"></textarea>
                             </div>
-                            <div class="col-md-12 mb-4"> {{-- edit lagi --}}
-                                <label for="owner_photo" class="form-label">Upload Bukti Dokumen
-                                    Registrasi</label>
-                                <input type="file" accept="all/*" name="registration" id="registration"
-                                    class="form-control" onchange="preview(event, 'imgRegistration')">
+                        </fieldset>
+                        <fieldset class="border row p-3 mb-4 rounded-2">
+                            <legend class="float-none w-auto px-4">Informasi Dokumen</legend>
+                            <div class="d-flex justify-content-between">
+                                <label class="form-label" for="register_doc">Dokumen Registrasi Reseller</label>
+                                <button type="button" class="btn btn-sm btn-primary" data-coreui-toggle="modal"
+                                    data-coreui-target="">
+                                    Tampilkan Bukti Dokumen
+                                </button>
                             </div>
                         </fieldset>
-
                         <fieldset class="border row p-3 mb-4 rounded-2">
                             <legend class="float-none w-auto px-4">Informasi Owner</legend>
                             <div class="col-md-6 mb-2">
@@ -73,7 +76,8 @@
                                 <a href="" class="btn btn-danger btn-outline">Tolak Pendaftaran</a>
                             </div>
                             <div class="px-3">
-                                <a href="" class="btn btn-primary btn-outline">Lanjutkan Pendaftaran</a>
+                                <a href="{{ route('admin.registerMenu.register') }}"
+                                    class="btn btn-primary btn-outline">Lanjutkan Pendaftaran</a>
                             </div>
                         </div>
                     </div>
