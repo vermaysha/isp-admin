@@ -84,7 +84,7 @@
         </div>
         <!-- /.row-->
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-8">
                 <div class="card mb-4">
                     <div class="card-header text-center fw-semibold">Mitra Dengan Pelanggan Terbanyak</div>
                     <div class="card-body">
@@ -131,6 +131,15 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <canvas id="ppnChart" aria-label="Grafik Total Reseller" role="img">
+                            Your browser does not support the canvas element
+                        </canvas>
+                    </div>
+                </div>
+            </div>
             <!-- /.col-->
         </div>
         <!-- /.row-->
@@ -142,6 +151,7 @@
     <script>
         const clientCtx = document.getElementById('clientChart')
         const resellerChart = document.getElementById('resellerChart')
+        const ppnCtx = document.getElementById('ppnChart')
 
         new Chart(clientCtx, {
             type: 'bar',
@@ -191,6 +201,29 @@
                 responsive: true,
                 maintainAspectRatio: false
             }
+        });
+
+        new Chart(ppnCtx, {
+            type: 'doughnut',
+            data: {
+                labels: [
+                    'Pelanggan PPN',
+                    'Pelanggan NON-PPN'
+                ],
+                datasets: [{
+                    label: 'Total',
+                    data: [{{ $totalPPNusers }}, {{ $totalNonPPNUsers }}],
+                    backgroundColor: [
+                        'rgb(54, 162, 235)',
+                        'rgb(255, 205, 86)'
+                    ],
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+            },
         });
     </script>
 @endsection
