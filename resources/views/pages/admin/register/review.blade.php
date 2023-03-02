@@ -42,7 +42,6 @@
                                 </button>
                             </div>
                         </fieldset>
-                        \
                         <fieldset class="border row p-3 mb-4 rounded-2">
                             <legend class="float-none w-auto px-4">Informasi Owner</legend>
                             <div class="col-md-6 mb-2">
