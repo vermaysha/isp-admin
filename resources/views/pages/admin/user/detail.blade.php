@@ -52,9 +52,9 @@
                                     <tr>
                                         <td>Jenis Kelamin</td>
                                         <td>
-                                            @if ($owner->gender === 'male')
+                                            @if ($owner->gender == 'male')
                                                 Laki-laki
-                                            @elseif ($owner->gender === 'female')
+                                            @elseif ($owner->gender == 'female')
                                                 Wanita
                                             @else
                                                 -
