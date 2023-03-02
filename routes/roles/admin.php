@@ -54,6 +54,7 @@ Route::name('registerMenu.')
     ->group(function () {
         Route::get('/', [RegisterController::class, 'index'])->name('index');
         Route::get('/review', [RegisterController::class, 'review'])->name('review');
+        Route::get('/register', [RegisterController::class, 'register'])->name('register');
     });
 
 /**

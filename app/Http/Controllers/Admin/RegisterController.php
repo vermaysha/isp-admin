@@ -20,4 +20,11 @@ class RegisterController extends Controller
             'title' => 'Pendaftaran Akun',
         ]);
     }
+
+    public function register(Request $request)
+    {
+        return view('pages.admin.register.register', [
+            'title' => 'Pendaftaran Akun',
+        ]);
+    }
 }

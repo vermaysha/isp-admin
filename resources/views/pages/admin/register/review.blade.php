@@ -76,7 +76,8 @@
                                 <a href="" class="btn btn-danger btn-outline">Tolak Pendaftaran</a>
                             </div>
                             <div class="px-3">
-                                <a href="" class="btn btn-primary btn-outline">Lanjutkan Pendaftaran</a>
+                                <a href="{{ route('admin.registerMenu.register') }}"
+                                    class="btn btn-primary btn-outline">Lanjutkan Pendaftaran</a>
                             </div>
                         </div>
                     </div>
