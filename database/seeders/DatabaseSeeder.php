@@ -15,16 +15,26 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // Load seeder sequentially
+        if (app()->environment('production')) {
+            $this->call([
+                RoleSeeder::class,
+                AdminSeeder::class,
+            ]);
+        } else {
+            $this->call([
+                RoleSeeder::class,
+                AdminSeeder::class,
+                ResellerSeeder::class,
+                PlanSeeder::class,
+                ClientSeeder::class,
+                BillSeeder::class,
+                WalletSeeder::class,
+                InvoicePDFSeeder::class,
+            ]);
+        }
+
         $this->call([
-            RoleSeeder::class,
-            AdminSeeder::class,
-            ResellerSeeder::class,
-            PlanSeeder::class,
-            ClientSeeder::class,
-            BillSeeder::class,
-            WalletSeeder::class,
-            InvoicePDFSeeder::class,
+            \Vermaysha\Wilayah\Seeds\DatabaseSeeder::class,
         ]);
     }
 }
