@@ -183,7 +183,7 @@
             data: {
                 labels: {{ Js::from($reseller['labels']) }},
                 datasets: [{
-                    label: 'Jumlah Pelanggan',
+                    label: 'Jumlah Reseller',
                     data: {{ Js::from($reseller['data']) }},
                     borderWidth: 1,
                     fill: false
