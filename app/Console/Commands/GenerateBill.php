@@ -45,7 +45,7 @@ class GenerateBill extends Command
         $bills = [];
 
         foreach ($clients as $client) {
-            $now = now()->setMonth(1)->setDay(1);
+            $now = now()->setWeek(1)->setDay(1);
             $createdAt = CarbonImmutable::parse($client->lastBill->payment_month);
             $diffMonth = CarbonImmutable::parse($createdAt->format('Y-m'))
                 ->setTime($now->hour, $now->minute, $now->second)
