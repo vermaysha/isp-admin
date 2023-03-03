@@ -224,7 +224,7 @@ class BillController extends Controller
             ->where('id', $id)
             ->firstOrFail();
 
-        if (empty($bill->invoice_file) || Storage::disk('invoices')->missing($bill->invoice_file)) {
+        if (empty($bill->invoice_file)) {
             return redirect()
                 ->route('business.billMenu.detail', $id)
                 ->with('warning', 'Invoice belum siap, silahkan tunggu beberapa menit');
