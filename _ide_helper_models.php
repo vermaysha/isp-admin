@@ -11,6 +11,33 @@
 
 namespace App\Models{
     /**
+     * App\Models\Admin
+     *
+     * @property int $id
+     * @property int $user_id
+     * @property string $office_location
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property-read \App\Models\User $user
+     *
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admin newModelQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admin newQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admin query()
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admin whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admin whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admin whereOfficeLocation($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admin whereUpdatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admin whereUserId($value)
+     *
+     * @mixin \Eloquent
+     */
+    class IdeHelperAdmin
+    {
+    }
+}
+
+namespace App\Models{
+    /**
      * App\Models\Bill
      *
      * @property int $id
@@ -21,6 +48,7 @@ namespace App\Models{
      * @property string $grand_total Balance With PPN & BHP USO
      * @property int|null $transaction_id
      * @property string|null $bill_photo
+     * @property string|null $invoice_file
      * @property int|null $reseller_id
      * @property string $reseller_name
      * @property int|null $client_id
@@ -56,6 +84,7 @@ namespace App\Models{
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill whereDescription($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill whereGrandTotal($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill whereInvoiceFile($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill whereInvoiceId($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill wherePayedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Bill wherePaymentMonth($value)
@@ -342,6 +371,7 @@ namespace App\Models{
      * @property \Illuminate\Support\Carbon|null $deleted_at
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property-read \App\Models\Admin|null $admin
      * @property-read \App\Models\Client|null $client
      * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
      * @property-read int|null $notifications_count
