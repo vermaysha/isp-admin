@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\PasswordController;
 use App\Http\Controllers\Admin\RegisterController;
 use App\Http\Controllers\Admin\ResellerController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 /**
