@@ -26,6 +26,9 @@ class Reseller extends Model implements Wallet
         'email',
         'phone_number',
         'address',
+        'npwp',
+        'pks',
+        'contract_file',
         'contract_start_at',
         'contract_end_at',
     ];
