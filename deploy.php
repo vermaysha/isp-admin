@@ -23,6 +23,8 @@ add('writable_dirs', [
     'storage/debugbar',
     'storage/fonts',
     'storage/app/invoices',
+    'storage/app/ktp',
+    'storage/app/contracts',
 ]);
 
 host('production')
