@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('photo')->nullable();
             $table->text('address')->nullable();
             $table->string('nik')->nullable();
+            $table->string('ktp_file')->nullable();
             $table->string('phone_number')->nullable();
             $table->date('birth')->nullable();
             $table->set('gender', ['male', 'female', 'other'])->nullable();
