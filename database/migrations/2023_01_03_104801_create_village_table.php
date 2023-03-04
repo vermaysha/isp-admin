@@ -3,8 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Vermaysha\Wilayah\Models\City;
-use Vermaysha\Wilayah\Models\Province;
+use Vermaysha\Wilayah\Models\District;
+use Vermaysha\Wilayah\Models\Village;
 
 return new class extends Migration
 {
@@ -12,17 +12,17 @@ return new class extends Migration
     {
         Schema::create($this->tableName(), function (Blueprint $table) {
             $table->id();
-            $table->char('code', 2)->unique();
-            $table->char('province_code');
+            $table->char('code', 10)->unique();
+            $table->char('district_code', 6);
             $table->string('name');
             $table->timestamps();
 
-            $table->foreign('province_code')->references('code')->on((new Province())->getTable());
+            $table->foreign('district_code')->references('code')->on((new District)->getTable());
         });
     }
 
     private function tableName(): string
     {
-        return (new City())->getTable();
+        return (new Village())->getTable();
     }
 };
