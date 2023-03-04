@@ -14,6 +14,7 @@
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.7",
+        "matanyadaev/laravel-eloquent-spatial": "^3.1",
         "predis/predis": "~2.1",
         "sentry/sentry-laravel": "^3.2",
         "spatie/cpu-load-health-check": "^1.0",
