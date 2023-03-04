@@ -68,7 +68,7 @@
                             </div>
                             <div class="col-md-12 mb-3">
                                 <label for="address" class="form-label">Alamat Lengkap</label>
-                                <textarea name="address" id="address" class="form-control" rows="5">{{ old('address') ?? $admin->user->address }}</textarea>
+                                <textarea name="address" id="address" class="form-control" rows="5">{{ old('address') ?? $admin->user->address->full_address }}</textarea>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="photo" class="form-label">Foto</label>

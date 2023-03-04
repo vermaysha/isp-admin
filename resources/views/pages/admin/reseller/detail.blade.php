@@ -28,7 +28,7 @@
                                         </tr>
                                         <tr>
                                             <td scope="col">Alamat Instansi</td>
-                                            <td>{{ $reseller->address }}</td>
+                                            <td>{{ $reseller->address->full_address }}</td>
                                         </tr>
                                         <tr>
                                             <td scope="col">Alamat Email</td>
