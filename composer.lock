@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "928aca09588cf6b3f970e45536d0b31d",
+    "content-hash": "87d0cb3e62b93bed5dded3a6d4d169dd",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -8868,16 +8868,16 @@
         },
         {
             "name": "vermaysha/laravel-wilayah-indonesia",
-            "version": "v1.1.0",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vermaysha/laravel-wilayah-indonesia.git",
-                "reference": "7d66d55701f4f39fa0b1548e69cb085061ff8c21"
+                "reference": "8139440a1f5b2bb74f80fb133e293de5b6d1fc59"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vermaysha/laravel-wilayah-indonesia/zipball/7d66d55701f4f39fa0b1548e69cb085061ff8c21",
-                "reference": "7d66d55701f4f39fa0b1548e69cb085061ff8c21",
+                "url": "https://api.github.com/repos/vermaysha/laravel-wilayah-indonesia/zipball/8139440a1f5b2bb74f80fb133e293de5b6d1fc59",
+                "reference": "8139440a1f5b2bb74f80fb133e293de5b6d1fc59",
                 "shasum": ""
             },
             "require": {
@@ -8931,9 +8931,9 @@
             ],
             "support": {
                 "issues": "https://github.com/vermaysha/laravel-wilayah-indonesia/issues",
-                "source": "https://github.com/vermaysha/laravel-wilayah-indonesia/tree/v1.1.0"
+                "source": "https://github.com/vermaysha/laravel-wilayah-indonesia/tree/v2.0.0"
             },
-            "time": "2023-02-26T01:08:53+00:00"
+            "time": "2023-03-04T03:36:35+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
