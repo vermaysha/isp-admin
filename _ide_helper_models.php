@@ -11,6 +11,40 @@
 
 namespace App\Models{
     /**
+     * App\Models\Address
+     *
+     * @property int $id
+     * @property int $village_id
+     * @property string|null $postal_code
+     * @property string|null $address_line
+     * @property \MatanYadaev\EloquentSpatial\Objects\Geometry|null|null $coordinates
+     * @property string|null $deleted_at
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property-read \Vermaysha\Wilayah\Models\Village $village
+     *
+     * @method static \Database\Factories\AddressFactory factory($count = null, $state = [])
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address newModelQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address newQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address query()
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereAddressLine($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereCoordinates($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereDeletedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address wherePostalCode($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereUpdatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Address whereVillageId($value)
+     *
+     * @mixin \Eloquent
+     */
+    class IdeHelperAddress
+    {
+    }
+}
+
+namespace App\Models{
+    /**
      * App\Models\Admin
      *
      * @property int $id
@@ -117,8 +151,15 @@ namespace App\Models{
      * @property int $user_id
      * @property int $plan_id
      * @property int $reseller_id
+     * @property string|null $plan_price Custom plan price
+     * @property string|null $plan_bandwidth Custom plan bandwidth
+     * @property string|null $npwp
      * @property string|null $payment_due_date
      * @property bool $is_ppn
+     * @property int $status
+     * @property \Illuminate\Support\Carbon|null $installed_at
+     * @property \Illuminate\Support\Carbon|null $blocked_at
+     * @property \Illuminate\Support\Carbon|null $inactive_at
      * @property \Illuminate\Support\Carbon|null $deleted_at
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property \Illuminate\Support\Carbon|null $updated_at
@@ -134,13 +175,20 @@ namespace App\Models{
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Client onlyTrashed()
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Client ppn()
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Client query()
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Client whereBlockedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Client whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Client whereDeletedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Client whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Client whereInactiveAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Client whereInstalledAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Client whereIsPpn($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Client whereNpwp($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Client wherePaymentDueDate($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Client wherePlanBandwidth($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Client wherePlanId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Client wherePlanPrice($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Client whereResellerId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Client whereStatus($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Client whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Client whereUserId($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Client withTrashed()
@@ -243,13 +291,17 @@ namespace App\Models{
      * @property string|null $photo
      * @property string|null $email Company Email
      * @property string|null $phone_number Company Phone Number
-     * @property string|null $address Company Address
+     * @property int $address_id
+     * @property string|null $npwp NPWP Number
+     * @property string|null $pks PKS number
+     * @property string|null $contract_file Contract File
      * @property \Illuminate\Support\Carbon|null $contract_start_at
      * @property \Illuminate\Support\Carbon|null $contract_end_at
      * @property \Illuminate\Support\Carbon|null $inactive_at
      * @property \Illuminate\Support\Carbon|null $deleted_at
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property-read \App\Models\Address $address
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Client> $clients
      * @property-read int|null $clients_count
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $employees
@@ -270,8 +322,9 @@ namespace App\Models{
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Reseller newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Reseller onlyTrashed()
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Reseller query()
-     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Reseller whereAddress($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Reseller whereAddressId($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Reseller whereContractEndAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Reseller whereContractFile($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Reseller whereContractStartAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Reseller whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Reseller whereDeletedAt($value)
@@ -279,8 +332,10 @@ namespace App\Models{
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Reseller whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Reseller whereInactiveAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Reseller whereName($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Reseller whereNpwp($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Reseller wherePhoneNumber($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Reseller wherePhoto($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Reseller wherePks($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Reseller whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Reseller whereUserId($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Reseller withTrashed()
@@ -362,8 +417,9 @@ namespace App\Models{
      * @property string $password
      * @property string|null $fullname
      * @property string|null $photo
-     * @property string|null $address
+     * @property int $address_id
      * @property string|null $nik
+     * @property string|null $ktp_file
      * @property string|null $phone_number
      * @property \Illuminate\Support\Carbon|null $birth
      * @property mixed|null $gender
@@ -371,6 +427,7 @@ namespace App\Models{
      * @property \Illuminate\Support\Carbon|null $deleted_at
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property-read \App\Models\Address $address
      * @property-read \App\Models\Admin|null $admin
      * @property-read \App\Models\Client|null $client
      * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
@@ -394,7 +451,7 @@ namespace App\Models{
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User permission($permissions)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User query()
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User role($roles, $guard = null)
-     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereAddress($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereAddressId($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereBirth($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereDeletedAt($value)
@@ -402,6 +459,7 @@ namespace App\Models{
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereFullname($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereGender($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereKtpFile($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereNik($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User wherePassword($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User wherePhoneNumber($value)
