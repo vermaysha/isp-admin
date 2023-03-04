@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use MatanYadaev\EloquentSpatial\Objects\Point;
 use Vermaysha\Wilayah\Models\Village;
 
+/**
+ * @mixin IdeHelperAddress
+ */
 class Address extends Model
 {
     use HasFactory;
