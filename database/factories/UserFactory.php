@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Address;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -27,7 +28,7 @@ class UserFactory extends Factory
             'password' => Hash::make(('password')),
             'fullname' => $faker->name($gender),
             'photo' => 'assets/img/avatars/' . $faker->numberBetween(1, 30) . '.jpg',
-            'address' => $faker->address(),
+            'address_id' => Address::factory()->create(),
             'nik' => $faker->nik(),
             'phone_number' => $faker->e164PhoneNumber(),
             'ktp_file' => 'example.jpg',
