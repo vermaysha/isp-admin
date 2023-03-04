@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AddresssController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
@@ -24,6 +25,18 @@ Route::middleware([
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    /**
+     * Address
+     */
+    Route::middleware([
+        'api',
+    ])->prefix('address')->group(function () {
+        Route::get('/provinces', [AddresssController::class, 'provinces'])->name('provinces');
+        Route::get('/cities/{code}', [AddresssController::class, 'cities'])->name('cities')->whereNumber('code');
+        Route::get('/districts/{code}', [AddresssController::class, 'districts'])->name('districts')->whereNumber('code');
+        Route::get('/villages/{code}', [AddresssController::class, 'villages'])->name('villages')->whereNumber('code');
+    });
 
     /**
      * Route for admin
