@@ -6,21 +6,21 @@ return [
         /**
          * Provinces table name
          */
-        'province' => 'provinces',
+        'province' => 'id_provinces',
 
         /**
          * City table name
          */
-        'city' => 'cities',
+        'city' => 'id_cities',
 
         /**
          * District table name
          */
-        'district' => 'districts',
+        'district' => 'id_districts',
 
         /**
          * Village table name
          */
-        'village' => 'villages',
+        'village' => 'id_villages',
     ],
 ];
