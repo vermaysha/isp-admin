@@ -34,6 +34,8 @@ class User extends Authenticatable
         'gender',
         'address',
         'photo',
+        'nik',
+        'ktp_file',
         'phone_number',
     ];
 
