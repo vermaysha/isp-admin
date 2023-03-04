@@ -17,12 +17,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        if (app()->environment('production')) {
-            $this->call([
-                RoleSeeder::class,
-                AdminSeeder::class,
-            ]);
-        } else {
+        $this->call([
+            RoleSeeder::class,
+            \Vermaysha\Wilayah\Seeds\DatabaseSeeder::class,
+            AdminSeeder::class,
+        ]);
+
+        if (! app()->environment('production')) {
             $file = Http::get('https://placehold.jp/ffffff/000000/200x300.jpg?text=Contoh%20File%20KTP');
             Storage::disk('ktp')->put('example.jpg', $file->body());
 
@@ -30,8 +31,6 @@ class DatabaseSeeder extends Seeder
             Storage::disk('contracts')->put('example.jpg', $file->body());
 
             $this->call([
-                RoleSeeder::class,
-                AdminSeeder::class,
                 ResellerSeeder::class,
                 PlanSeeder::class,
                 ClientSeeder::class,
@@ -40,9 +39,5 @@ class DatabaseSeeder extends Seeder
                 InvoicePDFSeeder::class,
             ]);
         }
-
-        $this->call([
-            \Vermaysha\Wilayah\Seeds\DatabaseSeeder::class,
-        ]);
     }
 }
