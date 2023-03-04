@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Address;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -25,7 +26,7 @@ class ResellerFactory extends Factory
             'email' => $faker->companyEmail(),
             'photo' => 'assets/img/logos/' . $faker->numberBetween(1, 30) . '.jpg',
             'phone_number' => $faker->e164PhoneNumber(),
-            'address' => $faker->address(),
+            'address_id' => Address::factory()->create(),
             'npwp' => $faker->nik(),
             'pks' => $faker->nik(),
             'contract_file' => 'example.jpg',
