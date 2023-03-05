@@ -18,6 +18,10 @@ use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use Intervention\Image\Facades\Image;
 use Throwable;
+use Vermaysha\Wilayah\Models\City;
+use Vermaysha\Wilayah\Models\District;
+use Vermaysha\Wilayah\Models\Province;
+use Vermaysha\Wilayah\Models\Village;
 use Yajra\DataTables\Facades\DataTables;
 
 class AdminController extends Controller
@@ -175,7 +179,27 @@ class AdminController extends Controller
             'password' => 'nullable|confirmed',
             'birth' => 'nullable|date',
             'gender' => 'nullable|in:male,female',
-            'address' => 'nullable',
+            'province' => [
+                'required',
+                Rule::exists((new Province())->getTable(), 'code'),
+            ],
+            'city' => [
+                'required',
+                Rule::exists((new City())->getTable(), 'code'),
+            ],
+            'district' => [
+                'required',
+                Rule::exists((new District())->getTable(), 'code'),
+            ],
+            'village' => [
+                'required',
+                Rule::exists((new Village())->getTable(), 'code'),
+            ],
+            'village_id' => [
+                'required',
+                Rule::exists((new Village())->getTable(), 'id'),
+            ],
+            'address_line' => 'nullable',
             'photo' => 'nullable|image|max:1024',
             'office_location' => [
                 'required',
@@ -203,7 +227,7 @@ class AdminController extends Controller
 
         try {
             DB::transaction(function () use ($request, $photoPath, $id) {
-                $user = User::whereHas('admin', function ($q) use ($id) {
+                $user = User::with('address')->whereHas('admin', function ($q) use ($id) {
                     $q->where('id', $id);
                 })->first();
 
@@ -215,7 +239,6 @@ class AdminController extends Controller
                     'password',
                     'birth',
                     'gender',
-                    'address',
                 ];
 
                 foreach ($allowedInput as $key) {
@@ -227,6 +250,11 @@ class AdminController extends Controller
                 if ($photoPath) {
                     $user->photo = $photoPath ? 'storage/' . $photoPath : null;
                 }
+
+                $user->address->update([
+                    'village_id' => $request->input('village_id'),
+                    'address_line' => $request->input('address_line'),
+                ]);
 
                 $user->save();
 
