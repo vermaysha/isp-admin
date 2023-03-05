@@ -56,7 +56,7 @@
                                         </span>
                                     @else
                                         <span class="badge badge-pills bg-danger">
-                                            Harga Belum Sudah termasuk PPN 11%
+                                            Harga Belum termasuk PPN 11%
                                         </span>
                                     @endif
                                 </td>
