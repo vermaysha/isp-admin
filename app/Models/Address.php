@@ -34,7 +34,7 @@ class Address extends Model
      * @var array
      */
     protected $with = [
-        'village:id,district_code,name',
+        'village:id,code,district_code,name',
         'village.district:code,city_code,name',
         'village.district.city:code,province_code,name',
         'village.district.city.province:code,name',
