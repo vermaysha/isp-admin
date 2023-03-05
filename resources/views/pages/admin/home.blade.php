@@ -116,7 +116,8 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="fw-semibold text-center">{{ $mitra->user->address }}</div>
+                                                <div class="fw-semibold text-center">
+                                                    {{ $mitra->user->address->full_address }}</div>
                                                 <div class="small text-medium-emphasis text-center">
                                                     {{ $mitra->user->phone_number }}</div>
                                             </td>

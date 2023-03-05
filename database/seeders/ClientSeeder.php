@@ -40,14 +40,19 @@ class ClientSeeder extends Seeder
             $date = $faker->numberBetween(1, 30);
             $createdAt = $user->created_at->addMonth($i);
 
+            $isPpn = mt_rand(1, 10) >= 5;
+
             $clients[] = [
                 'user_id' => $user->id,
                 'plan_id' => $faker->randomElement($planIds),
                 'reseller_id' => $reseller->id,
                 'payment_due_date' => "{$date}",
-                'is_ppn' => $faker->randomElement([1, 0]),
+                'npwp' => $isPpn ? $faker->nik() : null,
+                'is_ppn' => $isPpn,
                 'created_at' => $createdAt,
                 'updated_at' => $createdAt,
+                'status' => Client::ACTIVED,
+                'installed_at' => $createdAt,
             ];
         }
 

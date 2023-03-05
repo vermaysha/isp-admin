@@ -5,7 +5,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 10.0.3.
+ * Generated for Laravel 10.2.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -3434,6 +3434,7 @@ namespace Illuminate\Support\Facades {
      * @method static array|null resolveAuthenticatedUser(\Illuminate\Http\Request $request)
      * @method static void resolveAuthenticatedUserUsing(\Closure $callback)
      * @method static \Illuminate\Broadcasting\Broadcasters\Broadcaster channel(\Illuminate\Contracts\Broadcasting\HasBroadcastChannel|string $channel, callable|string $callback, array $options = [])
+     * @method static \Illuminate\Support\Collection getChannels()
      *
      * @see \Illuminate\Broadcasting\BroadcastManager
      * @see \Illuminate\Broadcasting\Broadcasters\Broadcaster
@@ -4256,6 +4257,22 @@ namespace Illuminate\Support\Facades {
         }
 
         /**
+         * Resolve the given store.
+         *
+         * @param  string  $name
+         * @return \Illuminate\Contracts\Cache\Repository
+         *
+         * @throws \InvalidArgumentException
+         *
+         * @static
+         */
+        public static function resolve($name)
+        {
+            /** @var \Illuminate\Cache\CacheManager $instance */
+            return $instance->resolve($name);
+        }
+
+        /**
          * Create a new cache repository with the given implementation.
          *
          * @param  \Illuminate\Contracts\Cache\Store  $store
@@ -4770,6 +4787,20 @@ namespace Illuminate\Support\Facades {
         {
             /** @var \Illuminate\Cache\Repository $instance */
             return $instance->getStore();
+        }
+
+        /**
+         * Set the cache store implementation.
+         *
+         * @param  \Illuminate\Contracts\Cache\Store  $store
+         * @return static
+         *
+         * @static
+         */
+        public static function setStore($store)
+        {
+            /** @var \Illuminate\Cache\Repository $instance */
+            return $instance->setStore($store);
         }
 
         /**
@@ -8922,7 +8953,7 @@ namespace Illuminate\Support\Facades {
      * @method static \Illuminate\Http\Client\PendingRequest withBasicAuth(string $username, string $password)
      * @method static \Illuminate\Http\Client\PendingRequest withDigestAuth(string $username, string $password)
      * @method static \Illuminate\Http\Client\PendingRequest withToken(string $token, string $type = 'Bearer')
-     * @method static \Illuminate\Http\Client\PendingRequest withUserAgent(string $userAgent)
+     * @method static \Illuminate\Http\Client\PendingRequest withUserAgent(string|bool $userAgent)
      * @method static \Illuminate\Http\Client\PendingRequest withUrlParameters(array $parameters = [])
      * @method static \Illuminate\Http\Client\PendingRequest withCookies(array $cookies, string $domain)
      * @method static \Illuminate\Http\Client\PendingRequest maxRedirects(int $max)
@@ -9653,6 +9684,8 @@ namespace Illuminate\Support\Facades {
      * @method static \Psr\Log\LoggerInterface getLogger()
      * @method static \Illuminate\Contracts\Events\Dispatcher getEventDispatcher()
      * @method static void setEventDispatcher(\Illuminate\Contracts\Events\Dispatcher $dispatcher)
+     * @method static \Illuminate\Log\Logger|mixed when(\Closure|mixed|null $value = null, callable|null $callback = null, callable|null $default = null)
+     * @method static \Illuminate\Log\Logger|mixed unless(\Closure|mixed|null $value = null, callable|null $callback = null, callable|null $default = null)
      *
      * @see \Illuminate\Log\LogManager
      */
@@ -12874,12 +12907,12 @@ namespace Illuminate\Support\Facades {
         /**
          * Clones a request and overrides some of its parameters.
          *
-         * @param  array  $query The GET parameters
-         * @param  array  $request The POST parameters
-         * @param  array  $attributes The request attributes (parameters parsed from the PATH_INFO, ...)
-         * @param  array  $cookies The COOKIE parameters
-         * @param  array  $files The FILES parameters
-         * @param  array  $server The SERVER parameters
+         * @param  array|null  $query The GET parameters
+         * @param  array|null  $request The POST parameters
+         * @param  array|null  $attributes The request attributes (parameters parsed from the PATH_INFO, ...)
+         * @param  array|null  $cookies The COOKIE parameters
+         * @param  array|null  $files The FILES parameters
+         * @param  array|null  $server The SERVER parameters
          * @return static
          *
          * @static
@@ -21608,1293 +21641,681 @@ namespace Barryvdh\Debugbar\Facades {
     }
 }
 
-namespace Collective\Html {
+namespace Barryvdh\DomPDF\Facade {
     /**
-     * @see \Collective\Html\FormBuilder
+     * @method static \Barryvdh\DomPDF\PDF setPaper($paper, $orientation = 'portrait')
+     * @method static \Barryvdh\DomPDF\PDF setBaseHost(string $baseHost)
+     * @method static \Barryvdh\DomPDF\PDF setProtocol(string $protocol)
+     * @method static \Barryvdh\DomPDF\PDF setHttpContext($httpContext)
+     * @method static \Barryvdh\DomPDF\PDF setCallbacks(array $callbacks)
      */
-    class FormFacade
+    class Pdf
     {
         /**
-         * Open up a new HTML form.
+         * Get the DomPDF instance
          *
-         * @param  array  $options
-         * @return \Illuminate\Support\HtmlString
+         * @return \Dompdf\Dompdf
          *
          * @static
          */
-        public static function open($options = [])
+        public static function getDomPDF()
         {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->open($options);
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->getDomPDF();
         }
 
         /**
-         * Create a new model based form builder.
-         *
-         * @param  mixed  $model
-         * @param  array  $options
-         * @return \Illuminate\Support\HtmlString
+         * Show or hide warnings
          *
          * @static
          */
-        public static function model($model, $options = [])
+        public static function setWarnings($warnings)
         {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->model($model, $options);
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->setWarnings($warnings);
         }
 
         /**
-         * Set the model instance on the form builder.
+         * Load a HTML string
          *
-         * @param  mixed  $model
-         * @return void
+         * @param  string|null  $encoding Not used yet
          *
          * @static
          */
-        public static function setModel($model)
+        public static function loadHTML($string, $encoding = null)
         {
-            /** @var \Collective\Html\FormBuilder $instance */
-            $instance->setModel($model);
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->loadHTML($string, $encoding);
         }
 
         /**
-         * Get the current model instance on the form builder.
-         *
-         * @return mixed $model
+         * Load a HTML file
          *
          * @static
          */
-        public static function getModel()
+        public static function loadFile($file)
         {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->getModel();
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->loadFile($file);
         }
 
         /**
-         * Close the current form.
+         * Add metadata info
          *
-         * @return string
+         * @param  \Barryvdh\DomPDF\array<string,  string>  $info
+         * @return static
          *
          * @static
          */
-        public static function close()
+        public static function addInfo($info)
         {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->close();
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->addInfo($info);
         }
 
         /**
-         * Generate a hidden field with the current CSRF token.
+         * Load a View and convert to HTML
          *
-         * @return string
+         * @param  \Barryvdh\DomPDF\array<string,  mixed>  $data
+         * @param  \Barryvdh\DomPDF\array<string,  mixed>  $mergeData
+         * @param  string|null  $encoding Not used yet
          *
          * @static
          */
-        public static function token()
+        public static function loadView($view, $data = [], $mergeData = [], $encoding = null)
         {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->token();
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->loadView($view, $data, $mergeData, $encoding);
         }
 
         /**
-         * Create a form label element.
+         * Set/Change an option (or array of options) in Dompdf
          *
-         * @param  string  $name
-         * @param  string  $value
-         * @param  array  $options
-         * @param  bool  $escape_html
-         * @return \Illuminate\Support\HtmlString
+         * @param  \Barryvdh\DomPDF\array<string,  mixed>|string  $attribute
+         * @param  null|mixed  $value
+         * @return \Barryvdh\DomPDF\PDF
          *
          * @static
          */
-        public static function label($name, $value = null, $options = [], $escape_html = true)
+        public static function setOption($attribute, $value = null)
         {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->label($name, $value, $options, $escape_html);
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->setOption($attribute, $value);
         }
 
         /**
-         * Create a form input field.
+         * Replace all the Options from DomPDF
          *
-         * @param  string  $type
-         * @param  string  $name
-         * @param  string  $value
-         * @param  array  $options
-         * @return \Illuminate\Support\HtmlString
+         * @deprecated Use setOption to override individual options.
+         *
+         * @param  \Barryvdh\DomPDF\array<string,  mixed>  $options
          *
          * @static
          */
-        public static function input($type, $name, $value = null, $options = [])
+        public static function setOptions($options)
         {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->input($type, $name, $value, $options);
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->setOptions($options);
         }
 
         /**
-         * Create a text input field.
+         * Output the PDF as a string.
          *
-         * @param  string  $name
-         * @param  string  $value
-         * @param  array  $options
-         * @return \Illuminate\Support\HtmlString
+         * The options parameter controls the output. Accepted options are:
+         *
+         * 'compress' = > 1 or 0 - apply content stream compression, this is
+         *    on (1) by default
+         *
+         * @param  \Barryvdh\DomPDF\array<string,  int>  $options
+         * @return string The rendered PDF as string
          *
          * @static
          */
-        public static function text($name, $value = null, $options = [])
+        public static function output($options = [])
         {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->text($name, $value, $options);
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->output($options);
         }
 
         /**
-         * Create a password input field.
-         *
-         * @param  string  $name
-         * @param  array  $options
-         * @return \Illuminate\Support\HtmlString
+         * Save the PDF to a file
          *
          * @static
          */
-        public static function password($name, $options = [])
+        public static function save($filename, $disk = null)
         {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->password($name, $options);
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->save($filename, $disk);
         }
 
         /**
-         * Create a range input field.
-         *
-         * @param  string  $name
-         * @param  string  $value
-         * @param  array  $options
-         * @return \Illuminate\Support\HtmlString
+         * Make the PDF downloadable by the user
          *
          * @static
          */
-        public static function range($name, $value = null, $options = [])
+        public static function download($filename = 'document.pdf')
         {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->range($name, $value, $options);
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->download($filename);
         }
 
         /**
-         * Create a hidden input field.
-         *
-         * @param  string  $name
-         * @param  string  $value
-         * @param  array  $options
-         * @return \Illuminate\Support\HtmlString
+         * Return a response with the PDF to show in the browser
          *
          * @static
          */
-        public static function hidden($name, $value = null, $options = [])
+        public static function stream($filename = 'document.pdf')
         {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->hidden($name, $value, $options);
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->stream($filename);
         }
 
         /**
-         * Create a search input field.
-         *
-         * @param  string  $name
-         * @param  string  $value
-         * @param  array  $options
-         * @return \Illuminate\Support\HtmlString
+         * Render the PDF
          *
          * @static
          */
-        public static function search($name, $value = null, $options = [])
+        public static function render()
         {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->search($name, $value, $options);
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->render();
         }
 
         /**
-         * Create an e-mail input field.
-         *
-         * @param  string  $name
-         * @param  string  $value
-         * @param  array  $options
-         * @return \Illuminate\Support\HtmlString
+         * @param  array<string>  $pc
          *
          * @static
          */
-        public static function email($name, $value = null, $options = [])
+        public static function setEncryption($password, $ownerpassword = '', $pc = [])
         {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->email($name, $value, $options);
-        }
-
-        /**
-         * Create a tel input field.
-         *
-         * @param  string  $name
-         * @param  string  $value
-         * @param  array  $options
-         * @return \Illuminate\Support\HtmlString
-         *
-         * @static
-         */
-        public static function tel($name, $value = null, $options = [])
-        {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->tel($name, $value, $options);
-        }
-
-        /**
-         * Create a number input field.
-         *
-         * @param  string  $name
-         * @param  string  $value
-         * @param  array  $options
-         * @return \Illuminate\Support\HtmlString
-         *
-         * @static
-         */
-        public static function number($name, $value = null, $options = [])
-        {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->number($name, $value, $options);
-        }
-
-        /**
-         * Create a date input field.
-         *
-         * @param  string  $name
-         * @param  string  $value
-         * @param  array  $options
-         * @return \Illuminate\Support\HtmlString
-         *
-         * @static
-         */
-        public static function date($name, $value = null, $options = [])
-        {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->date($name, $value, $options);
-        }
-
-        /**
-         * Create a datetime input field.
-         *
-         * @param  string  $name
-         * @param  string  $value
-         * @param  array  $options
-         * @return \Illuminate\Support\HtmlString
-         *
-         * @static
-         */
-        public static function datetime($name, $value = null, $options = [])
-        {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->datetime($name, $value, $options);
-        }
-
-        /**
-         * Create a datetime-local input field.
-         *
-         * @param  string  $name
-         * @param  string  $value
-         * @param  array  $options
-         * @return \Illuminate\Support\HtmlString
-         *
-         * @static
-         */
-        public static function datetimeLocal($name, $value = null, $options = [])
-        {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->datetimeLocal($name, $value, $options);
-        }
-
-        /**
-         * Create a time input field.
-         *
-         * @param  string  $name
-         * @param  string  $value
-         * @param  array  $options
-         * @return \Illuminate\Support\HtmlString
-         *
-         * @static
-         */
-        public static function time($name, $value = null, $options = [])
-        {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->time($name, $value, $options);
-        }
-
-        /**
-         * Create a url input field.
-         *
-         * @param  string  $name
-         * @param  string  $value
-         * @param  array  $options
-         * @return \Illuminate\Support\HtmlString
-         *
-         * @static
-         */
-        public static function url($name, $value = null, $options = [])
-        {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->url($name, $value, $options);
-        }
-
-        /**
-         * Create a week input field.
-         *
-         * @param  string  $name
-         * @param  string  $value
-         * @param  array  $options
-         * @return \Illuminate\Support\HtmlString
-         *
-         * @static
-         */
-        public static function week($name, $value = null, $options = [])
-        {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->week($name, $value, $options);
-        }
-
-        /**
-         * Create a file input field.
-         *
-         * @param  string  $name
-         * @param  array  $options
-         * @return \Illuminate\Support\HtmlString
-         *
-         * @static
-         */
-        public static function file($name, $options = [])
-        {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->file($name, $options);
-        }
-
-        /**
-         * Create a textarea input field.
-         *
-         * @param  string  $name
-         * @param  string  $value
-         * @param  array  $options
-         * @return \Illuminate\Support\HtmlString
-         *
-         * @static
-         */
-        public static function textarea($name, $value = null, $options = [])
-        {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->textarea($name, $value, $options);
-        }
-
-        /**
-         * Create a select box field.
-         *
-         * @param  string  $name
-         * @param  array  $list
-         * @param  string|bool  $selected
-         * @param  array  $selectAttributes
-         * @param  array  $optionsAttributes
-         * @param  array  $optgroupsAttributes
-         * @return \Illuminate\Support\HtmlString
-         *
-         * @static
-         */
-        public static function select($name, $list = [], $selected = null, $selectAttributes = [], $optionsAttributes = [], $optgroupsAttributes = [])
-        {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->select($name, $list, $selected, $selectAttributes, $optionsAttributes, $optgroupsAttributes);
-        }
-
-        /**
-         * Create a select range field.
-         *
-         * @param  string  $name
-         * @param  string  $begin
-         * @param  string  $end
-         * @param  string  $selected
-         * @param  array  $options
-         * @return \Illuminate\Support\HtmlString
-         *
-         * @static
-         */
-        public static function selectRange($name, $begin, $end, $selected = null, $options = [])
-        {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->selectRange($name, $begin, $end, $selected, $options);
-        }
-
-        /**
-         * Create a select year field.
-         *
-         * @param  string  $name
-         * @param  string  $begin
-         * @param  string  $end
-         * @param  string  $selected
-         * @param  array  $options
-         * @return mixed
-         *
-         * @static
-         */
-        public static function selectYear()
-        {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->selectYear();
-        }
-
-        /**
-         * Create a select month field.
-         *
-         * @param  string  $name
-         * @param  string  $selected
-         * @param  array  $options
-         * @param  string  $format
-         * @return \Illuminate\Support\HtmlString
-         *
-         * @static
-         */
-        public static function selectMonth($name, $selected = null, $options = [], $format = '%B')
-        {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->selectMonth($name, $selected, $options, $format);
-        }
-
-        /**
-         * Get the select option for the given value.
-         *
-         * @param  string  $display
-         * @param  string  $value
-         * @param  string  $selected
-         * @param  array  $attributes
-         * @param  array  $optgroupAttributes
-         * @return \Illuminate\Support\HtmlString
-         *
-         * @static
-         */
-        public static function getSelectOption($display, $value, $selected, $attributes = [], $optgroupAttributes = [])
-        {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->getSelectOption($display, $value, $selected, $attributes, $optgroupAttributes);
-        }
-
-        /**
-         * Create a checkbox input field.
-         *
-         * @param  string  $name
-         * @param  mixed  $value
-         * @param  bool  $checked
-         * @param  array  $options
-         * @return \Illuminate\Support\HtmlString
-         *
-         * @static
-         */
-        public static function checkbox($name, $value = 1, $checked = null, $options = [])
-        {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->checkbox($name, $value, $checked, $options);
-        }
-
-        /**
-         * Create a radio button input field.
-         *
-         * @param  string  $name
-         * @param  mixed  $value
-         * @param  bool  $checked
-         * @param  array  $options
-         * @return \Illuminate\Support\HtmlString
-         *
-         * @static
-         */
-        public static function radio($name, $value = null, $checked = null, $options = [])
-        {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->radio($name, $value, $checked, $options);
-        }
-
-        /**
-         * Create a HTML reset input element.
-         *
-         * @param  string  $value
-         * @param  array  $attributes
-         * @return \Illuminate\Support\HtmlString
-         *
-         * @static
-         */
-        public static function reset($value, $attributes = [])
-        {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->reset($value, $attributes);
-        }
-
-        /**
-         * Create a HTML image input element.
-         *
-         * @param  string  $url
-         * @param  string  $name
-         * @param  array  $attributes
-         * @return \Illuminate\Support\HtmlString
-         *
-         * @static
-         */
-        public static function image($url, $name = null, $attributes = [])
-        {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->image($url, $name, $attributes);
-        }
-
-        /**
-         * Create a month input field.
-         *
-         * @param  string  $name
-         * @param  string  $value
-         * @param  array  $options
-         * @return \Illuminate\Support\HtmlString
-         *
-         * @static
-         */
-        public static function month($name, $value = null, $options = [])
-        {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->month($name, $value, $options);
-        }
-
-        /**
-         * Create a color input field.
-         *
-         * @param  string  $name
-         * @param  string  $value
-         * @param  array  $options
-         * @return \Illuminate\Support\HtmlString
-         *
-         * @static
-         */
-        public static function color($name, $value = null, $options = [])
-        {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->color($name, $value, $options);
-        }
-
-        /**
-         * Create a submit button element.
-         *
-         * @param  string  $value
-         * @param  array  $options
-         * @return \Illuminate\Support\HtmlString
-         *
-         * @static
-         */
-        public static function submit($value = null, $options = [])
-        {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->submit($value, $options);
-        }
-
-        /**
-         * Create a button element.
-         *
-         * @param  string  $value
-         * @param  array  $options
-         * @return \Illuminate\Support\HtmlString
-         *
-         * @static
-         */
-        public static function button($value = null, $options = [])
-        {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->button($value, $options);
-        }
-
-        /**
-         * Create a datalist box field.
-         *
-         * @param  string  $id
-         * @param  array  $list
-         * @return \Illuminate\Support\HtmlString
-         *
-         * @static
-         */
-        public static function datalist($id, $list = [])
-        {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->datalist($id, $list);
-        }
-
-        /**
-         * Get the ID attribute for a field name.
-         *
-         * @param  string  $name
-         * @param  array  $attributes
-         * @return string
-         *
-         * @static
-         */
-        public static function getIdAttribute($name, $attributes)
-        {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->getIdAttribute($name, $attributes);
-        }
-
-        /**
-         * Get the value that should be assigned to the field.
-         *
-         * @param  string  $name
-         * @param  string  $value
-         * @return mixed
-         *
-         * @static
-         */
-        public static function getValueAttribute($name, $value = null)
-        {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->getValueAttribute($name, $value);
-        }
-
-        /**
-         * Take Request in fill process
-         *
-         * @param  bool  $consider
-         *
-         * @static
-         */
-        public static function considerRequest($consider = true)
-        {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->considerRequest($consider);
-        }
-
-        /**
-         * Get a value from the session's old input.
-         *
-         * @param  string  $name
-         * @return mixed
-         *
-         * @static
-         */
-        public static function old($name)
-        {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->old($name);
-        }
-
-        /**
-         * Determine if the old input is empty.
-         *
-         * @return bool
-         *
-         * @static
-         */
-        public static function oldInputIsEmpty()
-        {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->oldInputIsEmpty();
-        }
-
-        /**
-         * Get the session store implementation.
-         *
-         * @return \Illuminate\Contracts\Session\Session $session
-         *
-         * @static
-         */
-        public static function getSessionStore()
-        {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->getSessionStore();
-        }
-
-        /**
-         * Set the session store implementation.
-         *
-         * @param  \Illuminate\Contracts\Session\Session  $session
-         * @return \Collective\Html\FormBuilder
-         *
-         * @static
-         */
-        public static function setSessionStore($session)
-        {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->setSessionStore($session);
-        }
-
-        /**
-         * Register a custom macro.
-         *
-         * @param  string  $name
-         * @param  object|callable  $macro
-         * @return void
-         *
-         * @static
-         */
-        public static function macro($name, $macro)
-        {
-            \Collective\Html\FormBuilder::macro($name, $macro);
-        }
-
-        /**
-         * Mix another object into the class.
-         *
-         * @param  object  $mixin
-         * @param  bool  $replace
-         * @return void
-         *
-         * @throws \ReflectionException
-         *
-         * @static
-         */
-        public static function mixin($mixin, $replace = true)
-        {
-            \Collective\Html\FormBuilder::mixin($mixin, $replace);
-        }
-
-        /**
-         * Checks if macro is registered.
-         *
-         * @param  string  $name
-         * @return bool
-         *
-         * @static
-         */
-        public static function hasMacro($name)
-        {
-            return \Collective\Html\FormBuilder::hasMacro($name);
-        }
-
-        /**
-         * Flush the existing macros.
-         *
-         * @return void
-         *
-         * @static
-         */
-        public static function flushMacros()
-        {
-            \Collective\Html\FormBuilder::flushMacros();
-        }
-
-        /**
-         * Dynamically handle calls to the class.
-         *
-         * @param  string  $method
-         * @param  array  $parameters
-         * @return mixed
-         *
-         * @throws \BadMethodCallException
-         *
-         * @static
-         */
-        public static function macroCall($method, $parameters)
-        {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->macroCall($method, $parameters);
-        }
-
-        /**
-         * Register a custom component.
-         *
-         * @param  array  $signature
-         * @return void
-         *
-         * @static
-         */
-        public static function component($name, $view, $signature)
-        {
-            \Collective\Html\FormBuilder::component($name, $view, $signature);
-        }
-
-        /**
-         * Check if a component is registered.
-         *
-         * @return bool
-         *
-         * @static
-         */
-        public static function hasComponent($name)
-        {
-            return \Collective\Html\FormBuilder::hasComponent($name);
-        }
-
-        /**
-         * Dynamically handle calls to the class.
-         *
-         * @param  string  $method
-         * @param  array  $parameters
-         * @return \Illuminate\Contracts\View\View|mixed
-         *
-         * @throws \BadMethodCallException
-         *
-         * @static
-         */
-        public static function componentCall($method, $parameters)
-        {
-            /** @var \Collective\Html\FormBuilder $instance */
-            return $instance->componentCall($method, $parameters);
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->setEncryption($password, $ownerpassword, $pc);
         }
     }
     /**
-     * @see \Collective\Html\HtmlBuilder
+     * @method static \Barryvdh\DomPDF\PDF setPaper($paper, $orientation = 'portrait')
+     * @method static \Barryvdh\DomPDF\PDF setBaseHost(string $baseHost)
+     * @method static \Barryvdh\DomPDF\PDF setProtocol(string $protocol)
+     * @method static \Barryvdh\DomPDF\PDF setHttpContext($httpContext)
+     * @method static \Barryvdh\DomPDF\PDF setCallbacks(array $callbacks)
      */
-    class HtmlFacade
+    class Pdf
     {
         /**
-         * Convert an HTML string to entities.
+         * Get the DomPDF instance
          *
-         * @param  string  $value
-         * @return string
+         * @return \Dompdf\Dompdf
          *
          * @static
          */
-        public static function entities($value)
+        public static function getDomPDF()
         {
-            /** @var \Collective\Html\HtmlBuilder $instance */
-            return $instance->entities($value);
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->getDomPDF();
         }
 
         /**
-         * Convert entities to HTML characters.
-         *
-         * @param  string  $value
-         * @return string
+         * Show or hide warnings
          *
          * @static
          */
-        public static function decode($value)
+        public static function setWarnings($warnings)
         {
-            /** @var \Collective\Html\HtmlBuilder $instance */
-            return $instance->decode($value);
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->setWarnings($warnings);
         }
 
         /**
-         * Generate a link to a JavaScript file.
+         * Load a HTML string
          *
-         * @param  string  $url
-         * @param  array  $attributes
-         * @param  bool  $secure
-         * @return \Illuminate\Support\HtmlString
+         * @param  string|null  $encoding Not used yet
          *
          * @static
          */
-        public static function script($url, $attributes = [], $secure = null)
+        public static function loadHTML($string, $encoding = null)
         {
-            /** @var \Collective\Html\HtmlBuilder $instance */
-            return $instance->script($url, $attributes, $secure);
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->loadHTML($string, $encoding);
         }
 
         /**
-         * Generate a link to a CSS file.
-         *
-         * @param  string  $url
-         * @param  array  $attributes
-         * @param  bool  $secure
-         * @return \Illuminate\Support\HtmlString
+         * Load a HTML file
          *
          * @static
          */
-        public static function style($url, $attributes = [], $secure = null)
+        public static function loadFile($file)
         {
-            /** @var \Collective\Html\HtmlBuilder $instance */
-            return $instance->style($url, $attributes, $secure);
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->loadFile($file);
         }
 
         /**
-         * Generate an HTML image element.
+         * Add metadata info
          *
-         * @param  string  $url
-         * @param  string  $alt
-         * @param  array  $attributes
-         * @param  bool  $secure
-         * @return \Illuminate\Support\HtmlString
+         * @param  \Barryvdh\DomPDF\array<string,  string>  $info
+         * @return static
          *
          * @static
          */
-        public static function image($url, $alt = null, $attributes = [], $secure = null)
+        public static function addInfo($info)
         {
-            /** @var \Collective\Html\HtmlBuilder $instance */
-            return $instance->image($url, $alt, $attributes, $secure);
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->addInfo($info);
         }
 
         /**
-         * Generate a link to a Favicon file.
+         * Load a View and convert to HTML
          *
-         * @param  string  $url
-         * @param  array  $attributes
-         * @param  bool  $secure
-         * @return \Illuminate\Support\HtmlString
+         * @param  \Barryvdh\DomPDF\array<string,  mixed>  $data
+         * @param  \Barryvdh\DomPDF\array<string,  mixed>  $mergeData
+         * @param  string|null  $encoding Not used yet
          *
          * @static
          */
-        public static function favicon($url, $attributes = [], $secure = null)
+        public static function loadView($view, $data = [], $mergeData = [], $encoding = null)
         {
-            /** @var \Collective\Html\HtmlBuilder $instance */
-            return $instance->favicon($url, $attributes, $secure);
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->loadView($view, $data, $mergeData, $encoding);
         }
 
         /**
-         * Generate a HTML link.
+         * Set/Change an option (or array of options) in Dompdf
          *
-         * @param  string  $url
-         * @param  string  $title
-         * @param  array  $attributes
-         * @param  bool  $secure
-         * @param  bool  $escape
-         * @return \Illuminate\Support\HtmlString
+         * @param  \Barryvdh\DomPDF\array<string,  mixed>|string  $attribute
+         * @param  null|mixed  $value
+         * @return \Barryvdh\DomPDF\PDF
          *
          * @static
          */
-        public static function link($url, $title = null, $attributes = [], $secure = null, $escape = true)
+        public static function setOption($attribute, $value = null)
         {
-            /** @var \Collective\Html\HtmlBuilder $instance */
-            return $instance->link($url, $title, $attributes, $secure, $escape);
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->setOption($attribute, $value);
         }
 
         /**
-         * Generate a HTTPS HTML link.
+         * Replace all the Options from DomPDF
          *
-         * @param  string  $url
-         * @param  string  $title
-         * @param  array  $attributes
-         * @param  bool  $escape
-         * @return \Illuminate\Support\HtmlString
+         * @deprecated Use setOption to override individual options.
+         *
+         * @param  \Barryvdh\DomPDF\array<string,  mixed>  $options
          *
          * @static
          */
-        public static function secureLink($url, $title = null, $attributes = [], $escape = true)
+        public static function setOptions($options)
         {
-            /** @var \Collective\Html\HtmlBuilder $instance */
-            return $instance->secureLink($url, $title, $attributes, $escape);
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->setOptions($options);
         }
 
         /**
-         * Generate a HTML link to an asset.
+         * Output the PDF as a string.
          *
-         * @param  string  $url
-         * @param  string  $title
-         * @param  array  $attributes
-         * @param  bool  $secure
-         * @param  bool  $escape
-         * @return \Illuminate\Support\HtmlString
+         * The options parameter controls the output. Accepted options are:
+         *
+         * 'compress' = > 1 or 0 - apply content stream compression, this is
+         *    on (1) by default
+         *
+         * @param  \Barryvdh\DomPDF\array<string,  int>  $options
+         * @return string The rendered PDF as string
          *
          * @static
          */
-        public static function linkAsset($url, $title = null, $attributes = [], $secure = null, $escape = true)
+        public static function output($options = [])
         {
-            /** @var \Collective\Html\HtmlBuilder $instance */
-            return $instance->linkAsset($url, $title, $attributes, $secure, $escape);
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->output($options);
         }
 
         /**
-         * Generate a HTTPS HTML link to an asset.
-         *
-         * @param  string  $url
-         * @param  string  $title
-         * @param  array  $attributes
-         * @param  bool  $escape
-         * @return \Illuminate\Support\HtmlString
+         * Save the PDF to a file
          *
          * @static
          */
-        public static function linkSecureAsset($url, $title = null, $attributes = [], $escape = true)
+        public static function save($filename, $disk = null)
         {
-            /** @var \Collective\Html\HtmlBuilder $instance */
-            return $instance->linkSecureAsset($url, $title, $attributes, $escape);
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->save($filename, $disk);
         }
 
         /**
-         * Generate a HTML link to a named route.
-         *
-         * @param  string  $name
-         * @param  string  $title
-         * @param  array  $parameters
-         * @param  array  $attributes
-         * @param  bool  $secure
-         * @param  bool  $escape
-         * @return \Illuminate\Support\HtmlString
+         * Make the PDF downloadable by the user
          *
          * @static
          */
-        public static function linkRoute($name, $title = null, $parameters = [], $attributes = [], $secure = null, $escape = true)
+        public static function download($filename = 'document.pdf')
         {
-            /** @var \Collective\Html\HtmlBuilder $instance */
-            return $instance->linkRoute($name, $title, $parameters, $attributes, $secure, $escape);
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->download($filename);
         }
 
         /**
-         * Generate a HTML link to a controller action.
-         *
-         * @param  string  $action
-         * @param  string  $title
-         * @param  array  $parameters
-         * @param  array  $attributes
-         * @param  bool  $secure
-         * @param  bool  $escape
-         * @return \Illuminate\Support\HtmlString
+         * Return a response with the PDF to show in the browser
          *
          * @static
          */
-        public static function linkAction($action, $title = null, $parameters = [], $attributes = [], $secure = null, $escape = true)
+        public static function stream($filename = 'document.pdf')
         {
-            /** @var \Collective\Html\HtmlBuilder $instance */
-            return $instance->linkAction($action, $title, $parameters, $attributes, $secure, $escape);
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->stream($filename);
         }
 
         /**
-         * Generate a HTML link to an email address.
-         *
-         * @param  string  $email
-         * @param  string  $title
-         * @param  array  $attributes
-         * @param  bool  $escape
-         * @return \Illuminate\Support\HtmlString
+         * Render the PDF
          *
          * @static
          */
-        public static function mailto($email, $title = null, $attributes = [], $escape = true)
+        public static function render()
         {
-            /** @var \Collective\Html\HtmlBuilder $instance */
-            return $instance->mailto($email, $title, $attributes, $escape);
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->render();
         }
 
         /**
-         * Obfuscate an e-mail address to prevent spam-bots from sniffing it.
-         *
-         * @param  string  $email
-         * @return string
+         * @param  array<string>  $pc
          *
          * @static
          */
-        public static function email($email)
+        public static function setEncryption($password, $ownerpassword = '', $pc = [])
         {
-            /** @var \Collective\Html\HtmlBuilder $instance */
-            return $instance->email($email);
+            /** @var \Barryvdh\DomPDF\PDF $instance */
+            return $instance->setEncryption($password, $ownerpassword, $pc);
+        }
+    }
+}
+
+namespace Livewire {
+    /**
+     * @see \Livewire\LivewireManager
+     */
+    class Livewire
+    {
+        /**
+         * @static
+         */
+        public static function component($alias, $viewClass = null)
+        {
+            /** @var \Livewire\LivewireManager $instance */
+            return $instance->component($alias, $viewClass);
         }
 
         /**
-         * Generates non-breaking space entities based on number supplied.
-         *
-         * @param  int  $num
-         * @return string
-         *
          * @static
          */
-        public static function nbsp($num = 1)
+        public static function getAlias($class, $default = null)
         {
-            /** @var \Collective\Html\HtmlBuilder $instance */
-            return $instance->nbsp($num);
+            /** @var \Livewire\LivewireManager $instance */
+            return $instance->getAlias($class, $default);
         }
 
         /**
-         * Generate an ordered list of items.
-         *
-         * @param  array  $list
-         * @param  array  $attributes
-         * @return \Illuminate\Support\HtmlString|string
-         *
          * @static
          */
-        public static function ol($list, $attributes = [])
+        public static function getComponentAliases()
         {
-            /** @var \Collective\Html\HtmlBuilder $instance */
-            return $instance->ol($list, $attributes);
+            /** @var \Livewire\LivewireManager $instance */
+            return $instance->getComponentAliases();
         }
 
         /**
-         * Generate an un-ordered list of items.
-         *
-         * @param  array  $list
-         * @param  array  $attributes
-         * @return \Illuminate\Support\HtmlString|string
-         *
          * @static
          */
-        public static function ul($list, $attributes = [])
+        public static function getClass($alias)
         {
-            /** @var \Collective\Html\HtmlBuilder $instance */
-            return $instance->ul($list, $attributes);
+            /** @var \Livewire\LivewireManager $instance */
+            return $instance->getClass($alias);
         }
 
         /**
-         * Generate a description list of items.
-         *
-         * @param  array  $list
-         * @param  array  $attributes
-         * @return \Illuminate\Support\HtmlString
-         *
          * @static
          */
-        public static function dl($list, $attributes = [])
+        public static function getInstance($component, $id)
         {
-            /** @var \Collective\Html\HtmlBuilder $instance */
-            return $instance->dl($list, $attributes);
+            /** @var \Livewire\LivewireManager $instance */
+            return $instance->getInstance($component, $id);
         }
 
         /**
-         * Build an HTML attribute string from an array.
-         *
-         * @param  array  $attributes
-         * @return string
-         *
          * @static
          */
-        public static function attributes($attributes)
+        public static function mount($name, $params = [])
         {
-            /** @var \Collective\Html\HtmlBuilder $instance */
-            return $instance->attributes($attributes);
+            /** @var \Livewire\LivewireManager $instance */
+            return $instance->mount($name, $params);
         }
 
         /**
-         * Obfuscate a string to prevent spam-bots from sniffing it.
-         *
-         * @param  string  $value
-         * @return string
-         *
          * @static
          */
-        public static function obfuscate($value)
+        public static function dummyMount($id, $tagName)
         {
-            /** @var \Collective\Html\HtmlBuilder $instance */
-            return $instance->obfuscate($value);
+            /** @var \Livewire\LivewireManager $instance */
+            return $instance->dummyMount($id, $tagName);
         }
 
         /**
-         * Generate a meta tag.
-         *
-         * @param  string  $name
-         * @param  string  $content
-         * @param  array  $attributes
-         * @return \Illuminate\Support\HtmlString
-         *
          * @static
          */
-        public static function meta($name, $content, $attributes = [])
+        public static function test($name, $params = [])
         {
-            /** @var \Collective\Html\HtmlBuilder $instance */
-            return $instance->meta($name, $content, $attributes);
+            /** @var \Livewire\LivewireManager $instance */
+            return $instance->test($name, $params);
         }
 
         /**
-         * Generate an html tag.
-         *
-         * @param  string  $tag
-         * @param  mixed  $content
-         * @param  array  $attributes
-         * @return \Illuminate\Support\HtmlString
-         *
          * @static
          */
-        public static function tag($tag, $content, $attributes = [])
+        public static function visit($browser, $class, $queryString = '')
         {
-            /** @var \Collective\Html\HtmlBuilder $instance */
-            return $instance->tag($tag, $content, $attributes);
+            /** @var \Livewire\LivewireManager $instance */
+            return $instance->visit($browser, $class, $queryString);
         }
 
         /**
-         * Register a custom macro.
-         *
-         * @param  string  $name
-         * @param  object|callable  $macro
-         * @return void
-         *
          * @static
          */
-        public static function macro($name, $macro)
+        public static function actingAs($user, $driver = null)
         {
-            \Collective\Html\HtmlBuilder::macro($name, $macro);
+            /** @var \Livewire\LivewireManager $instance */
+            return $instance->actingAs($user, $driver);
         }
 
         /**
-         * Mix another object into the class.
-         *
-         * @param  object  $mixin
-         * @param  bool  $replace
-         * @return void
-         *
-         * @throws \ReflectionException
-         *
          * @static
          */
-        public static function mixin($mixin, $replace = true)
+        public static function addPersistentMiddleware($middleware)
         {
-            \Collective\Html\HtmlBuilder::mixin($mixin, $replace);
+            /** @var \Livewire\LivewireManager $instance */
+            return $instance->addPersistentMiddleware($middleware);
         }
 
         /**
-         * Checks if macro is registered.
-         *
-         * @param  string  $name
-         * @return bool
-         *
          * @static
          */
-        public static function hasMacro($name)
+        public static function setPersistentMiddleware($middleware)
         {
-            return \Collective\Html\HtmlBuilder::hasMacro($name);
+            /** @var \Livewire\LivewireManager $instance */
+            return $instance->setPersistentMiddleware($middleware);
         }
 
         /**
-         * Flush the existing macros.
-         *
-         * @return void
-         *
          * @static
          */
-        public static function flushMacros()
+        public static function getPersistentMiddleware()
         {
-            \Collective\Html\HtmlBuilder::flushMacros();
+            /** @var \Livewire\LivewireManager $instance */
+            return $instance->getPersistentMiddleware();
         }
 
         /**
-         * Dynamically handle calls to the class.
-         *
-         * @param  string  $method
-         * @param  array  $parameters
-         * @return mixed
-         *
-         * @throws \BadMethodCallException
-         *
          * @static
          */
-        public static function macroCall($method, $parameters)
+        public static function styles($options = [])
         {
-            /** @var \Collective\Html\HtmlBuilder $instance */
-            return $instance->macroCall($method, $parameters);
+            /** @var \Livewire\LivewireManager $instance */
+            return $instance->styles($options);
         }
 
         /**
-         * Register a custom component.
-         *
-         * @param  array  $signature
-         * @return void
-         *
          * @static
          */
-        public static function component($name, $view, $signature)
+        public static function scripts($options = [])
         {
-            \Collective\Html\HtmlBuilder::component($name, $view, $signature);
+            /** @var \Livewire\LivewireManager $instance */
+            return $instance->scripts($options);
         }
 
         /**
-         * Check if a component is registered.
-         *
-         * @return bool
-         *
          * @static
          */
-        public static function hasComponent($name)
+        public static function isLivewireRequest()
         {
-            return \Collective\Html\HtmlBuilder::hasComponent($name);
+            /** @var \Livewire\LivewireManager $instance */
+            return $instance->isLivewireRequest();
         }
 
         /**
-         * Dynamically handle calls to the class.
-         *
-         * @param  string  $method
-         * @param  array  $parameters
-         * @return \Illuminate\Contracts\View\View|mixed
-         *
-         * @throws \BadMethodCallException
-         *
          * @static
          */
-        public static function componentCall($method, $parameters)
+        public static function isDefinitelyLivewireRequest()
         {
-            /** @var \Collective\Html\HtmlBuilder $instance */
-            return $instance->componentCall($method, $parameters);
+            /** @var \Livewire\LivewireManager $instance */
+            return $instance->isDefinitelyLivewireRequest();
+        }
+
+        /**
+         * @static
+         */
+        public static function isProbablyLivewireRequest()
+        {
+            /** @var \Livewire\LivewireManager $instance */
+            return $instance->isProbablyLivewireRequest();
+        }
+
+        /**
+         * @static
+         */
+        public static function originalUrl()
+        {
+            /** @var \Livewire\LivewireManager $instance */
+            return $instance->originalUrl();
+        }
+
+        /**
+         * @static
+         */
+        public static function originalPath()
+        {
+            /** @var \Livewire\LivewireManager $instance */
+            return $instance->originalPath();
+        }
+
+        /**
+         * @static
+         */
+        public static function originalMethod()
+        {
+            /** @var \Livewire\LivewireManager $instance */
+            return $instance->originalMethod();
+        }
+
+        /**
+         * @static
+         */
+        public static function getRootElementTagName($dom)
+        {
+            /** @var \Livewire\LivewireManager $instance */
+            return $instance->getRootElementTagName($dom);
+        }
+
+        /**
+         * @static
+         */
+        public static function dispatch($event, ...$params)
+        {
+            /** @var \Livewire\LivewireManager $instance */
+            return $instance->dispatch($event, ...$params);
+        }
+
+        /**
+         * @static
+         */
+        public static function listen($event, $callback)
+        {
+            /** @var \Livewire\LivewireManager $instance */
+            return $instance->listen($event, $callback);
+        }
+
+        /**
+         * @static
+         */
+        public static function isOnVapor()
+        {
+            /** @var \Livewire\LivewireManager $instance */
+            return $instance->isOnVapor();
+        }
+
+        /**
+         * @static
+         */
+        public static function isRunningServerless()
+        {
+            /** @var \Livewire\LivewireManager $instance */
+            return $instance->isRunningServerless();
+        }
+
+        /**
+         * @static
+         */
+        public static function withQueryParams($queryParams)
+        {
+            /** @var \Livewire\LivewireManager $instance */
+            return $instance->withQueryParams($queryParams);
+        }
+
+        /**
+         * @static
+         */
+        public static function setBackButtonCache()
+        {
+            /** @var \Livewire\LivewireManager $instance */
+            return $instance->setBackButtonCache();
+        }
+
+        /**
+         * @static
+         */
+        public static function disableBackButtonCache()
+        {
+            /** @var \Livewire\LivewireManager $instance */
+            return $instance->disableBackButtonCache();
+        }
+
+        /**
+         * @static
+         */
+        public static function enableBackButtonCache()
+        {
+            /** @var \Livewire\LivewireManager $instance */
+            return $instance->enableBackButtonCache();
+        }
+
+        /**
+         * @static
+         */
+        public static function shouldDisableBackButtonCache()
+        {
+            /** @var \Livewire\LivewireManager $instance */
+            return $instance->shouldDisableBackButtonCache();
+        }
+
+        /**
+         * @static
+         */
+        public static function flushState()
+        {
+            /** @var \Livewire\LivewireManager $instance */
+            return $instance->flushState();
         }
     }
 }
@@ -23154,6 +22575,74 @@ namespace Sentry\Laravel {
         {
             /** @var \Sentry\State\Hub $instance */
             return $instance->getSpan();
+        }
+    }
+}
+
+namespace Spatie\Health\Facades {
+    /**
+     * @mixin \Spatie\Health\Health
+     */
+    class Health
+    {
+        /**
+         * @param  \Spatie\Health\array<int,  Check>  $checks
+         *
+         * @static
+         */
+        public static function checks($checks)
+        {
+            /** @var \Spatie\Health\Health $instance */
+            return $instance->checks($checks);
+        }
+
+        /**
+         * @static
+         */
+        public static function clearChecks()
+        {
+            /** @var \Spatie\Health\Health $instance */
+            return $instance->clearChecks();
+        }
+
+        /**
+         * @return \Spatie\Health\Collection<int, Check>
+         *
+         * @static
+         */
+        public static function registeredChecks()
+        {
+            /** @var \Spatie\Health\Health $instance */
+            return $instance->registeredChecks();
+        }
+
+        /**
+         * @return \Spatie\Health\Collection<int, ResultStore>
+         *
+         * @static
+         */
+        public static function resultStores()
+        {
+            /** @var \Spatie\Health\Health $instance */
+            return $instance->resultStores();
+        }
+
+        /**
+         * @static
+         */
+        public static function inlineStylesheet($stylesheet)
+        {
+            /** @var \Spatie\Health\Health $instance */
+            return $instance->inlineStylesheet($stylesheet);
+        }
+
+        /**
+         * @static
+         */
+        public static function assets()
+        {
+            /** @var \Spatie\Health\Health $instance */
+            return $instance->assets();
         }
     }
 }
@@ -23514,6 +23003,41 @@ namespace Spatie\LaravelIgnition\Facades {
     }
 }
 
+namespace Spatie\SignalAwareCommand\Facades {
+    /**
+     * @see \Spatie\SignalAwareCommand\Signal
+     */
+    class Signal
+    {
+        /**
+         * @static
+         */
+        public static function handle($signal, $callable)
+        {
+            /** @var \Spatie\SignalAwareCommand\Signal $instance */
+            return $instance->handle($signal, $callable);
+        }
+
+        /**
+         * @static
+         */
+        public static function executeSignalHandlers($signal, $command)
+        {
+            /** @var \Spatie\SignalAwareCommand\Signal $instance */
+            return $instance->executeSignalHandlers($signal, $command);
+        }
+
+        /**
+         * @static
+         */
+        public static function clearHandlers($signal = null)
+        {
+            /** @var \Spatie\SignalAwareCommand\Signal $instance */
+            return $instance->clearHandlers($signal);
+        }
+    }
+}
+
 namespace Yajra\DataTables\Facades {
     /**
      * @mixin \Yajra\DataTables\DataTables
@@ -23805,6 +23329,65 @@ namespace Illuminate\Http {
     }
 }
 
+namespace Illuminate\Testing {
+    /**
+     * @mixin \Illuminate\Http\Response
+     */
+    class TestResponse
+    {
+        /**
+         * @see \Livewire\LivewireServiceProvider::registerTestMacros()
+         *
+         * @param  mixed  $component
+         *
+         * @static
+         */
+        public static function assertSeeLivewire($component)
+        {
+            return \Illuminate\Testing\TestResponse::assertSeeLivewire($component);
+        }
+
+        /**
+         * @see \Livewire\LivewireServiceProvider::registerTestMacros()
+         *
+         * @param  mixed  $component
+         *
+         * @static
+         */
+        public static function assertDontSeeLivewire($component)
+        {
+            return \Illuminate\Testing\TestResponse::assertDontSeeLivewire($component);
+        }
+    }
+
+    class TestView
+    {
+        /**
+         * @see \Livewire\LivewireServiceProvider::registerTestMacros()
+         *
+         * @param  mixed  $component
+         *
+         * @static
+         */
+        public static function assertSeeLivewire($component)
+        {
+            return \Illuminate\Testing\TestView::assertSeeLivewire($component);
+        }
+
+        /**
+         * @see \Livewire\LivewireServiceProvider::registerTestMacros()
+         *
+         * @param  mixed  $component
+         *
+         * @static
+         */
+        public static function assertDontSeeLivewire($component)
+        {
+            return \Illuminate\Testing\TestView::assertDontSeeLivewire($component);
+        }
+    }
+}
+
 namespace Illuminate\Routing {
     class Route
     {
@@ -23830,6 +23413,88 @@ namespace Illuminate\Routing {
         public static function permission($permissions = [])
         {
             return \Illuminate\Routing\Route::permission($permissions);
+        }
+    }
+}
+
+namespace Illuminate\View {
+    class ComponentAttributeBag
+    {
+        /**
+         * @see \Livewire\LivewireServiceProvider::registerViewMacros()
+         *
+         * @param  mixed  $name
+         *
+         * @static
+         */
+        public static function wire($name)
+        {
+            return \Illuminate\View\ComponentAttributeBag::wire($name);
+        }
+    }
+
+    class View
+    {
+        /**
+         * @see \Livewire\Macros\ViewMacros::extends()
+         *
+         * @param  mixed  $view
+         * @param  mixed  $params
+         *
+         * @static
+         */
+        public static function extends($view, $params = [])
+        {
+            return \Illuminate\View\View::extends($view, $params);
+        }
+
+        /**
+         * @see \Livewire\Macros\ViewMacros::layout()
+         *
+         * @param  mixed  $view
+         * @param  mixed  $params
+         *
+         * @static
+         */
+        public static function layout($view, $params = [])
+        {
+            return \Illuminate\View\View::layout($view, $params);
+        }
+
+        /**
+         * @see \Livewire\Macros\ViewMacros::layoutData()
+         *
+         * @param  mixed  $data
+         *
+         * @static
+         */
+        public static function layoutData($data = [])
+        {
+            return \Illuminate\View\View::layoutData($data);
+        }
+
+        /**
+         * @see \Livewire\Macros\ViewMacros::section()
+         *
+         * @param  mixed  $section
+         *
+         * @static
+         */
+        public static function section($section)
+        {
+            return \Illuminate\View\View::section($section);
+        }
+
+        /**
+         * @see \Livewire\Macros\ViewMacros::slot()
+         *
+         * @param  mixed  $slot
+         *
+         * @static
+         */
+        public static function slot($slot)
+        {
+            return \Illuminate\View\View::slot($slot);
         }
     }
 }
@@ -25780,7 +25445,7 @@ namespace  {
         /**
          * Add a join clause to the query.
          *
-         * @param  string  $table
+         * @param  \Illuminate\Contracts\Database\Query\Expression|string  $table
          * @param  \Closure|string  $first
          * @param  string|null  $operator
          * @param  string|null  $second
@@ -25799,7 +25464,7 @@ namespace  {
         /**
          * Add a "join where" clause to the query.
          *
-         * @param  string  $table
+         * @param  \Illuminate\Contracts\Database\Query\Expression|string  $table
          * @param  \Closure|string  $first
          * @param  string  $operator
          * @param  string  $second
@@ -25839,7 +25504,7 @@ namespace  {
         /**
          * Add a left join to the query.
          *
-         * @param  string  $table
+         * @param  \Illuminate\Contracts\Database\Query\Expression|string  $table
          * @param  \Closure|string  $first
          * @param  string|null  $operator
          * @param  string|null  $second
@@ -25856,7 +25521,7 @@ namespace  {
         /**
          * Add a "join where" clause to the query.
          *
-         * @param  string  $table
+         * @param  \Illuminate\Contracts\Database\Query\Expression|string  $table
          * @param  \Closure|string  $first
          * @param  string  $operator
          * @param  string  $second
@@ -25891,7 +25556,7 @@ namespace  {
         /**
          * Add a right join to the query.
          *
-         * @param  string  $table
+         * @param  \Illuminate\Contracts\Database\Query\Expression|string  $table
          * @param  \Closure|string  $first
          * @param  string|null  $operator
          * @param  string|null  $second
@@ -25908,7 +25573,7 @@ namespace  {
         /**
          * Add a "right join where" clause to the query.
          *
-         * @param  string  $table
+         * @param  \Illuminate\Contracts\Database\Query\Expression|string  $table
          * @param  \Closure|string  $first
          * @param  string  $operator
          * @param  string  $second
@@ -25943,7 +25608,7 @@ namespace  {
         /**
          * Add a "cross join" clause to the query.
          *
-         * @param  string  $table
+         * @param  \Illuminate\Contracts\Database\Query\Expression|string  $table
          * @param  \Closure|string|null  $first
          * @param  string|null  $operator
          * @param  string|null  $second
@@ -26072,7 +25737,7 @@ namespace  {
         /**
          * Add a "where in" clause to the query.
          *
-         * @param  string  $column
+         * @param  \Illuminate\Contracts\Database\Query\Expression|string  $column
          * @param  mixed  $values
          * @param  string  $boolean
          * @param  bool  $not
@@ -26089,7 +25754,7 @@ namespace  {
         /**
          * Add an "or where in" clause to the query.
          *
-         * @param  string  $column
+         * @param  \Illuminate\Contracts\Database\Query\Expression|string  $column
          * @param  mixed  $values
          * @return \Illuminate\Database\Query\Builder
          *
@@ -26104,7 +25769,7 @@ namespace  {
         /**
          * Add a "where not in" clause to the query.
          *
-         * @param  string  $column
+         * @param  \Illuminate\Contracts\Database\Query\Expression|string  $column
          * @param  mixed  $values
          * @param  string  $boolean
          * @return \Illuminate\Database\Query\Builder
@@ -26120,7 +25785,7 @@ namespace  {
         /**
          * Add an "or where not in" clause to the query.
          *
-         * @param  string  $column
+         * @param  \Illuminate\Contracts\Database\Query\Expression|string  $column
          * @param  mixed  $values
          * @return \Illuminate\Database\Query\Builder
          *
@@ -26198,7 +25863,7 @@ namespace  {
         /**
          * Add a "where null" clause to the query.
          *
-         * @param  string|array  $columns
+         * @param  string|array|\Illuminate\Contracts\Database\Query\Expression  $columns
          * @param  string  $boolean
          * @param  bool  $not
          * @return \Illuminate\Database\Query\Builder
@@ -26214,7 +25879,7 @@ namespace  {
         /**
          * Add an "or where null" clause to the query.
          *
-         * @param  string|array  $column
+         * @param  string|array|\Illuminate\Contracts\Database\Query\Expression  $column
          * @return \Illuminate\Database\Query\Builder
          *
          * @static
@@ -26228,7 +25893,7 @@ namespace  {
         /**
          * Add a "where not null" clause to the query.
          *
-         * @param  string|array  $columns
+         * @param  string|array|\Illuminate\Contracts\Database\Query\Expression  $columns
          * @param  string  $boolean
          * @return \Illuminate\Database\Query\Builder
          *
@@ -26243,7 +25908,7 @@ namespace  {
         /**
          * Add a where between statement to the query.
          *
-         * @param  string|\Illuminate\Contracts\Database\Query\Expression  $column
+         * @param  \Illuminate\Contracts\Database\Query\Expression|string  $column
          * @param  \Illuminate\Database\Query\iterable  $values
          * @param  string  $boolean
          * @param  bool  $not
@@ -26260,7 +25925,7 @@ namespace  {
         /**
          * Add a where between statement using columns to the query.
          *
-         * @param  string  $column
+         * @param  \Illuminate\Contracts\Database\Query\Expression|string  $column
          * @param  array  $values
          * @param  string  $boolean
          * @param  bool  $not
@@ -26277,7 +25942,7 @@ namespace  {
         /**
          * Add an or where between statement to the query.
          *
-         * @param  string  $column
+         * @param  \Illuminate\Contracts\Database\Query\Expression|string  $column
          * @param  \Illuminate\Database\Query\iterable  $values
          * @return \Illuminate\Database\Query\Builder
          *
@@ -26292,7 +25957,7 @@ namespace  {
         /**
          * Add an or where between statement using columns to the query.
          *
-         * @param  string  $column
+         * @param  \Illuminate\Contracts\Database\Query\Expression|string  $column
          * @param  array  $values
          * @return \Illuminate\Database\Query\Builder
          *
@@ -26307,7 +25972,7 @@ namespace  {
         /**
          * Add a where not between statement to the query.
          *
-         * @param  string  $column
+         * @param  \Illuminate\Contracts\Database\Query\Expression|string  $column
          * @param  \Illuminate\Database\Query\iterable  $values
          * @param  string  $boolean
          * @return \Illuminate\Database\Query\Builder
@@ -26323,7 +25988,7 @@ namespace  {
         /**
          * Add a where not between statement using columns to the query.
          *
-         * @param  string  $column
+         * @param  \Illuminate\Contracts\Database\Query\Expression|string  $column
          * @param  array  $values
          * @param  string  $boolean
          * @return \Illuminate\Database\Query\Builder
@@ -26339,7 +26004,7 @@ namespace  {
         /**
          * Add an or where not between statement to the query.
          *
-         * @param  string  $column
+         * @param  \Illuminate\Contracts\Database\Query\Expression|string  $column
          * @param  \Illuminate\Database\Query\iterable  $values
          * @return \Illuminate\Database\Query\Builder
          *
@@ -26354,7 +26019,7 @@ namespace  {
         /**
          * Add an or where not between statement using columns to the query.
          *
-         * @param  string  $column
+         * @param  \Illuminate\Contracts\Database\Query\Expression|string  $column
          * @param  array  $values
          * @return \Illuminate\Database\Query\Builder
          *
@@ -26369,7 +26034,7 @@ namespace  {
         /**
          * Add an "or where not null" clause to the query.
          *
-         * @param  string  $column
+         * @param  \Illuminate\Contracts\Database\Query\Expression|string  $column
          * @return \Illuminate\Database\Query\Builder
          *
          * @static
@@ -26383,7 +26048,7 @@ namespace  {
         /**
          * Add a "where date" statement to the query.
          *
-         * @param  string  $column
+         * @param  \Illuminate\Contracts\Database\Query\Expression|string  $column
          * @param  string  $operator
          * @param  \DateTimeInterface|string|null  $value
          * @param  string  $boolean
@@ -26400,7 +26065,7 @@ namespace  {
         /**
          * Add an "or where date" statement to the query.
          *
-         * @param  string  $column
+         * @param  \Illuminate\Contracts\Database\Query\Expression|string  $column
          * @param  string  $operator
          * @param  \DateTimeInterface|string|null  $value
          * @return \Illuminate\Database\Query\Builder
@@ -26416,7 +26081,7 @@ namespace  {
         /**
          * Add a "where time" statement to the query.
          *
-         * @param  string  $column
+         * @param  \Illuminate\Contracts\Database\Query\Expression|string  $column
          * @param  string  $operator
          * @param  \DateTimeInterface|string|null  $value
          * @param  string  $boolean
@@ -26433,7 +26098,7 @@ namespace  {
         /**
          * Add an "or where time" statement to the query.
          *
-         * @param  string  $column
+         * @param  \Illuminate\Contracts\Database\Query\Expression|string  $column
          * @param  string  $operator
          * @param  \DateTimeInterface|string|null  $value
          * @return \Illuminate\Database\Query\Builder
@@ -26449,7 +26114,7 @@ namespace  {
         /**
          * Add a "where day" statement to the query.
          *
-         * @param  string  $column
+         * @param  \Illuminate\Contracts\Database\Query\Expression|string  $column
          * @param  string  $operator
          * @param  \DateTimeInterface|string|int|null  $value
          * @param  string  $boolean
@@ -26466,7 +26131,7 @@ namespace  {
         /**
          * Add an "or where day" statement to the query.
          *
-         * @param  string  $column
+         * @param  \Illuminate\Contracts\Database\Query\Expression|string  $column
          * @param  string  $operator
          * @param  \DateTimeInterface|string|int|null  $value
          * @return \Illuminate\Database\Query\Builder
@@ -26482,7 +26147,7 @@ namespace  {
         /**
          * Add a "where month" statement to the query.
          *
-         * @param  string  $column
+         * @param  \Illuminate\Contracts\Database\Query\Expression|string  $column
          * @param  string  $operator
          * @param  \DateTimeInterface|string|int|null  $value
          * @param  string  $boolean
@@ -26499,7 +26164,7 @@ namespace  {
         /**
          * Add an "or where month" statement to the query.
          *
-         * @param  string  $column
+         * @param  \Illuminate\Contracts\Database\Query\Expression|string  $column
          * @param  string  $operator
          * @param  \DateTimeInterface|string|int|null  $value
          * @return \Illuminate\Database\Query\Builder
@@ -26515,7 +26180,7 @@ namespace  {
         /**
          * Add a "where year" statement to the query.
          *
-         * @param  string  $column
+         * @param  \Illuminate\Contracts\Database\Query\Expression|string  $column
          * @param  string  $operator
          * @param  \DateTimeInterface|string|int|null  $value
          * @param  string  $boolean
@@ -26532,7 +26197,7 @@ namespace  {
         /**
          * Add an "or where year" statement to the query.
          *
-         * @param  string  $column
+         * @param  \Illuminate\Contracts\Database\Query\Expression|string  $column
          * @param  string  $operator
          * @param  \DateTimeInterface|string|int|null  $value
          * @return \Illuminate\Database\Query\Builder
@@ -26903,7 +26568,7 @@ namespace  {
         /**
          * Add a "group by" clause to the query.
          *
-         * @param  array|string|\Illuminate\Contracts\Database\Query\Expression  $groups
+         * @param  array|\Illuminate\Contracts\Database\Query\Expression|string  $groups
          * @return \Illuminate\Database\Query\Builder
          *
          * @static
@@ -27487,7 +27152,7 @@ namespace  {
         /**
          * Retrieve the "count" result of the query.
          *
-         * @param  string  $columns
+         * @param  \Illuminate\Contracts\Database\Query\Expression|string  $columns
          * @return int
          *
          * @static
@@ -27501,7 +27166,7 @@ namespace  {
         /**
          * Retrieve the minimum value of a given column.
          *
-         * @param  string  $column
+         * @param  \Illuminate\Contracts\Database\Query\Expression|string  $column
          * @return mixed
          *
          * @static
@@ -27515,7 +27180,7 @@ namespace  {
         /**
          * Retrieve the maximum value of a given column.
          *
-         * @param  string  $column
+         * @param  \Illuminate\Contracts\Database\Query\Expression|string  $column
          * @return mixed
          *
          * @static
@@ -27529,7 +27194,7 @@ namespace  {
         /**
          * Retrieve the sum of the values of a given column.
          *
-         * @param  string  $column
+         * @param  \Illuminate\Contracts\Database\Query\Expression|string  $column
          * @return mixed
          *
          * @static
@@ -27543,7 +27208,7 @@ namespace  {
         /**
          * Retrieve the average of the values of a given column.
          *
-         * @param  string  $column
+         * @param  \Illuminate\Contracts\Database\Query\Expression|string  $column
          * @return mixed
          *
          * @static
@@ -27557,7 +27222,7 @@ namespace  {
         /**
          * Alias for the "avg" method.
          *
-         * @param  string  $column
+         * @param  \Illuminate\Contracts\Database\Query\Expression|string  $column
          * @return mixed
          *
          * @static
@@ -28110,16 +27775,25 @@ namespace  {
     class Debugbar extends \Barryvdh\Debugbar\Facades\Debugbar
     {
     }
-    class Form extends \Collective\Html\FormFacade
+    class Pdf extends \Barryvdh\DomPDF\Facade\Pdf
     {
     }
-    class Html extends \Collective\Html\HtmlFacade
+    class PDF extends \Barryvdh\DomPDF\Facade\Pdf
+    {
+    }
+    class Livewire extends \Livewire\Livewire
     {
     }
     class Sentry extends \Sentry\Laravel\Facade
     {
     }
+    class Health extends \Spatie\Health\Facades\Health
+    {
+    }
     class Flare extends \Spatie\LaravelIgnition\Facades\Flare
+    {
+    }
+    class Signal extends \Spatie\SignalAwareCommand\Facades\Signal
     {
     }
     class DataTables extends \Yajra\DataTables\Facades\DataTables

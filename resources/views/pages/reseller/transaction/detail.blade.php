@@ -174,7 +174,7 @@
                                     <tr>
                                         <th scope="col">Alamat</th>
                                         <td scope="col">:</td>
-                                        <td scope="col">{{ $transaction->client->user->address }}</td>
+                                        <td scope="col">{{ $transaction->client->user->address->full_address }}</td>
                                     </tr>
                                     <tr>
                                         <th scope="col">Nomor Telepon</th>

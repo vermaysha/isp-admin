@@ -15,6 +15,26 @@ class Client extends Model
     use HasFactory, SoftDeletes;
 
     /**
+     * Internet Reseller Belum Terpasang
+     */
+    const NOT_INSTALLED = 0;
+
+    /**
+     * Internet Reseller Sudah Terpasang dan sudah aktif
+     */
+    const ACTIVED = 1;
+
+    /**
+     * Pelanggan Terblokir
+     */
+    const BLOCKED = 2;
+
+    /**
+     * Pelanggan berhenti sementara
+     */
+    const INACTIVE = 4;
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
@@ -23,8 +43,15 @@ class Client extends Model
         'client_id',
         'reseller_id',
         'plan_id',
+        'plan_price',
+        'plan_bandwidth',
+        'npwp',
         'payment_due_date',
         'is_ppn',
+        'status',
+        'installed_at',
+        'blocked_at',
+        'inactive_at',
     ];
 
     /**
@@ -34,6 +61,9 @@ class Client extends Model
      */
     protected $casts = [
         'is_ppn' => 'boolean',
+        'installed_at' => 'datetime',
+        'blocked_at' => 'datetime',
+        'inactive_at' => 'datetime',
     ];
 
     /**

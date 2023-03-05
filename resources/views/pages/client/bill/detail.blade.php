@@ -159,7 +159,7 @@
                                     <tr>
                                         <th scope="col">Alamat</th>
                                         <td scope="col">:</td>
-                                        <td scope="col">{{ $bill->reseller->address }}</td>
+                                        <td scope="col">{{ $bill->reseller->address->full_address }}</td>
                                     </tr>
                                     <tr>
                                         <th scope="col">Nomor Telepon</th>

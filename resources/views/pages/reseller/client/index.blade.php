@@ -72,7 +72,7 @@
                                         {{ $client->user->phone_number }}
                                     </td>
                                     <td>
-                                        {{ $client->user->address }}
+                                        {{ $client->user->address->full_address }}
                                     </td>
                                     <td class="text-center">
                                         @if ($client->is_ppn)
