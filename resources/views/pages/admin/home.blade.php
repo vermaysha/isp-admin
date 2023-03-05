@@ -171,7 +171,9 @@
                         beginAtZero: true,
                         ticks: {
                             precision: 0
-                        }
+                        },
+                        min: 0,
+                        max: {{ round(max($client['data']), -1) }},
                     }
                 },
                 responsive: true,
@@ -196,7 +198,9 @@
                         beginAtZero: true,
                         ticks: {
                             precision: 0
-                        }
+                        },
+                        min: 0,
+                        max: {{ round(max($client['data']), -1) }},
                     }
                 },
                 responsive: true,
