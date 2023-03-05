@@ -108,8 +108,10 @@
                         render: (data, type, row, meta) => {
                             if (row.user.gender == 'male') {
                                 return `<span class="badge badge-pills bg-info">Laki-laki</span>`;
-                            } else {
+                            } else if (row.user.gender == 'female') {
                                 return `<span class="badge badge-pills bg-primary">Perempuan</span>`;
+                            } else {
+                                return `-`
                             }
                         }
                     },
