@@ -42,8 +42,8 @@
                                             <td scope="col">Kontrak</td>
                                             <td>
                                                 <div>
-                                                    {{ $reseller->contract_start_at->isoFormat('dddd, D MMMM g') }} -
-                                                    {{ $reseller->contract_end_at->isoFormat('dddd, D MMMM g') }}
+                                                    {{ $reseller->contract_start_at?->isoFormat('dddd, D MMMM g') ?? '' }} -
+                                                    {{ $reseller->contract_end_at?->isoFormat('dddd, D MMMM g') ?? '' }}
                                                 </div>
                                             </td>
                                         </tr>
@@ -51,7 +51,7 @@
                                             <td scope="col">Durasi Kontrak</td>
                                             <td>
                                                 <span class="badge rounded-pill bg-info">
-                                                    {{ $reseller->contract_start_at->diffInMonths($reseller->contract_end_at) }}
+                                                    {{ $reseller->contract_start_at?->diffInMonths($reseller->contract_end_at) }}
                                                     Bulan
                                                 </span>
                                             </td>
