@@ -66,14 +66,61 @@
                                     <option value="female @selected(old('gender') === 'female')">Wanita</option>
                                 </select>
                             </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="province">Provinsi</label>
+                                <select name="province" id="province" class="form-control" required>
+                                    <option value="{{ old('province') }}" selected>
+                                        {{ old('province_name') }}</option>
+                                </select>
+                                <input type="hidden" name="province_name" id="province_name" value="">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="city">Kabupaten/Kota</label>
+                                <select name="city" id="city" class="form-control" required>
+                                    <option value="{{ old('city') }}" selected>
+                                        {{ old('city_name') }}</option>
+                                </select>
+                                <input type="hidden" name="city_name" id="city_name" value="">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="district" for="district">Kecamatan</label>
+                                <select name="district" id="district" class="form-control" required>
+                                    <option value="{{ old('district') }}" selected>
+                                        {{ old('district_name') }}</option>
+                                </select>
+                                <input type="hidden" name="district_name" id="district_name" value="">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="village">Desa/Kelurahan</label>
+                                <select name="village" id="village" class="form-control" required>
+                                    <option value="{{ old('village') }}" selected>
+                                        {{ old('village_name') }}</option>
+                                </select>
+                                <input type="hidden" name="village_name" id="village_name" value="">
+                            </div>
                             <div class="col-md-12 mb-3">
-                                <label for="address" class="form-label">Alamat Lengkap</label>
-                                <textarea name="address" id="address" class="form-control" rows="5">{{ old('address') }}</textarea>
+                                <label for="address_line" class="form-label">Alamat Jalan/Gedung</label>
+                                <textarea name="address_line" id="address_line" class="form-control" rows="5">{{ old('address_line') }}</textarea>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <div id='map' style='width: 100%; height: 500px;'></div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="latitude">Garis Lintang</label>
+                                <input type="text" id="latitude" name="latitude" class="form-control" readonly
+                                    placeholder="Garis Lintang (Terisi Otomatis Sesuai Peta)"
+                                    value="{{ old('latitude') }}">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="longitude">Garis Bujur</label>
+                                <input type="text" id="longitude" name="longitude" class="form-control" readonly
+                                    placeholder="Garis Bujur (Terisi Otomatis Sesuai Peta)"
+                                    value="{{ old('longitude') }}">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="photo" class="form-label">Foto</label>
-                                <input type="file" accept="image/*" name="photo" id="photo" class="form-control"
-                                    onchange="preview(event, 'imgOwner')">
+                                <input type="file" accept="image/*" name="photo" id="photo"
+                                    class="form-control" onchange="preview(event, 'imgOwner')">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <span class="mb-2 d-block">Pratinjau Gambar</span>
@@ -93,6 +140,7 @@
                         <div class="d-flex justify-content-end my-4">
                             <button class="btn btn-primary" type="submit">Simpan</button>
                         </div>
+                        <input type="hidden" name="village_id" id="village_id" value="{{ old('village_id') }}" />
                     </form>
                 </div>
             </div>
@@ -102,4 +150,11 @@
 
 @section('script')
     @include('js.previewImg')
+    @include('js.address')
+    @include('js.mapbox')
+@endsection
+
+@section('stylesheet')
+    @include('stylesheet.address')
+    @include('stylesheet.mapbox')
 @endsection

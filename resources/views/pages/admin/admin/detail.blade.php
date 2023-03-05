@@ -48,8 +48,10 @@
                                             <td>
                                                 @if ($admin->user->gender == 'male')
                                                     Laki-Laki
-                                                @else
+                                                @elseif ($admin->user->gender == 'female')
                                                     Wanita
+                                                @else
+                                                    -
                                                 @endif
                                             </td>
                                         </tr>
@@ -61,7 +63,7 @@
                                         <tr>
                                             <td scope="col"><strong>Alamat</strong></td>
                                             <td>:</td>
-                                            <td>{{ $admin->user->address ?? '-' }}</td>
+                                            <td>{{ $admin->user->address->full_address ?? '-' }}</td>
                                         </tr>
                                         <tr>
                                             <td scope="col"><strong>Tanggal Pendaftaran</strong></td>

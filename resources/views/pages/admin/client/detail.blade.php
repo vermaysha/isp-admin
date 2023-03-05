@@ -61,7 +61,7 @@
                                         <tr>
                                             <td scope="col"><strong>Alamat</strong></td>
                                             <td>:</td>
-                                            <td>{{ $client->user->address ?? '-' }}</td>
+                                            <td>{{ $client->user->address->full_address ?? '-' }}</td>
                                         </tr>
                                         <tr>
                                             <td scope="col"><strong>Tanggal Pendaftaran</strong></td>

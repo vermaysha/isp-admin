@@ -35,7 +35,7 @@
                                     </tr>
                                     <tr>
                                         <td>Alamat</td>
-                                        <td>{{ $owner->address ?? '-' }}</td>
+                                        <td>{{ $owner->address->full_address ?? '-' }}</td>
                                     </tr>
                                     <tr>
                                         <td>NIK</td>

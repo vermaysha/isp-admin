@@ -25,7 +25,10 @@ class Reseller extends Model implements Wallet
         'photo',
         'email',
         'phone_number',
-        'address',
+        'address_id',
+        'npwp',
+        'pks',
+        'contract_file',
         'contract_start_at',
         'contract_end_at',
     ];
@@ -79,5 +82,15 @@ class Reseller extends Model implements Wallet
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Relation to address
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function address()
+    {
+        return $this->belongsTo(Address::class);
     }
 }

@@ -32,8 +32,10 @@ class User extends Authenticatable
         'password',
         'birth',
         'gender',
-        'address',
+        'address_id',
         'photo',
+        'nik',
+        'ktp_file',
         'phone_number',
     ];
 
@@ -112,6 +114,16 @@ class User extends Authenticatable
     public function reseller()
     {
         return $this->hasOne(Reseller::class);
+    }
+
+    /**
+     * Relation to address
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function address()
+    {
+        return $this->belongsTo(Address::class);
     }
 
     /**

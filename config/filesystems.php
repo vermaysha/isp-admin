@@ -51,6 +51,20 @@ return [
             'throw' => false,
         ],
 
+        'ktp' => [
+            'driver' => 'local',
+            'root' => storage_path('app/ktp'),
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
+        'contracts' => [
+            'driver' => 'local',
+            'root' => storage_path('app/contracts'),
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
         'backups' => [
             'driver' => 'local',
             'root' => storage_path('app'),
