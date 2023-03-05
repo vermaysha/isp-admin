@@ -89,8 +89,9 @@
                             <div class="col-md-3 mb-3">
                                 <label for="district" for="district">Kecamatan</label>
                                 <select name="district" id="district" class="form-control" required>
-                                    <option value="{{ $admin->user->address->district->code }}" selected>
-                                        {{ $admin->user->address->district->name }}</option>
+                                    <option value="{{ old('district') ?? $admin->user->address->district->code }}"
+                                        selected>
+                                        {{ old('district_name') ?? $admin->user->address->district->name }}</option>
                                 </select>
                                 <input type="hidden" name="district_name" id="district_name"
                                     value="{{ $admin->user->address->district->name }}">
@@ -98,14 +99,14 @@
                             <div class="col-md-3 mb-3">
                                 <label for="village">Desa/Kelurahan</label>
                                 <select name="village" id="village" class="form-control" required>
-                                    <option value="{{ $admin->user->address->village->code }}" selected>
-                                        {{ $admin->user->address->village->name }}</option>
+                                    <option value="{{ old('village') ?? $admin->user->address->village->code }}" selected>
+                                        {{ old('village_name') ?? $admin->user->address->village->name }}</option>
                                 </select>
                                 <input type="hidden" name="village_name" id="village_name"
                                     value="{{ $admin->user->address->village->name }}">
                             </div>
                             <input type="hidden" name="village_id" id="village_id"
-                                value="{{ $admin->user->address->village->id }}" />
+                                value="{{ old('village_id') ?? $admin->user->address->village->id }}" />
                             <div class="col-md-12 mb-3">
                                 <label for="address_line" class="form-label">Alamat Jalan/Gedung</label>
                                 <textarea name="address_line" id="address_line" class="form-control" rows="5">{{ old('address_line') ?? $admin->user->address->address_line }}</textarea>
