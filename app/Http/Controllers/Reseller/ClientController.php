@@ -32,7 +32,8 @@ class ClientController extends Controller
     public function index(Request $request)
     {
         $clients = Client::with([
-            'user:id,fullname,username,photo,phone_number,address',
+            'user:id,fullname,username,photo,phone_number,address_id',
+            'user.address',
             'plan:id,name',
         ])->whereHas('reseller.employees', function ($q) {
             $q->where('user_id', Auth::id());

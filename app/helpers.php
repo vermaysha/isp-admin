@@ -68,3 +68,12 @@ if (! function_exists('graph')) {
         ];
     }
 }
+
+if (! function_exists('graphMax')) {
+    function graphMax(int $max)
+    {
+        $digits = ($max !== 0 ? floor(log10($max)) : 1);
+
+        return round($max, -($digits)) + (10 ** ($digits < 1 ? $digits + 1 : $digits));
+    }
+}
