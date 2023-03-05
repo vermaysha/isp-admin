@@ -10,8 +10,8 @@
                 container: 'map',
                 style: 'mapbox://styles/mapbox/streets-v11',
                 cooperativeGestures: true,
-                center: [117.8888, -2.44565],
-                zoom: 4
+                center: {{ Js::from([$longitude ?? 117.8888, $latitude ?? -2.44565]) }},
+                zoom: {{ isset($latitude) && isset($longitude) ? 14 : 4 }}
             });
 
             const geocoder = new MapboxGeocoder({
@@ -25,6 +25,11 @@
             const marker = new mapboxgl.Marker({
                 draggable: true
             })
+
+            @if (isset($latitude) && isset($longitude))
+                marker.setLngLat({{ Js::from([$longitude, $latitude]) }})
+                    .addTo(map)
+            @endif
 
             marker.on('dragend', function(e) {
                 var coords = e.target.getLngLat();
