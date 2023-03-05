@@ -48,8 +48,10 @@
                                             <td>
                                                 @if ($admin->user->gender == 'male')
                                                     Laki-Laki
-                                                @else
+                                                @elseif ($admin->user->gender == 'female')
                                                     Wanita
+                                                @else
+                                                    -
                                                 @endif
                                             </td>
                                         </tr>
