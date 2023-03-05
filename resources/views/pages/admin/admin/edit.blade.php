@@ -109,8 +109,20 @@
                                 <label for="address_line" class="form-label">Alamat Jalan/Gedung</label>
                                 <textarea name="address_line" id="address_line" class="form-control" rows="5">{{ old('address_line') ?? $admin->user->address->address_line }}</textarea>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-12 mb-3">
                                 <div id='map' style='width: 100%; height: 500px;'></div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="latitude">Garis Lintang</label>
+                                <input type="text" id="latitude" name="latitude" class="form-control" readonly
+                                    placeholder="Garis Lintang (Terisi Otomatis Sesuai Peta)"
+                                    value="{{ old('latitude') ?? $admin->user->address->coordinates->latitude }}">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="longitude">Garis Bujur</label>
+                                <input type="text" id="longitude" name="longitude" class="form-control" readonly
+                                    placeholder="Garis Bujur (Terisi Otomatis Sesuai Peta)"
+                                    value="{{ old('longitude') ?? $admin->user->address->coordinates->longitude }}">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="photo" class="form-label">Foto</label>
@@ -138,16 +150,17 @@
                         </div>
                         <input type="hidden" name="village_id" id="village_id"
                             value="{{ old('village_id') ?? $admin->user->address->village->id }}" />
-                        <input type="hidden" id="latitude" name="latitude"
-                            value="{{ old('latitude') ?? $admin->user->address->latitude }}">
-                        <input type="hidden" id="longitude" name="longitude"
-                            value="{{ old('longitude') ?? $admin->user->address->longitude }}">
                     </form>
                 </div>
             </div>
         </div>
     </div>
 @endsection
+
+@php
+    $latitude = $admin->user->address->coordinates->latitude;
+    $longitude = $admin->user->address->coordinates->longitude;
+@endphp
 
 @section('script')
     @include('js.previewImg')
