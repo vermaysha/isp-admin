@@ -121,8 +121,8 @@
                         orderable: false,
                     },
                     {
-                        data: 'address',
-                        name: 'address',
+                        data: 'address.city.name',
+                        name: 'address.city.name',
                         className: 'text-left',
                         searchable: false,
                         orderable: false,
