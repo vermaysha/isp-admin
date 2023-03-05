@@ -159,8 +159,8 @@
                         orderable: false,
                     },
                     {
-                        data: 'user.address',
-                        name: 'user.address',
+                        data: 'user.address.full_address',
+                        name: 'user.address.full_address',
                         className: 'text-left',
                         searchable: false,
                         orderable: false,
