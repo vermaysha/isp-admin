@@ -17,6 +17,7 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use Intervention\Image\Facades\Image;
+use MatanYadaev\EloquentSpatial\Objects\Point;
 use Throwable;
 use Vermaysha\Wilayah\Models\City;
 use Vermaysha\Wilayah\Models\District;
@@ -200,6 +201,8 @@ class AdminController extends Controller
                 Rule::exists((new Village())->getTable(), 'id'),
             ],
             'address_line' => 'nullable',
+            'latitude' => 'required|between:-90,90',
+            'longitude' => 'required|between:-90,90',
             'photo' => 'nullable|image|max:1024',
             'office_location' => [
                 'required',
@@ -254,6 +257,7 @@ class AdminController extends Controller
                 $user->address->update([
                     'village_id' => $request->input('village_id'),
                     'address_line' => $request->input('address_line'),
+                    'coordinates' => new Point($request->input('latitude'), $request->input('longitude')),
                 ]);
 
                 $user->save();
