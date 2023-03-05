@@ -9,7 +9,7 @@
         <div class="row g-0 mb-4">
             <div class="card">
                 <div class="card-header">
-                    <strong>Tambah Admin GMDP</strong>
+                    <strong>Edit Admin GMDP</strong>
                 </div>
                 <div class="card-body py-4">
                     @if ($errors->any())
@@ -23,6 +23,7 @@
                     @endif
                     <form action="{{ route('admin.adminMenu.update', ['id' => $admin->id]) }}" method="post" class="px-4"
                         autocomplete="off" enctype="multipart/form-data">
+                        <input autocomplete="false" name="hidden" type="text" style="display:none;">
                         @csrf
                         <fieldset class="border rounded-2 row p-3">
                             <legend class="float-none w-auto px-4">Informasi Admin</legend>
@@ -36,22 +37,23 @@
                                 <div class="input-group">
                                     <span class="input-group-text">@</span>
                                     <input type="text" name="username" id="username" class="form-control"
-                                        value="{{ old('username') ?? $admin->user->username }}">
+                                        value="{{ old('username') ?? $admin->user->username }}" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="email" class="form-label">Email Admin</label>
                                 <input type="email" name="email" id="email" class="form-control"
-                                    value="{{ old('email') ?? $admin->user->email }}">
+                                    value="{{ old('email') ?? $admin->user->email }}" autocomplete="email">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="password" class="form-label">Kata Sandi Sistem</label>
-                                <input type="password" name="password" id="password" class="form-control">
+                                <input type="password" name="password" id="password" class="form-control"
+                                    autocomplete="new-password">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="password_confirmation" class="form-label">Konfirmasi Kata Sandi</label>
                                 <input type="password" name="password_confirmation" id="password_confirmation"
-                                    class="form-control">
+                                    class="form-control" autocomplete="new-password">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="birth" class="form-label">Tanggal Lahir</label>
@@ -66,14 +68,52 @@
                                     <option value="female @selected(old('gender') ?? $admin->user->gender == 'female')">Wanita</option>
                                 </select>
                             </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="province">Provinsi</label>
+                                <select name="province" id="province" class="form-control" required>
+                                    <option value="{{ old('province') ?? $admin->user->address->province->code }}" selected>
+                                        {{ old('province_name') ?? $admin->user->address->province->name }}</option>
+                                </select>
+                                <input type="hidden" name="province_name" id="province_name"
+                                    value="{{ $admin->user->address->province->name }}">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="city">Kabupaten/Kota</label>
+                                <select name="city" id="city" class="form-control" required>
+                                    <option value="{{ old('city') ?? $admin->user->address->city->code }}" selected>
+                                        {{ old('city_name') ?? $admin->user->address->city->name }}</option>
+                                </select>
+                                <input type="hidden" name="city_name" id="city_name"
+                                    value="{{ $admin->user->address->city->name }}">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="district" for="district">Kecamatan</label>
+                                <select name="district" id="district" class="form-control" required>
+                                    <option value="{{ $admin->user->address->district->code }}" selected>
+                                        {{ $admin->user->address->district->name }}</option>
+                                </select>
+                                <input type="hidden" name="district_name" id="district_name"
+                                    value="{{ $admin->user->address->district->name }}">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="village">Desa/Kelurahan</label>
+                                <select name="village" id="village" class="form-control" required>
+                                    <option value="{{ $admin->user->address->village->code }}" selected>
+                                        {{ $admin->user->address->village->name }}</option>
+                                </select>
+                                <input type="hidden" name="village_name" id="village_name"
+                                    value="{{ $admin->user->address->village->name }}">
+                            </div>
+                            <input type="hidden" name="village_id" id="village_id"
+                                value="{{ $admin->user->address->village->id }}" />
                             <div class="col-md-12 mb-3">
-                                <label for="address" class="form-label">Alamat Lengkap</label>
-                                <textarea name="address" id="address" class="form-control" rows="5">{{ old('address') ?? $admin->user->address->full_address }}</textarea>
+                                <label for="address_line" class="form-label">Alamat Jalan/Gedung</label>
+                                <textarea name="address_line" id="address_line" class="form-control" rows="5">{{ old('address_line') ?? $admin->user->address->address_line }}</textarea>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="photo" class="form-label">Foto</label>
-                                <input type="file" accept="image/*" name="photo" id="photo" class="form-control"
-                                    onchange="preview(event, 'imgOwner')">
+                                <input type="file" accept="image/*" name="photo" id="photo"
+                                    class="form-control" onchange="preview(event, 'imgOwner')">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <span class="mb-2 d-block">Pratinjau Gambar</span>
@@ -103,4 +143,11 @@
 
 @section('script')
     @include('js.previewImg')
+    @include('js.address')
+@endsection
+
+@section('stylesheet')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
 @endsection
