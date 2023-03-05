@@ -77,7 +77,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-footer d-flex justify-content-end">
+                <div class="card-footer d-flex justify-content-between">
+                    <a href="" class="text-white btn btn-danger">Hapus</a>
                     <a href="{{ route('admin.adminMenu.edit', ['id' => $admin->id]) }}"
                         class="text-white btn btn-info">Edit</a>
                 </div>
