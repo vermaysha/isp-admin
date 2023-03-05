@@ -312,4 +312,16 @@ class ClientController extends Controller
             return abort(500, $e->getMessage());
         }
     }
+
+    /**
+     * Show create clients form
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function candidate(Request $request)
+    {
+        return view('pages.reseller.client.candidate_client', [
+            'title' => 'Calon Pelanggan',
+        ]);
+    }
 }

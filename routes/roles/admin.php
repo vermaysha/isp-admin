@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ClientController;
+use App\Http\Controllers\Admin\DirectController;
 use App\Http\Controllers\Admin\PasswordController;
 use App\Http\Controllers\Admin\RegisterController;
 use App\Http\Controllers\Admin\ResellerController;
@@ -28,6 +29,7 @@ Route::name('clientMenu.')
     ->group(function () {
         Route::get('/', [ClientController::class, 'index'])->name('index');
         Route::get('/{id}', [ClientController::class, 'detail'])->name('detail')->whereNumber('id');
+        Route::get('/direct', [DirectController::class, 'direct'])->name('direct');
     });
 
 /**
