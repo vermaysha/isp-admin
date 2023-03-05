@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Address;
 use App\Models\Admin;
 use App\Models\Role;
 use App\Models\User;
@@ -81,7 +82,29 @@ class AdminController extends Controller
             'password' => 'required|confirmed',
             'birth' => 'nullable|date',
             'gender' => 'nullable|in:male,female',
-            'address' => 'nullable',
+            'province' => [
+                'required',
+                Rule::exists((new Province())->getTable(), 'code'),
+            ],
+            'city' => [
+                'required',
+                Rule::exists((new City())->getTable(), 'code'),
+            ],
+            'district' => [
+                'required',
+                Rule::exists((new District())->getTable(), 'code'),
+            ],
+            'village' => [
+                'required',
+                Rule::exists((new Village())->getTable(), 'code'),
+            ],
+            'village_id' => [
+                'required',
+                Rule::exists((new Village())->getTable(), 'id'),
+            ],
+            'address_line' => 'nullable',
+            'latitude' => 'required|between:-90,90',
+            'longitude' => 'required|between:-180,180',
             'photo' => 'nullable|image|max:1024',
             'office_location' => [
                 'required',
@@ -117,9 +140,18 @@ class AdminController extends Controller
                     'birth' => $request->input('birth'),
                     'gender' => $request->input('gender'),
                     'phone_number' => $request->input('phone_number'),
-                    'address' => $request->input('address'),
                     'photo' => $photoPath ? 'storage/' . $photoPath : null,
                 ]);
+
+                $address = new Address([
+                    'village_id' => $request->input('village_id'),
+                    'address_line' => $request->input('address_line'),
+                    'coordinates' => new Point($request->input('latitude'), $request->input('longitude')),
+                ]);
+
+                $address->save();
+
+                $user->address()->associate($address);
 
                 $user->save();
                 $user->assignRole(Role::ADMIN);
@@ -202,7 +234,7 @@ class AdminController extends Controller
             ],
             'address_line' => 'nullable',
             'latitude' => 'required|between:-90,90',
-            'longitude' => 'required|between:-90,90',
+            'longitude' => 'required|between:-180,180',
             'photo' => 'nullable|image|max:1024',
             'office_location' => [
                 'required',
