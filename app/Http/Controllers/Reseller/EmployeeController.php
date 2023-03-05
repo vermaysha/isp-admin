@@ -29,6 +29,7 @@ class EmployeeController extends Controller
     {
         $staffs = User::with([
             'roles',
+            'address',
         ])->whereHas('resellers', function ($q) {
             $q->whereHas('user', function ($q) {
                 $q->where('id', Auth::id());
