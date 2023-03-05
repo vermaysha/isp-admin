@@ -31,12 +31,13 @@ Route::middleware([
      */
     Route::middleware([
         'api',
-    ])->prefix('address')->group(function () {
-        Route::get('/provinces', [AddresssController::class, 'provinces'])->name('provinces');
-        Route::get('/cities/{code}', [AddresssController::class, 'cities'])->name('cities')->whereNumber('code');
-        Route::get('/districts/{code}', [AddresssController::class, 'districts'])->name('districts')->whereNumber('code');
-        Route::get('/villages/{code}', [AddresssController::class, 'villages'])->name('villages')->whereNumber('code');
-    });
+    ])->prefix('address')
+        ->name('address.')->group(function () {
+            Route::get('/provinces', [AddresssController::class, 'provinces'])->name('provinces');
+            Route::get('/cities/{code?}', [AddresssController::class, 'cities'])->name('cities')->whereNumber('code');
+            Route::get('/districts/{code?}', [AddresssController::class, 'districts'])->name('districts')->whereNumber('code');
+            Route::get('/villages/{code?}', [AddresssController::class, 'villages'])->name('villages')->whereNumber('code');
+        });
 
     /**
      * Route for admin
