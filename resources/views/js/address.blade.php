@@ -22,6 +22,7 @@
                 },
                 processResults: function(data) {
                     var results = $.map(data, function(obj) {
+                        obj.id_original = obj.id;
                         obj.id = obj.code;
                         obj.text = obj.name;
 
@@ -85,7 +86,7 @@
                                 // Village select
                                 villageSelect(e.params.data.code)
                                     .on('select2:select', (e) => {
-                                        $('#village_id').val(e.params.data.id)
+                                        $('#village_id').val(e.params.data.id_original)
                                     })
                             })
                     })
