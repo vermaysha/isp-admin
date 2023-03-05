@@ -66,7 +66,7 @@
             <div class="col-md-6">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <canvas id="clientChart" aria-label="Grafik Total Pelanggan" role="img" style="height: 350px">
+                        <canvas id="resellerChart" aria-label="Grafik Total Reseller" role="img" style="height: 350px">
                             Your browser does not support the canvas element
                         </canvas>
                     </div>
@@ -75,7 +75,7 @@
             <div class="col-md-6">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <canvas id="resellerChart" aria-label="Grafik Total Reseller" role="img" style="height: 350px">
+                        <canvas id="clientChart" aria-label="Grafik Total Pelanggan" role="img" style="height: 350px">
                             Your browser does not support the canvas element
                         </canvas>
                     </div>

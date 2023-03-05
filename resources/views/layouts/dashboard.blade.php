@@ -41,6 +41,11 @@
                         href="{{ route('admin.clientMenu.index') }}">
                         <i class="nav-icon cil cil-people"></i> Pelanggan </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::route()->getName() == 'admin.direct' ? 'active' : '' }}"
+                        href="{{ route('admin.clientMenu.direct') }}">
+                        <i class="nav-icon cil cil-user-plus"></i> Pelanggan Direct </a>
+                </li>
 
                 {{-- <li class="nav-title">Data Sistem</li> --}}
                 <li class="nav-item">
@@ -59,6 +64,11 @@
             {{-- reference: https://spatie.be/docs/laravel-permission/v5/basic-usage/blade-directives --}}
             @hasanyrole(\App\Models\Role::RESELLER_OWNER)
                 <li class="nav-title">Data Master</li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::route()->getName() == 'business.clientMenu.candidate' ? 'active' : '' }}"
+                        href="{{ route('business.clientMenu.candidate') }}">
+                        <i class="nav-icon cil cil-warning"></i> Calon Pelanggan </a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link {{ Request::route()->getName() == 'business.clientMenu.index' ? 'active' : '' }}"
                         href="{{ route('business.clientMenu.index') }}">
