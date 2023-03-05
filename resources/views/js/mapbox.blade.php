@@ -46,7 +46,7 @@
                 positionOptions: {
                     enableHighAccuracy: true
                 },
-                trackUserLocation: true,
+                trackUserLocation: false,
                 showUserHeading: false,
                 showUserLocation: false,
             });
