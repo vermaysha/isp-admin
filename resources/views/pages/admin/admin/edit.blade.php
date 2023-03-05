@@ -105,11 +105,12 @@
                                 <input type="hidden" name="village_name" id="village_name"
                                     value="{{ $admin->user->address->village->name }}">
                             </div>
-                            <input type="hidden" name="village_id" id="village_id"
-                                value="{{ old('village_id') ?? $admin->user->address->village->id }}" />
                             <div class="col-md-12 mb-3">
                                 <label for="address_line" class="form-label">Alamat Jalan/Gedung</label>
                                 <textarea name="address_line" id="address_line" class="form-control" rows="5">{{ old('address_line') ?? $admin->user->address->address_line }}</textarea>
+                            </div>
+                            <div class="col-md-12">
+                                <div id='map' style='width: 100%; height: 500px;'></div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="photo" class="form-label">Foto</label>
@@ -135,6 +136,12 @@
                         <div class="d-flex justify-content-end my-4">
                             <button class="btn btn-primary" type="submit">Simpan</button>
                         </div>
+                        <input type="hidden" name="village_id" id="village_id"
+                            value="{{ old('village_id') ?? $admin->user->address->village->id }}" />
+                        <input type="hidden" id="latitude" name="latitude"
+                            value="{{ old('latitude') ?? $admin->user->address->latitude }}">
+                        <input type="hidden" id="longitude" name="longitude"
+                            value="{{ old('longitude') ?? $admin->user->address->longitude }}">
                     </form>
                 </div>
             </div>
@@ -145,10 +152,10 @@
 @section('script')
     @include('js.previewImg')
     @include('js.address')
+    @include('js.mapbox')
 @endsection
 
 @section('stylesheet')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+    @include('stylesheet.address')
+    @include('stylesheet.mapbox')
 @endsection
