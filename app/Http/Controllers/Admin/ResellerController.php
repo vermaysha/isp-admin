@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Address;
 use App\Models\Client;
 use App\Models\Reseller;
 use App\Models\Role;
@@ -16,6 +17,11 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Intervention\Image\Facades\Image;
+use MatanYadaev\EloquentSpatial\Objects\Point;
+use Vermaysha\Wilayah\Models\City;
+use Vermaysha\Wilayah\Models\District;
+use Vermaysha\Wilayah\Models\Province;
+use Vermaysha\Wilayah\Models\Village;
 
 class ResellerController extends Controller
 {
@@ -84,16 +90,40 @@ class ResellerController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'email' => 'nullable|email:rfc,dns',
+            'email' => 'nullable|email:rfc,dns|unique:resellers,email',
             'phoneNumber' => 'nullable|numeric',
-            'address' => 'required',
-            'contractStartDate' => 'required|date',
-            'contractEndDate' => 'required|date|after:contractStartDate',
+            'province' => [
+                'required',
+                Rule::exists((new Province())->getTable(), 'code'),
+            ],
+            'city' => [
+                'required',
+                Rule::exists((new City())->getTable(), 'code'),
+            ],
+            'district' => [
+                'required',
+                Rule::exists((new District())->getTable(), 'code'),
+            ],
+            'village' => [
+                'required',
+                Rule::exists((new Village())->getTable(), 'code'),
+            ],
+            'village_id' => [
+                'required',
+                Rule::exists((new Village())->getTable(), 'id'),
+            ],
+            'address_line' => 'nullable',
+            'latitude' => 'required|between:-90,90',
+            'longitude' => 'required|between:-180,180',
+            'contractRangeDate' => 'required',
+            'npwp' => 'required',
+            'pks' => 'required',
             'logo' => 'nullable|file|image|max:1024',
+            'contract_file' => 'required|file|max:1024|mimes:jpeg,bmp,png,pdf,eps',
 
             'owner_fullname' => 'required',
             'owner_username' => 'required|unique:users,username',
-            'owner_email' => 'nullable|email:rfc,dns',
+            'owner_email' => 'nullable|email:rfc,dns|unique:users,email',
             'owner_password' => 'required|confirmed',
             'owner_birth' => 'nullable|date',
             'owner_gender' => [
@@ -103,11 +133,36 @@ class ResellerController extends Controller
                     'male',
                 ]),
             ],
-            'owner_address' => 'nullable',
-            'owner_photo' => 'nullable|image|max:1024',
+            'owner_province' => [
+                'required',
+                Rule::exists((new Province())->getTable(), 'code'),
+            ],
+            'owner_city' => [
+                'required',
+                Rule::exists((new City())->getTable(), 'code'),
+            ],
+            'owner_district' => [
+                'required',
+                Rule::exists((new District())->getTable(), 'code'),
+            ],
+            'owner_village' => [
+                'required',
+                Rule::exists((new Village())->getTable(), 'code'),
+            ],
+            'owner_village_id' => [
+                'required',
+                Rule::exists((new Village())->getTable(), 'id'),
+            ],
+            'owner_address_line' => 'nullable',
+            'owner_latitude' => 'required|between:-90,90',
+            'owner_longitude' => 'required|between:-180,180',
+            'owner_photo_profile' => 'nullable|image|max:1024',
+            'owner_photo_ktp' => 'required|image|max:1024',
         ]);
 
-        $photoPath = null;
+        $photoProfilePath = null;
+        $photoKtpPath = null;
+        $contractPath = null;
         $logoPath = null;
 
         try {
@@ -123,22 +178,53 @@ class ResellerController extends Controller
                 );
             }
 
-            if ($request->hasFile('owner_photo')) {
-                $photo = Image::make($request->file('owner_photo'));
-                $photo->fit($photo->width());
+            if ($request->hasFile('contract_file')) {
+                $contract = Image::make($request->file('contract_file'));
+                $contract->fit($contract->width());
 
-                $photoPath = 'images/profile/' . $request->input('owner_username') . '.webp';
+                $contractPath = Str::slug($request->input('name')) . time() . '.webp';
+
+                Storage::disk('contracts')->put(
+                    $contractPath,
+                    $contract->encode('webp')
+                );
+            }
+
+            if ($request->hasFile('owner_photo_profile')) {
+                $photoProfile = Image::make($request->file('owner_photo_profile'));
+                $photoProfile->fit($photoProfile->width());
+
+                $photoProfilePath = 'images/profile/' . $request->input('owner_username') . '.webp';
 
                 Storage::disk('public')->put(
-                    $photoPath,
-                    $photo->encode('webp')
+                    $photoProfilePath,
+                    $photoProfile->encode('webp')
+                );
+            }
+
+            if ($request->hasFile('owner_photo_ktp')) {
+                $photoKtp = Image::make($request->file('owner_photo_ktp'));
+
+                $photoKtpPath = $request->input('owner_username') . '.webp';
+
+                Storage::disk('ktp')->put(
+                    $photoKtpPath,
+                    $photoKtp->encode('webp')
                 );
             }
         } catch (Exception $ex) {
             Log::error($ex->getMessage());
         }
 
-        DB::transaction(function () use ($request, $photoPath, $logoPath) {
+        $contractRangeDate = explode(' to ', mb_strtolower($request->input('contractRangeDate')));
+
+        if (count($contractRangeDate) < 2) {
+            return redirect()->route('admin.resellerMenu.index')->withErrors([
+                'contractRangeDate' => 'Tanggal kontrak tidak valid',
+            ]);
+        }
+
+        DB::transaction(function () use ($request, $photoProfilePath, $logoPath, $photoKtpPath, $contractPath, $contractRangeDate) {
             $user = new User([
                 'fullname' => $request->input('owner_fullname'),
                 'username' => $request->input('owner_username'),
@@ -147,8 +233,19 @@ class ResellerController extends Controller
                 'birth' => $request->input('birth'),
                 'gender' => $request->input('owner_gender'),
                 'address' => $request->input('owner_address'),
-                'photo' => $photoPath ? 'storage/' . $photoPath : null,
+                'photo' => $photoProfilePath ? 'storage/' . $photoProfilePath : null,
+                'ktp_file' => $photoKtpPath,
             ]);
+
+            $userAddress = new Address([
+                'village_id' => $request->input('owner_village_id'),
+                'address_line' => $request->input('owner_address_line'),
+                'coordinates' => new Point($request->input('owner_latitude'), $request->input('owner_longitude')),
+            ]);
+
+            $userAddress->save();
+
+            $user->address()->associate($userAddress);
 
             $user->save();
 
@@ -159,10 +256,23 @@ class ResellerController extends Controller
                 'photo' => $logoPath ? 'storage/' . $logoPath : null,
                 'email' => $request->input('email'),
                 'phone_number' => $request->input('phoneNumber'),
-                'address' => $request->input('address'),
-                'contract_start_at' => $request->input('contractStartDate'),
-                'contract_end_at' => $request->input('contractEndDate'),
+                'address_line' => $request->input('address_line'),
+                'npwp' => $request->input('npwp'),
+                'pks' => $request->input('pks'),
+                'contract_file' => $contractPath,
+                'contract_start_at' => $contractRangeDate[0],
+                'contract_end_at' => $contractRangeDate[1],
             ]);
+
+            $resellerAddress = new Address([
+                'village_id' => $request->input('village_id'),
+                'address_line' => $request->input('address_line'),
+                'coordinates' => new Point($request->input('latitude'), $request->input('longitude')),
+            ]);
+
+            $resellerAddress->save();
+
+            $reseller->address()->associate($resellerAddress);
 
             $user->reseller()->save($reseller);
         }, 5);
