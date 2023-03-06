@@ -61,8 +61,10 @@
                                             <td>
                                                 @if ($staff->gender == 'male')
                                                     Laki-Laki
-                                                @else
+                                                @elseif ($staff->gender == 'female')
                                                     Wanita
+                                                @else
+                                                    -
                                                 @endif
                                             </td>
                                         </tr>
@@ -75,6 +77,11 @@
                                             <td scope="col"><strong>Alamat</strong></td>
                                             <td>:</td>
                                             <td>{{ $staff->address->full_address ?? '-' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td scope="col"><strong>Alamat jalan/gedung</strong></td>
+                                            <td>:</td>
+                                            <td>{{ $staff->address->address_line ?? '-' }}</td>
                                         </tr>
                                         <tr>
                                             <td scope="col"><strong>Tanggal Pendaftaran</strong></td>
