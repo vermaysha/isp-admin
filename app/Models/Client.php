@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\ClientStatus;
+use App\Enums\ClientType;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,6 +15,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Client extends Model
 {
     use HasFactory, SoftDeletes;
+
+    /**
+     * Direct Client
+     */
+    const DIRECT_CLIENT = 0;
+
+    /**
+     * Indirect Client
+     */
+    const INDIRECT_CLIENT = 1;
 
     /**
      * Internet Reseller Belum Terpasang
@@ -52,6 +64,8 @@ class Client extends Model
         'installed_at',
         'blocked_at',
         'inactive_at',
+        'type',
+        'status',
     ];
 
     /**
@@ -64,6 +78,8 @@ class Client extends Model
         'installed_at' => 'datetime',
         'blocked_at' => 'datetime',
         'inactive_at' => 'datetime',
+        'type' => ClientType::class,
+        'status' => ClientStatus::class,
     ];
 
     /**

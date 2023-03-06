@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Reseller;
 
+use App\Enums\ClientStatus;
+use App\Enums\ClientType;
 use App\Http\Controllers\Controller;
 use App\Models\Address;
 use App\Models\Client;
@@ -41,15 +43,16 @@ class ClientController extends Controller
             'user:id,fullname,username,photo,phone_number,address_id',
             'user.address',
             'plan:id,name',
-        ])->whereHas('reseller.employees', function ($q) {
-            $q->where('user_id', Auth::id());
-        });
+        ])->where('type', ClientType::INDIRECT_CLIENT)
+            ->whereHas('reseller.employees', function ($q) {
+                $q->where('user_id', Auth::id());
+            });
 
         $status = match ($request->input('status')) {
-            'not_installed' => Client::NOT_INSTALLED,
-            'installed' => Client::ACTIVED,
-            'blocked' => Client::BLOCKED,
-            'inactive' => Client::INACTIVE,
+            'not_installed' => ClientStatus::NOT_INSTALLED,
+            'installed' => ClientStatus::ACTIVED,
+            'blocked' => ClientStatus::BLOCKED,
+            'inactive' => ClientStatus::INACTIVE,
             default => false
         };
 
@@ -104,9 +107,10 @@ class ClientController extends Controller
                 $q->limit(5);
                 $q->orderBy('id', 'desc');
             },
-        ])->whereHas('reseller.employees', function ($q) {
-            $q->where('user_id', Auth::id());
-        })->findOrFail($id);
+        ])->where('type', ClientType::INDIRECT_CLIENT)
+            ->whereHas('reseller.employees', function ($q) {
+                $q->where('user_id', Auth::id());
+            })->findOrFail($id);
 
         $plans = Plan::whereHas('reseller.employees', function ($q) {
             $q->where('user_id', Auth::id());
@@ -128,7 +132,8 @@ class ClientController extends Controller
     {
         $client = Client::whereHas('reseller.employees', function ($q) {
             $q->where('user_id', Auth::id());
-        })->findOrFail($id);
+        })->where('type', ClientType::INDIRECT_CLIENT)
+            ->findOrFail($id);
 
         $bandwidts = Plan::whereHas('reseller.employees', function ($q) {
             $q->where('user_id', Auth::id());

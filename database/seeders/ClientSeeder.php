@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Enums\ClientStatus;
+use App\Enums\ClientType;
 use App\Models\Client;
 use App\Models\Plan;
 use App\Models\Reseller;
@@ -51,7 +53,8 @@ class ClientSeeder extends Seeder
                 'is_ppn' => $isPpn,
                 'created_at' => $createdAt,
                 'updated_at' => $createdAt,
-                'status' => Client::ACTIVED,
+                'type' => ClientType::INDIRECT_CLIENT,
+                'status' => ClientStatus::ACTIVED,
                 'installed_at' => $createdAt,
             ];
         }
