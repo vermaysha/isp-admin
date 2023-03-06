@@ -52,8 +52,9 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="birth" class="form-label">Tanggal Lahir</label>
-                                <input type="date" name="birth" id="birth" class="form-control"
-                                    value="{{ old('birth') ?? $client->user->birth?->format('Y-m-d') }}">
+                                <input type="text" name="birth" id="birth" class="form-control"
+                                    value="{{ old('birth') ?? $client->user->birth?->format('Y-m-d') }}"
+                                    placeholder="Pilih tanggal lahir (opsional)">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="gender" class="form-label">Jenis Kelamin</label>
@@ -63,15 +64,68 @@
                                     <option value="female @selected(old('gender') ?? $client->user->gender == 'female')">Wanita</option>
                                 </select>
                             </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="province">Provinsi</label>
+                                <select name="province" id="province" class="form-control" required>
+                                    <option value="{{ old('province') ?? $client->user->address->province->code }}"
+                                        selected>
+                                        {{ old('province_name') ?? $client->user->address->province->name }}</option>
+                                </select>
+                                <input type="hidden" name="province_name" id="province_name"
+                                    value="{{ $client->user->address->province->name }}">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="city">Kabupaten/Kota</label>
+                                <select name="city" id="city" class="form-control" required>
+                                    <option value="{{ old('city') ?? $client->user->address->city->code }}" selected>
+                                        {{ old('city_name') ?? $client->user->address->city->name }}</option>
+                                </select>
+                                <input type="hidden" name="city_name" id="city_name"
+                                    value="{{ $client->user->address->city->name }}">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="district" for="district">Kecamatan</label>
+                                <select name="district" id="district" class="form-control" required>
+                                    <option value="{{ old('district') ?? $client->user->address->district->code }}"
+                                        selected>
+                                        {{ old('district_name') ?? $client->user->address->district->name }}</option>
+                                </select>
+                                <input type="hidden" name="district_name" id="district_name"
+                                    value="{{ $client->user->address->district->name }}">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="village">Desa/Kelurahan</label>
+                                <select name="village" id="village" class="form-control" required>
+                                    <option value="{{ old('village') ?? $client->user->address->village->code }}"
+                                        selected>
+                                        {{ old('village_name') ?? $client->user->address->village->name }}</option>
+                                </select>
+                                <input type="hidden" name="village_name" id="village_name"
+                                    value="{{ $client->user->address->village->name }}">
+                            </div>
                             <div class="col-md-12 mb-3">
-                                <label for="address" class="form-label">Alamat Lengkap</label>
-                                <textarea name="address" id="address" class="form-control" rows="5"
-                                    placeholder="Masukan alamat pengguna (opsional)">{{ old('address') ?? $client->user->address->full_address }}</textarea>
+                                <label for="address_line" class="form-label">Alamat Jalan/Gedung</label>
+                                <textarea name="address_line" id="address_line" class="form-control" rows="5">{{ old('address_line') ?? $client->user->address->address_line }}</textarea>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <div id='map' style='width: 100%; height: 500px;'></div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="latitude">Garis Lintang</label>
+                                <input type="text" id="latitude" name="latitude" class="form-control" readonly
+                                    placeholder="Garis Lintang (Terisi Otomatis Sesuai Peta)"
+                                    value="{{ old('latitude') ?? $client->user->address->coordinates->latitude }}">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="longitude">Garis Bujur</label>
+                                <input type="text" id="longitude" name="longitude" class="form-control" readonly
+                                    placeholder="Garis Bujur (Terisi Otomatis Sesuai Peta)"
+                                    value="{{ old('longitude') ?? $client->user->address->coordinates->longitude }}">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="photo" class="form-label">Foto</label>
-                                <input type="file" accept="image/*" name="photo" id="photo" class="form-control"
-                                    onchange="preview(event, 'imgOwner')">
+                                <input type="file" accept="image/*" name="photo" id="photo"
+                                    class="form-control" onchange="preview(event, 'imgOwner')">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <span class="mb-2 d-block">Pratinjau Gambar</span>
@@ -108,12 +162,37 @@
                             <button class="btn btn-primary" type="submit">Simpan</button>
                         </div>
                     </div>
+                    <input type="hidden" name="village_id" id="village_id"
+                        value="{{ old('village_id') ?? $client->user->address->village->id }}" />
                 </form>
             </div>
         </div>
     </div>
 @endsection
 
+@php
+    $latitude = $client->user->address->coordinates->latitude;
+    $longitude = $client->user->address->coordinates->longitude;
+@endphp
+
 @section('script')
     @include('js.previewImg')
+    @include('js.address')
+    @include('js.mapbox')
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.js"></script>
+
+    <script>
+        $('#birth').flatpickr({
+            altInput: true,
+            dateFormat: "Y-m-d",
+            altFormat: "j F Y",
+        });
+    </script>
+@endsection
+
+@section('stylesheet')
+    @include('stylesheet.address')
+    @include('stylesheet.mapbox')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css">
 @endsection
