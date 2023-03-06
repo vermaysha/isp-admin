@@ -64,11 +64,11 @@
             {{-- reference: https://spatie.be/docs/laravel-permission/v5/basic-usage/blade-directives --}}
             @hasanyrole(\App\Models\Role::RESELLER_OWNER)
                 <li class="nav-title">Data Master</li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link {{ Request::route()->getName() == 'business.clientMenu.candidate' ? 'active' : '' }}"
                         href="{{ route('business.clientMenu.candidate') }}">
                         <i class="nav-icon cil cil-warning"></i> Calon Pelanggan </a>
-                </li>
+                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link {{ Request::route()->getName() == 'business.clientMenu.index' ? 'active' : '' }}"
                         href="{{ route('business.clientMenu.index') }}">

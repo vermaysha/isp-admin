@@ -45,6 +45,18 @@ class ClientController extends Controller
             $q->where('user_id', Auth::id());
         });
 
+        $status = match ($request->input('status')) {
+            'not_installed' => Client::NOT_INSTALLED,
+            'installed' => Client::ACTIVED,
+            'blocked' => Client::BLOCKED,
+            'inactive' => Client::INACTIVE,
+            default => false
+        };
+
+        if ($status !== false) {
+            $clients->where('status', $status);
+        }
+
         if ($request->ajax() || $request->has('is_ajax')) {
             return DataTables::eloquent($clients)->toJson();
         }

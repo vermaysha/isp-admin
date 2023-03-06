@@ -75,6 +75,10 @@
     }
 
     $(document).ready(() => {
+        $('.select2').select2({
+            theme: "bootstrap-5",
+        })
+
         provinceSelect()
             .on('select2:select', (e) => {
                 // City Select

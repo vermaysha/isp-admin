@@ -32,7 +32,7 @@ class Client extends Model
     /**
      * Pelanggan berhenti sementara
      */
-    const INACTIVE = 4;
+    const INACTIVE = 3;
 
     /**
      * The attributes that are mass assignable.
