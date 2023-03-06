@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Reseller;
 
 use App\Http\Controllers\Controller;
+use App\Models\Address;
 use App\Models\Reseller;
 use App\Models\Role;
 use App\Models\User;
@@ -15,7 +16,12 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Intervention\Image\Facades\Image;
+use MatanYadaev\EloquentSpatial\Objects\Point;
 use Throwable;
+use Vermaysha\Wilayah\Models\City;
+use Vermaysha\Wilayah\Models\District;
+use Vermaysha\Wilayah\Models\Province;
+use Vermaysha\Wilayah\Models\Village;
 use Yajra\DataTables\Facades\DataTables;
 
 class EmployeeController extends Controller
@@ -89,12 +95,34 @@ class EmployeeController extends Controller
         $this->validate($request, [
             'fullname' => 'required',
             'username' => 'required|alpha_dash|regex:/^[A-Za-z0-9_]+$/|unique:users,username',
-            'email' => 'nullable|email:rfc,dns|unique:users,email',
+            'email' => 'required|email:rfc,dns|unique:users,email',
             'phone_number' => 'nullable|numeric',
             'password' => 'required|confirmed',
             'birth' => 'nullable|date',
             'gender' => 'nullable|in:male,female',
-            'address' => 'nullable',
+            'province' => [
+                'required',
+                Rule::exists((new Province())->getTable(), 'code'),
+            ],
+            'city' => [
+                'required',
+                Rule::exists((new City())->getTable(), 'code'),
+            ],
+            'district' => [
+                'required',
+                Rule::exists((new District())->getTable(), 'code'),
+            ],
+            'village' => [
+                'required',
+                Rule::exists((new Village())->getTable(), 'code'),
+            ],
+            'village_id' => [
+                'required',
+                Rule::exists((new Village())->getTable(), 'id'),
+            ],
+            'address_line' => 'nullable',
+            'latitude' => 'required|between:-90,90',
+            'longitude' => 'required|between:-180,180',
             'photo' => 'nullable|image|max:1024',
             'role' => [
                 'required',
@@ -137,9 +165,18 @@ class EmployeeController extends Controller
                     'birth' => $request->input('birth'),
                     'gender' => $request->input('gender'),
                     'phone_number' => $request->input('phone_number'),
-                    'address' => $request->input('address'),
                     'photo' => $photoPath ? 'storage/' . $photoPath : null,
                 ]);
+
+                $address = new Address([
+                    'village_id' => $request->input('village_id'),
+                    'address_line' => $request->input('address_line'),
+                    'coordinates' => new Point($request->input('latitude'), $request->input('longitude')),
+                ]);
+
+                $address->save();
+
+                $user->address()->associate($address);
 
                 $user->save();
                 $user->assignRole($request->input('role'));
@@ -206,7 +243,7 @@ class EmployeeController extends Controller
                 Rule::unique('users', 'username')->ignore($staff->id),
             ],
             'email' => [
-                'nullable',
+                'required',
                 'email:rfc,dns',
                 Rule::unique('users', 'email')->ignore($staff->id),
             ],
@@ -214,7 +251,27 @@ class EmployeeController extends Controller
             'password' => 'nullable|confirmed',
             'birth' => 'nullable|date',
             'gender' => 'nullable|in:male,female',
-            'address' => 'nullable',
+            'province' => [
+                'required',
+                Rule::exists((new Province())->getTable(), 'code'),
+            ],
+            'city' => [
+                'required',
+                Rule::exists((new City())->getTable(), 'code'),
+            ],
+            'district' => [
+                'required',
+                Rule::exists((new District())->getTable(), 'code'),
+            ],
+            'village' => [
+                'required',
+                Rule::exists((new Village())->getTable(), 'code'),
+            ],
+            'village_id' => [
+                'required',
+                Rule::exists((new Village())->getTable(), 'id'),
+            ],
+            'address_line' => 'nullable',
             'photo' => 'nullable|image|max:1024',
             'role' => [
                 'required',
@@ -253,7 +310,6 @@ class EmployeeController extends Controller
                     'password',
                     'birth',
                     'gender',
-                    'address',
                 ];
 
                 foreach ($allowedInput as $key) {
@@ -265,6 +321,12 @@ class EmployeeController extends Controller
                 if ($photoPath) {
                     $staff->photo = $photoPath ? 'storage/' . $photoPath : null;
                 }
+
+                $staff->address->update([
+                    'village_id' => $request->input('village_id'),
+                    'address_line' => $request->input('address_line'),
+                    'coordinates' => new Point($request->input('latitude'), $request->input('longitude')),
+                ]);
 
                 $staff->save();
             }, 5);

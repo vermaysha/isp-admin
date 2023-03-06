@@ -36,7 +36,8 @@
                                     <th scope="col">Nama Pelanggan</th>
                                     <th scope="col">Paket</th>
                                     <th scope="col">No.Telp</th>
-                                    <th scope="col">Alamat</th>
+                                    <th scope="col">Kecamatan</th>
+                                    <th scope="col">Desa</th>
                                     <th scope="col">PPN</th>
                                 </tr>
                             </thead>
@@ -159,8 +160,15 @@
                         orderable: false,
                     },
                     {
-                        data: 'user.address.full_address',
-                        name: 'user.address.full_address',
+                        data: 'user.address.district.name',
+                        name: 'user.address.district.name',
+                        className: 'text-left',
+                        searchable: false,
+                        orderable: false,
+                    },
+                    {
+                        data: 'user.address.village.name',
+                        name: 'user.address.village.name',
                         className: 'text-left',
                         searchable: false,
                         orderable: false,

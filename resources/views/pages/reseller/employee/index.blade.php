@@ -36,7 +36,8 @@
                                     <th scope="col">Nama</th>
                                     <th scope="col">Jabatan</th>
                                     <th scope="col">Nomor Telepon</th>
-                                    <th scope="col">Alamat</th>
+                                    <th scope="col">Kota/Kabupaten</th>
+                                    <th scope="col">Kecamatan</th>
                                     <th scope="col">Tanggal Pendaftaran</th>
                                 </tr>
                             </thead>
@@ -67,7 +68,7 @@
                     url: '{{ asset('/js/datatable-id.json') }}',
                 },
                 order: [
-                    [0, 'asc']
+                    [0, 'desc']
                 ],
                 stateSave: true,
                 pagingType: 'simple_numbers',
@@ -123,6 +124,13 @@
                     {
                         data: 'address.city.name',
                         name: 'address.city.name',
+                        className: 'text-left',
+                        searchable: false,
+                        orderable: false,
+                    },
+                    {
+                        data: 'address.district.name',
+                        name: 'address.district.name',
                         className: 'text-left',
                         searchable: false,
                         orderable: false,
