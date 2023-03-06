@@ -12,13 +12,52 @@
                     <strong>Pelanggan</strong>
                 </div>
                 <div class="card-body py-4">
-                    <div class="d-flex justify-content-between mb-3">
-                        <div class="px-3">
-                            <a href=""> </a>
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="col-12">
+                                <label class="visually-hidden" for="search">Search</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control form-control-sm" id="searchTable"
+                                        placeholder="Cari ...">
+                                    <div class="input-group-text">
+                                        <i class="cil-magnifying-glass"></i>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="px-3">
-                            <a href="{{ route('business.clientMenu.create') }}" class="btn btn-primary btn-outline">Tambah
-                                Pelanggan</a>
+                        <div class="col-md-3">
+                            <form action="{{ route('business.clientMenu.index') }}" method="get">
+                                <div class="col-12">
+                                    <label class="visually-hidden" for="yearRange">Status</label>
+                                    <div class="input-group">
+                                        <select name="status" id="status" class="form-control select2">
+                                            <option value="all">Semua</option>
+                                            <option value="not_installed" @selected(request()->get('status') === 'not_installed')>Belum Terpasang
+                                            </option>
+                                            <option value="installed" @selected(request()->get('status') === 'installed')>Terpasang</option>
+                                            <option value="blocked" @selected(request()->get('status') === 'blocked')>Diblokir</option>
+                                            <option value="inactive" @selected(request()->get('status') === 'inactive')>Berhenti Sementara
+                                            </option>
+                                        </select>
+                                        <button class="btn btn-primary btn-sm" type="submit">
+                                            Kirim
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-3 text-right">
+                            <a id="resetFilter" href="{{ route('business.clientMenu.index') }}"
+                                class="btn btn-danger btn-sm text-white">Reset</a>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="d-flex justify-content-end mb-3">
+                                <div class="px-3">
+                                    <a href="{{ route('business.clientMenu.create') }}"
+                                        class="btn btn-primary btn-outline">Tambah
+                                        Pelanggan</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     @if (session('status'))
@@ -35,10 +74,10 @@
                                     <th scope="col" class="text-center">#</th>
                                     <th scope="col">Nama Pelanggan</th>
                                     <th scope="col">Paket</th>
-                                    <th scope="col">No.Telp</th>
                                     <th scope="col">Kecamatan</th>
                                     <th scope="col">Desa</th>
                                     <th scope="col">PPN</th>
+                                    <th scope="col">Status Pemasangan</th>
                                 </tr>
                             </thead>
                             <tbody class="table-group-divider">
@@ -97,19 +136,29 @@
 
 @section('stylesheet')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap5.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
 @endsection
 
 @section('script')
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     <script>
         $(document).ready(function() {
+            $('.select2').select2({
+                theme: "bootstrap-5",
+            })
             const table = $('#clientTable').DataTable({
                 serverSide: true,
                 processing: true,
                 ajax: '',
-                info: true,
+                info: false,
+                lengthChange: false,
+                dom: 'trip',
                 language: {
                     url: '{{ asset('/js/datatable-id.json') }}',
                 },
@@ -153,13 +202,6 @@
                         }
                     },
                     {
-                        data: 'user.phone_number',
-                        name: 'user.phone_number',
-                        className: 'text-left',
-                        searchable: false,
-                        orderable: false,
-                    },
-                    {
                         data: 'user.address.district.name',
                         name: 'user.address.district.name',
                         className: 'text-left',
@@ -181,9 +223,27 @@
                         orderable: true,
                         render: (data, type, row, meta) => {
                             if (data) {
-                                return `<span class="badge rounded-pill bg-primary">Ya</span>`
+                                return `<span class="badge rounded-pill bg-success">Ya</span>`
                             }
                             return `<span class="badge rounded-pill bg-danger">Tidak</span>`
+                        }
+                    },
+                    {
+                        data: 'status',
+                        name: 'status',
+                        className: 'text-left',
+                        searchable: false,
+                        orderable: false,
+                        render: (data) => {
+                            if (data === 1) {
+                                return `<span class="badge rounded-pill bg-info">Terpasang</span>`
+                            } else if (data === 2) {
+                                return `<span class="badge rounded-pill bg-danger">Terblokir</span>`
+                            } else if (data === 3) {
+                                return `<span class="badge rounded-pill bg-warning">Berhenti</span>`
+                            } else {
+                                return `<span class="badge rounded-pill bg-secondary">Belum Terpasang</span>`
+                            }
                         }
                     },
                     // {
@@ -203,6 +263,23 @@
                     cell.innerHTML = i + 1 + info.start;
                 });
             });
+
+            $('#searchTable').on('keyup', function() {
+                table.search(this.value).draw();
+            });
+
+            var state = table.state.loaded();
+
+            $('#searchTable').val(state.search.search)
+
+            $('#resetFilter').on('click', async function(e) {
+                e.preventDefault();
+
+                table.state.clear();
+                setTimeout(() => {
+                    window.location.assign($(this).attr('href'))
+                }, 250);
+            })
         })
     </script>
 @endsection
