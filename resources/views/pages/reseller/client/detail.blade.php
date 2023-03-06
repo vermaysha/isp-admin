@@ -104,6 +104,28 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td scope="col"><strong>Status</strong></td>
+                                <td>:</td>
+                                <td>
+                                    @if ($client->status === \App\Models\Client::NOT_INSTALLED)
+                                        <span class="badge rounded-pill bg-danger">Belum Terpasang</span>
+                                    @elseif ($client->status === \App\Models\Client::ACTIVED)
+                                        <span class="badge rounded-pill bg-info">Terpasang</span>
+                                    @elseif ($client->status === \App\Models\Client::BLOCKED)
+                                        <span class="badge rounded-pill bg-danger">Diblokir</span>
+                                    @elseif ($client->status === \App\Models\Client::INACTIVE)
+                                        <span class="badge rounded-pill bg-warning"> Berhenti Sementara</span>
+                                    @endif
+                                </td>
+                            </tr>
+                            <tr>
+                                <td scope="col"><strong>Tanggal Pemasangan</strong></td>
+                                <td>:</td>
+                                <td>
+                                    {{ $client->installed_at->isoFormat('dddd, D MMMM g / HH:MM:ss') . ' WIB' }}
+                                </td>
+                            </tr>
+                            <tr>
                                 <td scope="col"><strong>Termasuk PPN ?</strong></td>
                                 <td>:</td>
                                 <td>
