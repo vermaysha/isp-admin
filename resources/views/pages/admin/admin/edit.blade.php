@@ -62,7 +62,7 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="gender" class="form-label">Jenis Kelamin</label>
-                                <select name="gender" id="gender" class="form-control">
+                                <select name="gender" id="gender" class="form-control select2">
                                     <option value="">--- Pilih Jenis Kelamin ---</option>
                                     <option value="male" @selected(old('gender') ?? $admin->user->gender == 'male')>Lelaki</option>
                                     <option value="female @selected(old('gender') ?? $admin->user->gender == 'female')">Wanita</option>
