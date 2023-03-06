@@ -75,6 +75,10 @@
     }
 
     $(document).ready(() => {
+        $('.select2').select2({
+            theme: "bootstrap-5",
+        })
+
         provinceSelect()
             .on('select2:select', (e) => {
                 // City Select
@@ -102,9 +106,5 @@
 
         var districtCode = $('#district').find(':selected').val()
         villageSelect(districtCode)
-
-        $('.select2').select2({
-            theme: "bootstrap-5",
-        })
     })
 </script>
