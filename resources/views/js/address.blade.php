@@ -102,5 +102,9 @@
 
         var districtCode = $('#district').find(':selected').val()
         villageSelect(districtCode)
+
+        $('.select2').select2({
+            theme: "bootstrap-5",
+        })
     })
 </script>
