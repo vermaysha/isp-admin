@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Reseller;
 
 use App\Http\Controllers\Controller;
+use App\Models\Address;
 use App\Models\Client;
 use App\Models\Plan;
 use App\Models\Reseller;
@@ -19,7 +20,12 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Intervention\Image\Facades\Image;
+use MatanYadaev\EloquentSpatial\Objects\Point;
 use Throwable;
+use Vermaysha\Wilayah\Models\City;
+use Vermaysha\Wilayah\Models\District;
+use Vermaysha\Wilayah\Models\Province;
+use Vermaysha\Wilayah\Models\Village;
 use Yajra\DataTables\Facades\DataTables;
 
 class ClientController extends Controller
@@ -125,7 +131,7 @@ class ClientController extends Controller
                 Rule::unique('users', 'username')->ignore($client->user_id),
             ],
             'email' => [
-                'nullable',
+                'required',
                 'email:rfc,dns',
                 Rule::unique('users', 'email')->ignore($client->user_id),
             ],
@@ -133,7 +139,27 @@ class ClientController extends Controller
             'password' => 'nullable|confirmed',
             'birth' => 'nullable|date',
             'gender' => 'nullable|in:male,female',
-            'address' => 'nullable',
+            'province' => [
+                'required',
+                Rule::exists((new Province())->getTable(), 'code'),
+            ],
+            'city' => [
+                'required',
+                Rule::exists((new City())->getTable(), 'code'),
+            ],
+            'district' => [
+                'required',
+                Rule::exists((new District())->getTable(), 'code'),
+            ],
+            'village' => [
+                'required',
+                Rule::exists((new Village())->getTable(), 'code'),
+            ],
+            'village_id' => [
+                'required',
+                Rule::exists((new Village())->getTable(), 'id'),
+            ],
+            'address_line' => 'nullable',
             'photo' => 'nullable|image|max:1024',
             'plan' => [
                 'nullable',
@@ -172,7 +198,6 @@ class ClientController extends Controller
                     'password',
                     'birth',
                     'gender',
-                    'address',
                 ];
 
                 foreach ($allowedInput as $key) {
@@ -184,6 +209,12 @@ class ClientController extends Controller
                 if ($photoPath) {
                     $user->photo = $photoPath ? 'storage/' . $photoPath : null;
                 }
+
+                $user->address->update([
+                    'village_id' => $request->input('village_id'),
+                    'address_line' => $request->input('address_line'),
+                    'coordinates' => new Point($request->input('latitude'), $request->input('longitude')),
+                ]);
 
                 $user->save();
 
@@ -242,12 +273,34 @@ class ClientController extends Controller
         $this->validate($request, [
             'fullname' => 'required',
             'username' => 'required|alpha_dash|regex:/^[A-Za-z0-9_]+$/|unique:users,username',
-            'email' => 'nullable|email:rfc,dns|unique:users,email',
+            'email' => 'required|email:rfc,dns|unique:users,email',
             'phone_number' => 'nullable|numeric',
             'password' => 'required|confirmed',
             'birth' => 'nullable|date',
             'gender' => 'nullable|in:male,female',
-            'address' => 'nullable',
+            'province' => [
+                'required',
+                Rule::exists((new Province())->getTable(), 'code'),
+            ],
+            'city' => [
+                'required',
+                Rule::exists((new City())->getTable(), 'code'),
+            ],
+            'district' => [
+                'required',
+                Rule::exists((new District())->getTable(), 'code'),
+            ],
+            'village' => [
+                'required',
+                Rule::exists((new Village())->getTable(), 'code'),
+            ],
+            'village_id' => [
+                'required',
+                Rule::exists((new Village())->getTable(), 'id'),
+            ],
+            'address_line' => 'nullable',
+            'latitude' => 'required|between:-90,90',
+            'longitude' => 'required|between:-180,180',
             'photo' => 'nullable|image|max:1024',
             'plan' => [
                 'required',
@@ -284,9 +337,18 @@ class ClientController extends Controller
                     'birth' => $request->input('birth'),
                     'gender' => $request->input('gender'),
                     'phone_number' => $request->input('phone_number'),
-                    'address' => $request->input('address'),
                     'photo' => $photoPath ? 'storage/' . $photoPath : null,
                 ]);
+
+                $address = new Address([
+                    'village_id' => $request->input('village_id'),
+                    'address_line' => $request->input('address_line'),
+                    'coordinates' => new Point($request->input('latitude'), $request->input('longitude')),
+                ]);
+
+                $address->save();
+
+                $user->address()->associate($address);
 
                 $user->save();
                 $user->assignRole(Role::CLIENT);
@@ -294,7 +356,7 @@ class ClientController extends Controller
                 $user->client()->save(new Client([
                     'plan_id' => $request->input('plan'),
                     'reseller_id' => Reseller::whereHas('user', fn ($q) => $q->where('user_id', Auth::id()))->first()->id,
-                    'payment_due_date' => 25,
+                    'payment_due_date' => 10,
                     'is_ppn' => $request->has('ppn'),
                 ]));
             }, 5);
