@@ -12,6 +12,7 @@ use App\Models\Reseller;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
@@ -253,6 +254,60 @@ class ClientController extends Controller
             if ($photoPath) {
                 Storage::delete($photoPath);
             }
+            Log::critical($e->getMessage(), $e->getTrace());
+
+            return abort(500, $e->getMessage());
+        }
+    }
+
+    /**
+     * Update status for user
+     */
+    public function updateStatus(Request $request, string $id): RedirectResponse
+    {
+        $request->validate([
+            'status' => [
+                'required',
+                Rule::in(ClientStatus::getAllValues()),
+            ],
+        ]);
+
+        $client = Client::with('user')->whereHas('reseller.employees', function ($q) {
+            $q->where('user_id', Auth::id());
+        })->where('type', ClientType::INDIRECT_CLIENT)
+            ->findOrFail($id);
+
+        switch ($request->input('status')) {
+            case ClientStatus::ACTIVED:
+                $client->installed_at = now();
+                $client->blocked_at = null;
+                $client->inactive_at = null;
+                break;
+
+            case ClientStatus::BLOCKED:
+                $client->blocked_at = now();
+                break;
+
+            case ClientStatus::INACTIVE:
+                $client->inactive_at = now();
+                break;
+
+            case ClientStatus::NOT_INSTALLED:
+                $client->installed_at = null;
+                $client->blocked_at = null;
+                $client->inactive_at = null;
+                break;
+        }
+
+        $client->status = $request->input('status');
+
+        try {
+            $client->save();
+
+            return redirect()
+                    ->route('business.clientMenu.detail', ['id' => $client->id])
+                    ->with('status', 'Pelanggan "' . $client->user->fullname . '" Telah Diubah');
+        } catch (Throwable $e) {
             Log::critical($e->getMessage(), $e->getTrace());
 
             return abort(500, $e->getMessage());

@@ -23,4 +23,12 @@ enum ClientStatus: int
      * Pelanggan berhenti sementara
      */
     case INACTIVE = 3;
+
+    /**
+     * Get all status
+     */
+    public static function getAllValues(): array
+    {
+        return array_column(ClientStatus::cases(), 'value');
+    }
 }

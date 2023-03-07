@@ -72,7 +72,11 @@
                 <li class="nav-item">
                     <a class="nav-link {{ Request::route()->getName() == 'business.clientMenu.index' ? 'active' : '' }}"
                         href="{{ route('business.clientMenu.index') }}">
-                        <i class="nav-icon cil cil-user"></i> Pelanggan </a>
+                        <i class="nav-icon cil cil-user"></i> Pelanggan
+                        @if ($prospectiveClient)
+                            <span class="badge badge-pills bg-danger ms-auto badge-sm">{{ $prospectiveClient }}</span>
+                        @endif
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ Request::route()->getName() == 'business.planMenu.index' ? 'active' : '' }}"
@@ -138,7 +142,11 @@
                 <li class="nav-item">
                     <a class="nav-link {{ Request::route()->getName() == 'business.clientMenu.index' ? 'active' : '' }}"
                         href="{{ route('business.clientMenu.index') }}">
-                        <i class="nav-icon cil cil-user"></i> Pelanggan </a>
+                        <i class="nav-icon cil cil-user"></i> Pelanggan
+                        @if ($prospectiveClient)
+                            <span class="badge badge-pills bg-danger ms-auto badge-sm">{{ $prospectiveClient }}</span>
+                        @endif
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ Request::route()->getName() == 'business.planMenu.index' ? 'active' : '' }}"
@@ -176,8 +184,17 @@
             @hasanyrole(\App\Models\Role::RESELLER_TECHNICIAN)
                 <li class="nav-title">Data Master</li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::route()->getName() == 'business.client' ? 'active' : '' }}"
-                        href="{{ route('business.clientMenu.index') }}">
+                    <a class="nav-link {{ Request::route()->getName() == 'business.clientMenu.index' && request()->get('status') == 'not_installed' ? 'active' : '' }}"
+                        href="{{ route('business.clientMenu.index', ['status' => 'not_installed']) }}#not_installed">
+                        <i class="nav-icon cil cil-warning"></i> Calon Pelanggan
+                        @if ($prospectiveClient)
+                            <span class="badge badge-pills bg-danger ms-auto badge-sm">{{ $prospectiveClient }}</span>
+                        @endif
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::route()->getName() == 'business.clientMenu.index' && request()->get('status') !== 'not_installed' ? 'active' : '' }}"
+                        href="{{ route('business.clientMenu.index') }}#all">
                         <i class="nav-icon cil cil-user"></i> Pelanggan </a>
                 </li>
             @endhasanyrole

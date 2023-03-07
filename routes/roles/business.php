@@ -18,6 +18,7 @@ Route::prefix('client')->name('clientMenu.')->group(function () {
     Route::post('/create', [ClientController::class, 'store'])->name('store');
     Route::get('/edit/{id}', [ClientController::class, 'edit'])->name('edit')->whereNumber('id');
     Route::post('/edit/{id}', [ClientController::class, 'update'])->name('update')->whereNumber('id');
+    Route::post('/edit-status/{id}', [ClientController::class, 'updateStatus'])->name('updateStatus')->whereNumber('id');
     // Route::get('/candidate', [ClientController::class, 'candidate'])->name('candidate');
 })->middleware(sprintf('role:%s|%s', ROWNER, RTECHN));
 
