@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@coreui/coreui": "^4.2.6",
-    "@coreui/icons": "^3.0.0",
+    "@coreui/icons": "^3.0.1",
     "sass": "^1.58.3"
   }
 }
