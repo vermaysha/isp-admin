@@ -13,4 +13,11 @@ class DirectController extends Controller
             'title' => 'Pelanggan Direct',
         ]);
     }
+
+    public function office(Request $request)
+    {
+        return view('pages.admin.direct.office', [
+            'title' => 'Office',
+        ]);
+    }
 }

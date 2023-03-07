@@ -30,6 +30,7 @@ Route::name('clientMenu.')
         Route::get('/', [ClientController::class, 'index'])->name('index');
         Route::get('/{id}', [ClientController::class, 'detail'])->name('detail')->whereNumber('id');
         Route::get('/direct', [DirectController::class, 'direct'])->name('direct');
+        Route::get('/direct/office', [DirectController::class, 'office'])->name('office');
     });
 
 /**
