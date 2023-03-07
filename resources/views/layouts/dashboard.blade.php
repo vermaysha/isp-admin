@@ -56,7 +56,7 @@
                 <li class="nav-item">
                     <a class="nav-link {{ Request::route()->getName() == 'admin.register' ? 'active' : '' }}"
                         href="{{ route('admin.registerMenu.index') }}">
-                        <i class="nav-icon cil cil-people"></i> Pendaftaran Reseller </a>
+                        <i class="nav-icon cil cil-paperclip"></i> Pendaftaran Reseller </a>
                 </li>
             @endhasanyrole
 
