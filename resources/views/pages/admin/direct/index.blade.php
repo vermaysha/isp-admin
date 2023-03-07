@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('pageTitle')
-    {{ $title ?? 'Paket' }}
+    {{ $title ?? 'Pelanggan Direct' }}
 @endsection
 
 @section('content')
@@ -24,8 +24,8 @@
                             </thead>
                             <tbody class="table-group-divider">
                                 <tr>
-                                    <th> <img src="{{ mix('assets/brand/GMDP_35x35.png') }}" style="width: 45px"> </th>
-                                    <th> <a href="">SOLO</a> </th>
+                                    <th> <img src="{{ mix('assets/brand/GMDP_full.png') }}" style="width: 45px"> </th>
+                                    <th> <a href="{{ route('admin.clientMenu.office') }}">SOLO</a> </th>
                                     <th>
                                         <span class="badge rounded-pill bg-primary">5 Admin</span>
                                     </th>
@@ -34,8 +34,8 @@
                                     </th>
                                 </tr>
                                 <tr>
-                                    <th> <img src="{{ mix('assets/brand/GMDP_35x35.png') }}" style="width: 45px"> </th>
-                                    <th> <a href="">TANGGERANG</a> </th>
+                                    <th> <img src="{{ mix('assets/brand/GMDP_full.png') }}" style="width: 45px"> </th>
+                                    <th> <a href="{{ route('admin.clientMenu.office') }}">TANGGERANG</a> </th>
                                     <th>
                                         <span class="badge rounded-pill bg-primary">5 Admin</span>
                                     </th>
@@ -44,8 +44,8 @@
                                     </th>
                                 </tr>
                                 <tr>
-                                    <th> <img src="{{ mix('assets/brand/GMDP_35x35.png') }}" style="width: 45px"> </th>
-                                    <th> <a href="">GRESIK</a> </th>
+                                    <th> <img src="{{ mix('assets/brand/GMDP_full.png') }}" style="width: 45px"> </th>
+                                    <th> <a href="{{ route('admin.clientMenu.office') }}">GRESIK</a> </th>
                                     <th>
                                         <span class="badge rounded-pill bg-primary">5 Admin</span>
                                     </th>
