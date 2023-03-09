@@ -343,26 +343,62 @@
                         <div class="dropdown-menu dropdown-menu-end pt-0">
                             <div class="dropdown-header bg-light py-2">
                                 <div class="fw-semibold">Menu</div>
-                            </div><a class="dropdown-item" href="#">
-                                <svg class="icon me-2">
-                                    <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg') }}#cil-user">
-                                    </use>
-                                </svg> Profile</a><a class="dropdown-item" href="">
+                            </div>
+                            @hasanyrole(\App\Models\Role::ADMIN)
+                                <a class="dropdown-item" href="{{ route('admin.profileMenu.admin') }}">
+                                    <svg class="icon me-2">
+                                        <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg') }}#cil-user">
+                                        </use>
+                                    </svg> Profile</a>
+                            @endhasanyrole
 
-                                @hasanyrole(\App\Models\Role::RESELLER_OWNER)
+                            @hasanyrole(\App\Models\Role::RESELLER_OWNER)
+                                <a class="dropdown-item" href="{{ route('business.profileMenu.owner') }}">
+                                    <svg class="icon me-2">
+                                        <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg') }}#cil-user">
+                                        </use>
+                                    </svg> Profile</a>
+                            @endhasanyrole
+
+                            @hasanyrole(\App\Models\Role::RESELLER_OWNER)
+                                <a class="dropdown-item" href="{{ route('business.profileMenu.business') }}">
                                     <svg class="icon me-2">
                                         <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg') }}#cil-home">
                                         </use>
-                                    </svg> Bisnis</a><a class="dropdown-item" href="#">
-                                @endhasanyrole
+                                    </svg> Bisnis</a>
+                            @endhasanyrole
 
-                                <div class="dropdown-divider"></div><a class="dropdown-item"
-                                    href="{{ route('logout') }}">
+                            @hasanyrole(\App\Models\Role::RESELLER_ADMIN)
+                                <a class="dropdown-item" href="{{ route('business.profileMenu.employee') }}">
                                     <svg class="icon me-2">
-                                        <use
-                                            xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg') }}#cil-account-logout">
+                                        <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg') }}#cil-user">
                                         </use>
-                                    </svg> Logout</a>
+                                    </svg> Profile</a>
+                            @endhasanyrole
+
+                            @hasanyrole(\App\Models\Role::RESELLER_TECHNICIAN)
+                                <a class="dropdown-item" href="{{ route('business.profileMenu.employee') }}">
+                                    <svg class="icon me-2">
+                                        <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg') }}#cil-user">
+                                        </use>
+                                    </svg> Profile</a>
+                            @endhasanyrole
+
+                            @hasanyrole(\App\Models\Role::CLIENT)
+                                <a class="dropdown-item" href="{{ route('client.profileMenu.client') }}">
+                                    <svg class="icon me-2">
+                                        <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg') }}#cil-user">
+                                        </use>
+                                    </svg> Profile</a>
+                            @endhasanyrole
+
+                            <div class="dropdown-divider"></div><a class="dropdown-item"
+                                href="{{ route('logout') }}">
+                                <svg class="icon me-2">
+                                    <use
+                                        xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg') }}#cil-account-logout">
+                                    </use>
+                                </svg> Logout</a>
                         </div>
                     </li>
                 </ul>

@@ -3,7 +3,7 @@
 use App\Http\Controllers\Client\BillController;
 use App\Http\Controllers\Client\InvoiceController;
 use App\Http\Controllers\Client\PaymentController;
-use App\Http\Controllers\Client\ProfileController;
+use App\Http\Controllers\ProfileController as ControllersProfileController;
 use Illuminate\Support\Facades\Route;
 
 /**
@@ -44,5 +44,5 @@ Route::name('paymentMenu.')
 Route::name('profileMenu.')
     ->prefix('profile')
     ->group(function () {
-        Route::get('/', [ProfileController::class, 'index'])->name('index');
+        Route::get('/', [ControllersProfileController::class, 'client'])->name('client');
     });

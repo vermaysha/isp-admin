@@ -9,7 +9,7 @@
         <div class="row g-0 mb-4">
             <div class="card">
                 <div class="card-header">
-                    <strong>Profile Pelanggan</strong>
+                    <strong>Profile Admin</strong>
                 </div>
                 <div class="card-body py-4">
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -17,53 +17,46 @@
                         <button type="button" class="btn-close" data-coreui-dismiss="alert" aria-label="Close"></button>
                     </div>
                     <form action="" method="post" class="px-4" autocomplete="off" enctype="multipart/form-data">
-                        <fieldset class="border row p-3 mb-4 rounded-2">
-                            <legend class="float-none w-auto px-4">Data Diri Pelanggan</legend>
-                            <div class="col-md-6 mb-3">
+                        <fieldset class="border rounded-2 row p-3">
+                            <legend class="float-none w-auto px-4">Informasi Admin</legend>
+                            <div class="col-md-12 mb-3">
                                 <label for="fullname" class="form-label">Nama Lengkap</label>
-                                <input type="text" class="form-control" name="fullname" id="fullname" autocomplete="off"
-                                    autofocus value="{{ old('fullname') }}" placeholder="Masukan nama lengkap (wajib)">
+                                <input type="text" name="fullname" id="fullname" class="form-control"
+                                    value="{{ old('fullname') }}">
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label for="username" class="form-label">Nama Pengguna</label>
-                                <input type="text" class="form-control" name="username" id="username" autocomplete="off"
-                                    autofocus value="{{ old('username') }}" placeholder="Masukan nama pengguna (wajib)"
-                                    required readonly>
+                                <label for="username" class="form-label">Username Sistem</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">@</span>
+                                    <input type="text" name="username" id="username" class="form-control"
+                                        value="{{ old('username') }}" readonly>
+                                </div>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" name="email" id="email" autocomplete="off"
-                                    autofocus value="{{ old('email') }}" placeholder="Masukan alamat email (wajib)"
-                                    required>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label" for="phone_number">Nomor Telepon</label>
-                                <input type="text" name="phone_number" id="phone_number" class="form-control"
-                                    value="{{ old('phone_number') }}" placeholder="Masukan nomor telepon (opsional)">
+                                <label for="email" class="form-label">Email Admin</label>
+                                <input type="email" name="email" id="email" class="form-control"
+                                    value="{{ old('email') }}">
                             </div>
                             {{-- <div class="col-md-6 mb-3">
-                                <label for="password" class="form-label">Kata Sandi</label>
-                                <input type="password" class="form-control" name="password" id="password"
-                                    autocomplete="new-password" autofocus value="{{ old('password') }}"
-                                    placeholder="Masukan kata sandi (wajib)" required>
+                                <label for="password" class="form-label">Kata Sandi Sistem</label>
+                                <input type="password" name="password" id="password" class="form-control">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="password_confirmation" class="form-label">Konfirmasi Kata Sandi</label>
-                                <input type="password" class="form-control" name="password_confirmation"
-                                    id="password_confirmation" autocomplete="new-password" autofocus
-                                    value="{{ old('password_confirmation') }}" placeholder="Konfirmasi kata sandi (wajib)">
+                                <input type="password" name="password_confirmation" id="password_confirmation"
+                                    class="form-control">
                             </div> --}}
                             <div class="col-md-6 mb-3">
                                 <label for="birth" class="form-label">Tanggal Lahir</label>
-                                <input type="text" name="birth" id="birth" class="form-control"
-                                    value="{{ old('birth') }}" placeholder="Masukan Tanggal lahir (opsional)" required>
+                                <input type="date" name="birth" id="birth" class="form-control"
+                                    value="{{ old('birth') }}">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="gender" class="form-label">Jenis Kelamin</label>
                                 <select name="gender" id="gender" class="form-control select2">
-                                    <option value="">--- Pilih Jenis Kelamin (Opsional) ---</option>
-                                    <option value="male" @selected(old('gender') == 'male')>Lelaki</option>
-                                    <option value="female @selected(old('gender') == 'female')">Wanita</option>
+                                    <option value="">--- Pilih Jenis Kelamin ---</option>
+                                    <option value="male" @selected(old('gender') === 'male')>Lelaki</option>
+                                    <option value="female @selected(old('gender') === 'female')">Wanita</option>
                                 </select>
                             </div>
                             <div class="col-md-3 mb-3">
@@ -100,8 +93,7 @@
                             </div>
                             <div class="col-md-12 mb-3">
                                 <label for="address_line" class="form-label">Alamat Jalan/Gedung</label>
-                                <textarea name="address_line" id="address_line" class="form-control" rows="5"
-                                    placeholder="Masukan alamat jalan/gedung (opsional)">{{ old('address_line') }}</textarea>
+                                <textarea name="address_line" id="address_line" class="form-control" rows="5">{{ old('address_line') }}</textarea>
                             </div>
                             <div class="col-md-12 mb-3">
                                 <div id='map' style='width: 100%; height: 500px;'></div>
@@ -119,7 +111,7 @@
                                     value="{{ old('longitude') }}">
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label for="photo" class="form-label">Foto Profil</label>
+                                <label for="photo" class="form-label">Foto</label>
                                 <input type="file" accept="image/*" name="photo" id="photo"
                                     class="form-control" onchange="preview(event, 'imgOwner')">
                             </div>
@@ -128,6 +120,15 @@
                                 <img id="imgOwner" src="https://via.placeholder.com/200?text=Pratinjau Gambar"
                                     class="img-fluid img-thumbnail" />
                             </div>
+                            {{-- <div class="col-md-12 mb-3">
+                                <label for="office_location" class="form-label">Lokasi Kantor</label>
+                                <select name="office_location" id="office_location" class="form-control">
+                                    <option value="">--- Pilih Lokasi Kantor ---</option>
+                                    <option value="Tangerang">Tangerang</option>
+                                    <option value="Gresik">Gresik</option>
+                                    <option value="Solo">Solo</option>
+                                </select>
+                            </div> --}}
                         </fieldset>
                         <div class="d-flex justify-content-end my-4">
                             <button class="btn btn-primary" type="submit">Simpan</button>

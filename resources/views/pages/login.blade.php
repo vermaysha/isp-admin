@@ -49,7 +49,7 @@
                                         </div>
                                         <div class="mb-4"> </div>
                                         <div class="col-6">
-                                            <button class="btn btn-link btn-sm px-0" type="button">Lupa Password?</button>
+                                            {{-- <buttonclass="btnbtn-linkbtn-smpx-0"type="button">LupaPassword?</button> --}}
                                         </div>
                                         <div class="col-6 text-end">
                                             <a href="{{ route('signup') }}"><button class="btn btn-link btn-sm px-0"
