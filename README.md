@@ -1,5 +1,6 @@
 <p align="center">
     <h1 align="center">ISP Admin</h1>
+    <h3 align="center"><i>repository masih dalam tahap pengembangan</i></h3>
 </p>
 
 <p align="center">
