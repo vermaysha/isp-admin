@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfileController as ControllersProfileController;
 use App\Http\Controllers\Reseller\BillController;
 use App\Http\Controllers\Reseller\ClientController;
 use App\Http\Controllers\Reseller\EmployeeController;
@@ -55,3 +56,9 @@ Route::prefix('bill')->name('billMenu.')->group(function () {
     Route::post('/confirm/{id}', [BillController::class, 'confirm'])->name('confirm')->whereNumber('id');
     Route::get('/invoice/{id}', [BillController::class, 'invoice'])->name('invoice')->whereNumber('id');
 })->middleware(sprintf('role:%s|%s', ROWNER, RADMIN));
+
+Route::prefix('profile')->name('profileMenu.')->group(function () {
+    Route::get('/owner', [ControllersProfileController::class, 'owner'])->name('owner');
+    Route::get('/business', [ControllersProfileController::class, 'business'])->name('business');
+    Route::get('/employee', [ControllersProfileController::class, 'employee'])->name('employee');
+})->middleware(sprintf('role:%s|%s', ROWNER, RTECHN, RADMIN));

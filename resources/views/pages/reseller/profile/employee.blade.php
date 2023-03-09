@@ -9,7 +9,7 @@
         <div class="row g-0 mb-4">
             <div class="card">
                 <div class="card-header">
-                    <strong>Profile Pelanggan</strong>
+                    <strong>Profile Pegawai</strong>
                 </div>
                 <div class="card-body py-4">
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -18,7 +18,7 @@
                     </div>
                     <form action="" method="post" class="px-4" autocomplete="off" enctype="multipart/form-data">
                         <fieldset class="border row p-3 mb-4 rounded-2">
-                            <legend class="float-none w-auto px-4">Data Diri Pelanggan</legend>
+                            <legend class="float-none w-auto px-4">Data Diri</legend>
                             <div class="col-md-6 mb-3">
                                 <label for="fullname" class="form-label">Nama Lengkap</label>
                                 <input type="text" class="form-control" name="fullname" id="fullname" autocomplete="off"
@@ -28,7 +28,7 @@
                                 <label for="username" class="form-label">Nama Pengguna</label>
                                 <input type="text" class="form-control" name="username" id="username" autocomplete="off"
                                     autofocus value="{{ old('username') }}" placeholder="Masukan nama pengguna (wajib)"
-                                    required readonly>
+                                    readonly>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="email" class="form-label">Email</label>
@@ -45,7 +45,7 @@
                                 <label for="password" class="form-label">Kata Sandi</label>
                                 <input type="password" class="form-control" name="password" id="password"
                                     autocomplete="new-password" autofocus value="{{ old('password') }}"
-                                    placeholder="Masukan kata sandi (wajib)" required>
+                                    placeholder="Masukan kata sandi (wajib)">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="password_confirmation" class="form-label">Konfirmasi Kata Sandi</label>
@@ -119,7 +119,7 @@
                                     value="{{ old('longitude') }}">
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label for="photo" class="form-label">Foto Profil</label>
+                                <label for="photo" class="form-label">Foto</label>
                                 <input type="file" accept="image/*" name="photo" id="photo"
                                     class="form-control" onchange="preview(event, 'imgOwner')">
                             </div>

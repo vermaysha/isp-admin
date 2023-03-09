@@ -147,7 +147,7 @@
                         render: (data, type) => {
                             if (type === 'display') {
                                 return `<span class="badge badge-pills bg-info">
-                                            ${data} Pengguna
+                                            ${data} Mbps
                                         </span>`;
                             }
 
