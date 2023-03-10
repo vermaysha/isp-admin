@@ -10,6 +10,13 @@
     <a href=""><img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/vermaysha/isp-admin"></a>
 </p>
 
+<p align="center">
+    <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/y/vermaysha/isp-admin">
+    <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/vermaysha/isp-admin">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/vermaysha/isp-admin">
+    <a href="https://ebilling.gmdp.net.id/login"><img alt="GitHub repo size" src="https://img.shields.io/website?down_color=red&down_message=offline&up_color=green&up_message=online&url=https%3A%2F%2Febilling.gmdp.net.id%2Flogin"></a>
+</p>
+
 ## Tentang
 
 Aplikasi untuk ISP lokal
