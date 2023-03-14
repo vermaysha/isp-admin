@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             Storage::disk('contracts')->put('example.jpg', $contractExample);
 
             $this->call([
+                OfficeSeeder::class,
                 ResellerSeeder::class,
                 PlanSeeder::class,
                 ClientSeeder::class,
