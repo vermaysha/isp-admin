@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\ResellerType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,6 +20,7 @@ return new class extends Migration
             $table->string('npwp')->nullable()->comment('NPWP Number');
             $table->string('pks')->nullable()->comment('PKS number');
             $table->string('contract_file')->nullable()->comment('Contract File');
+            $table->unsignedTinyInteger('type')->default(ResellerType::INDIRECT->value);
             $table->date('contract_start_at')->nullable();
             $table->date('contract_end_at')->nullable();
             $table->date('inactive_at')->nullable();

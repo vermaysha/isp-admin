@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ResellerType;
 use Bavix\Wallet\Interfaces\Wallet;
 use Bavix\Wallet\Traits\HasWallet;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -31,6 +32,7 @@ class Reseller extends Model implements Wallet
         'contract_file',
         'contract_start_at',
         'contract_end_at',
+        'type',
     ];
 
     /**
@@ -39,6 +41,7 @@ class Reseller extends Model implements Wallet
      * @var array<string, string>
      */
     protected $casts = [
+        'type' => ResellerType::class,
         'contract_start_at' => 'date',
         'contract_end_at' => 'date',
         'inactive_at' => 'date',
