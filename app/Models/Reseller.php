@@ -7,6 +7,7 @@ use Bavix\Wallet\Traits\HasWallet;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use ResellerType;
 
 /**
  * @mixin IdeHelperReseller
@@ -39,6 +40,7 @@ class Reseller extends Model implements Wallet
      * @var array<string, string>
      */
     protected $casts = [
+        'type' => ResellerType::class,
         'contract_start_at' => 'date',
         'contract_end_at' => 'date',
         'inactive_at' => 'date',
