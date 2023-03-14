@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\ResellerType;
 use App\Http\Controllers\Controller;
 use App\Models\Address;
 use App\Models\Client;
@@ -34,7 +35,7 @@ class ResellerController extends Controller
     {
         $resellers = Reseller::with([
             'user:id,fullname',
-        ])->withCount('clients')->latest();
+        ])->withCount('clients')->where('type', ResellerType::INDIRECT)->latest();
 
         return view('pages.admin.reseller.index', [
             'title' => 'Reseller',
@@ -55,7 +56,7 @@ class ResellerController extends Controller
         ])->withCount([
             'clients',
             'clientPpns',
-        ])->where('id', $id)->firstOrFail();
+        ])->where('id', $id)->where('type', ResellerType::INDIRECT)->firstOrFail();
 
         $clients = Client::with([
             'user',
