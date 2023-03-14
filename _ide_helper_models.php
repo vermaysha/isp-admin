@@ -150,13 +150,14 @@ namespace App\Models{
      * @property int $id
      * @property int $user_id
      * @property int $plan_id
-     * @property int $reseller_id
+     * @property int|null $reseller_id
      * @property string|null $plan_price Custom plan price
      * @property string|null $plan_bandwidth Custom plan bandwidth
      * @property string|null $npwp
      * @property string|null $payment_due_date
      * @property bool $is_ppn
-     * @property int $status
+     * @property \App\Enums\ClientType $type
+     * @property \App\Enums\ClientStatus $status
      * @property \Illuminate\Support\Carbon|null $installed_at
      * @property \Illuminate\Support\Carbon|null $blocked_at
      * @property \Illuminate\Support\Carbon|null $inactive_at
@@ -167,7 +168,7 @@ namespace App\Models{
      * @property-read int|null $bills_count
      * @property-read \App\Models\Bill|null $lastBill
      * @property-read \App\Models\Plan $plan
-     * @property-read \App\Models\Reseller $reseller
+     * @property-read \App\Models\Reseller|null $reseller
      * @property-read \App\Models\User $user
      *
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Client newModelQuery()
@@ -189,6 +190,7 @@ namespace App\Models{
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Client wherePlanPrice($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Client whereResellerId($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Client whereStatus($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Client whereType($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Client whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Client whereUserId($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Client withTrashed()
@@ -197,6 +199,34 @@ namespace App\Models{
      * @mixin \Eloquent
      */
     class IdeHelperClient
+    {
+    }
+}
+
+namespace App\Models{
+    /**
+     * App\Models\Office
+     *
+     * @property int $id
+     * @property string $name
+     * @property int $address_id
+     * @property int|null $reseller_id
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     *
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Office newModelQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Office newQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Office query()
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Office whereAddressId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Office whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Office whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Office whereName($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Office whereResellerId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Office whereUpdatedAt($value)
+     *
+     * @mixin \Eloquent
+     */
+    class IdeHelperOffice
     {
     }
 }
@@ -295,6 +325,7 @@ namespace App\Models{
      * @property string|null $npwp NPWP Number
      * @property string|null $pks PKS number
      * @property string|null $contract_file Contract File
+     * @property \App\Enums\ResellerType $type
      * @property \Illuminate\Support\Carbon|null $contract_start_at
      * @property \Illuminate\Support\Carbon|null $contract_end_at
      * @property \Illuminate\Support\Carbon|null $inactive_at
@@ -336,6 +367,7 @@ namespace App\Models{
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Reseller wherePhoneNumber($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Reseller wherePhoto($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Reseller wherePks($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Reseller whereType($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Reseller whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Reseller whereUserId($value)
      * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Reseller withTrashed()

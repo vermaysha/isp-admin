@@ -19,17 +19,6 @@ class ResellerSeeder extends Seeder
     {
         $faker = fake('id_ID');
 
-        foreach (User::factory(1, ['username' => 'reseller_official'])->create() as $owner) {
-            $owner->assignRole(Role::RESELLER_OWNER);
-
-            $reseller = Reseller::create(Reseller::factory(1, [
-                'user_id' => $owner->id,
-                'type' => ResellerType::DIRECT,
-            ])->makeOne()->toArray());
-
-            $reseller->employees()->attach($owner->id);
-        }
-
         foreach (User::factory(1, ['username' => 'reseller_owner'])->create() as $owner) {
             $owner->assignRole(Role::RESELLER_OWNER);
 
