@@ -32,24 +32,24 @@
             @hasanyrole(\App\Models\Role::ADMIN)
                 <li class="nav-title">Data Master</li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::route()->getName() == 'admin.reseller' ? 'active' : '' }}"
+                    <a class="nav-link {{ Request::route()->getName() == 'admin.resellerMenu.index' ? 'active' : '' }}"
                         href="{{ route('admin.resellerMenu.index') }}">
                         <i class="nav-icon cil cil-vector"></i> Reseller</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::route()->getName() == 'admin.client' ? 'active' : '' }}"
+                    <a class="nav-link {{ Request::route()->getName() == 'admin.clientMenu.index' ? 'active' : '' }}"
                         href="{{ route('admin.clientMenu.index') }}">
                         <i class="nav-icon cil cil-people"></i> Pelanggan </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::route()->getName() == 'admin.direct' ? 'active' : '' }}"
-                        href="{{ route('admin.clientMenu.direct') }}">
-                        <i class="nav-icon cil cil-user-plus"></i> Pelanggan Direct </a>
+                    <a class="nav-link {{ Request::route()->getName() == 'admin.officeMenu.index' ? 'active' : '' }}"
+                        href="{{ route('admin.officeMenu.index') }}">
+                        <i class="nav-icon cil cil-user-plus"></i> Kantor </a>
                 </li>
 
                 {{-- <li class="nav-title">Data Sistem</li> --}}
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::route()->getName() == 'admin.admin' ? 'active' : '' }}"
+                    <a class="nav-link {{ Request::route()->getName() == 'admin.adminMenu.index' ? 'active' : '' }}"
                         href="{{ route('admin.adminMenu.index') }}">
                         <i class="nav-icon cil cil-featured-playlist"></i> Admin </a>
                 </li>
