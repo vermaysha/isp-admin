@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Enums;
+
 enum ResellerType: int
 {
     case INDIRECT = 0;
