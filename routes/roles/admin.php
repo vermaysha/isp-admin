@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ClientController;
-use App\Http\Controllers\Admin\DirectController;
+use App\Http\Controllers\Admin\OfficeController;
 use App\Http\Controllers\Admin\PasswordController;
 use App\Http\Controllers\Admin\RegisterController;
 use App\Http\Controllers\Admin\ResellerController;
@@ -22,6 +22,13 @@ Route::name('resellerMenu.')
     Route::post('/create', [ResellerController::class, 'store'])->name('store');
 });
 
+Route::name('officeMenu.')
+->prefix('office')
+->group(function () {
+    Route::get('/', [OfficeController::class, 'index'])->name('index');
+    Route::get('/{id}', [OfficeController::class, 'detail'])->name('detail')->whereNumber('id');
+});
+
 /**
  * Client menu
  */
@@ -30,8 +37,6 @@ Route::name('clientMenu.')
     ->group(function () {
         Route::get('/', [ClientController::class, 'index'])->name('index');
         Route::get('/{id}', [ClientController::class, 'detail'])->name('detail')->whereNumber('id');
-        Route::get('/direct', [DirectController::class, 'direct'])->name('direct');
-        Route::get('/direct/office', [DirectController::class, 'office'])->name('office');
     });
 
 /**
