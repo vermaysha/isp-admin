@@ -19,4 +19,24 @@ class Office extends Model
         'address_id',
         'reseller_id',
     ];
+
+    /**
+     * Relation to address
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function address()
+    {
+        return $this->belongsTo(Address::class);
+    }
+
+    /**
+     * Relation to address
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function reseller()
+    {
+        return $this->belongsTo(Reseller::class);
+    }
 }
